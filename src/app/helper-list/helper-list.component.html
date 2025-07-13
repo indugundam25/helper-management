@@ -1,0 +1,6 @@
+<h3>Helpers</h3>
+<ul class="helper-list">
+  <li *ngFor="let helper of helpers" (click)="selectHelper(helper)">
+    {{ helper.name }} - {{ helper.role }}
+  </li>
+</ul>

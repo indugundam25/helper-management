@@ -1,2 +1,10 @@
 <h1>Helpers</h1>
 <app-toolbar></app-toolbar>
+<div class="layout-wrapper">
+  <div class="left-section">
+    <app-helper-list (helperSelected)="selectedHelper = $event"></app-helper-list>
+  </div>
+  <div class="right-section">
+    <app-helper-details [helper]="selectedHelper"></app-helper-details>
+  </div>
+</div>
