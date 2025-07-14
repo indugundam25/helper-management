@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {
+  @Output() addHelperClicked = new EventEmitter<void>();
 
+  onAddHelper() {
+    this.addHelperClicked.emit();
+  }
 }

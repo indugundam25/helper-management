@@ -1,0 +1,50 @@
+<div class="helper-form">
+  <h2>Helper details</h2>
+  <p>Track, Add and manage all your helpers at one place</p>
+  <form (ngSubmit)="onSubmit()">
+    <div class="photo-upload">
+      <label for="photo">Upload Photo</label>
+      <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*">
+      <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview">
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Type of Service</mat-label>
+      <mat-select [(ngModel)]="role" name="role" required>
+        <mat-option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Organization</mat-label>
+      <mat-select [(ngModel)]="organization" name="organization" required>
+        <mat-option *ngFor="let org of organizations" [value]="org">{{ org }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Full Name</mat-label>
+      <input matInput [(ngModel)]="name" name="name" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Languages</mat-label>
+      <mat-select [(ngModel)]="languages" name="languages" multiple>
+        <mat-option *ngFor="let lang of languageOptions" [value]="lang">{{ lang }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="gender-group">
+      <label>Gender:</label>
+      <mat-radio-group [(ngModel)]="gender" name="gender" required>
+        <mat-radio-button value="Male">Male</mat-radio-button>
+        <mat-radio-button value="Female">Female</mat-radio-button>
+        <mat-radio-button value="Other">Other</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input matInput [(ngModel)]="phone" name="phone" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" name="email">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Add Helper</button>
+  </form>
+</div> 
