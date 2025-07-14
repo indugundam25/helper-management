@@ -6,7 +6,7 @@ import { HelperDetailsComponent } from './helper-details/helper-details.componen
 import { HelperFormComponent } from './helper-form/helper-form.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { TrackDetailsComponent } from './track-details/track-details.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,7 +17,8 @@ import { RouterModule } from '@angular/router';
     HelperListComponent,
     HelperDetailsComponent,
     HelperFormComponent,
-    RouterModule
+    RouterModule,
+    TrackDetailsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

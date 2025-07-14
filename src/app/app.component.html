@@ -1,16 +1,27 @@
-<h1>Helpers</h1>
-<app-toolbar (addHelperClicked)="toggleHelperForm()"></app-toolbar>
-<app-helper-form *ngIf="showHelperForm"></app-helper-form>
- <router-outlet></router-outlet>
-<div class="layout-wrapper">
+<div *ngIf = "!showHelperForm" class = "header">
+ <h2 class = "title">Helpers</h2>
+ <button class="menu-btn">⋮</button>
+</div>
+<div *ngIf = "!showHelperForm"> 
+  <app-toolbar (addHelperClicked)="toggleHelperForm()"></app-toolbar>
+</div>
+<router-outlet></router-outlet>
+
+<div *ngIf="showHelperForm" class="form-layout-wrapper">
+  <section>
+    <p class = "nav">←Add helper</p>
+  </section>
+  <div class="track-left">
+    <app-track-details></app-track-details>
+  </div>
+  <div class="form-right">
+    <app-helper-form></app-helper-form>
+  </div>
+</div>
+
+<div *ngIf="!showHelperForm" class="layout-wrapper">
   <div class="left-section">
     <app-helper-list (helperSelected)="selectedHelper = $event"></app-helper-list> 
-    <!-- <app-helper-list
-    [helpers]="helpers"
-    [selectedHelperId]="selectedHelperId"
-    (selectHelper)="onSelectHelper($event)"
-    (addHelper)="onAddHelper()">
-  </app-helper-list> -->
   </div>
   <div class="right-section">
     <app-helper-details [helper]="selectedHelper"></app-helper-details>
