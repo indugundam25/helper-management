@@ -3,10 +3,13 @@
   <p>Track, Add and manage all your helpers at one place</p>
   <form (ngSubmit)="onSubmit()">
     <div class="photo-upload">
-      <label for="photo">Upload Photo</label>
-      <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*">
-      <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview">
-    </div>
+  <label for="photo">
+    Upload<br />Photo
+  </label>
+  <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" />
+  <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
+  <p>Upload photo(.png, .jpeg) size 5Mb</p>
+</div>
     <mat-form-field appearance="outline">
       <mat-label>Type of Service</mat-label>
       <mat-select [(ngModel)]="role" name="role" required>

@@ -1,70 +1,91 @@
-.helper-form {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  .helper-form {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  h2 {
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-  }
-
-  p {
-    margin-bottom: 2rem;
-    color: #555;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .photo-upload {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    input[type="file"] {
-      padding: 0.5rem;
+    h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
     }
 
-    .avatar-preview {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-top: 0.5rem;
-      border: 1px solid #ccc;
-    }
-  }
-
-  mat-form-field {
-    width: 100%;
-  }
-
-  .gender-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    label {
-      font-weight: 500;
+    p {
+      margin-bottom: 2rem;
+      color: #555;
     }
 
-    mat-radio-group {
+    form {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 1.5rem;
     }
+
+    .photo-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      gap: 0.75rem;
+
+      input[type="file"] {
+        display: none; 
+      }
+
+  label {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #777;
+    text-align: center;
+    padding: 1rem;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: #3f51b5;
+    }
   }
 
-  button[type="submit"] {
-    align-self: flex-start;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    font-size: 1rem;
+  .avatar-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #3f51b5;
+    margin-top: 0.25rem;
   }
 }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .gender-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-weight: 500;
+      }
+
+      mat-radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+    }
+
+    button[type="submit"] {
+      align-self: flex-start;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  }

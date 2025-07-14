@@ -5,6 +5,7 @@ import { HelperListComponent } from './helper-list/helper-list.component';
 import { HelperDetailsComponent } from './helper-details/helper-details.component';
 import { HelperFormComponent } from './helper-form/helper-form.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
     ToolbarComponent,
     HelperListComponent,
     HelperDetailsComponent,
-    HelperFormComponent
+    HelperFormComponent,
+    RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
