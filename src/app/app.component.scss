@@ -35,23 +35,34 @@
 }
 
 .form-layout-wrapper {
-  display: flex;
-  gap: 16px;
-  padding: 8x;
+  padding: 16px;
+  display: block; // allow stacking of nav and columns
 
-   .nav {
-    left: 30px;
+  .nav {
+    text-align: left;
+    margin-bottom: 16px;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: #333;
+    }
+  }
+
+  .content-flex {
+    display: flex;
+    gap: 16px;
   }
 
   .track-left {
-    flex: 1;
+    flex: 0 0 200px;
     max-width: 20%;
     border-right: 1px solid #ccc;
     padding-right: 8px;
   }
 
   .form-right {
-    flex: 2;
+    flex: 1;
     max-width: 80%;
     padding-left: 12px;
   }

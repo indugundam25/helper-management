@@ -8,16 +8,20 @@
 <router-outlet></router-outlet>
 
 <div *ngIf="showHelperForm" class="form-layout-wrapper">
-  <section>
-    <p class = "nav">←Add helper</p>
-  </section>
-  <div class="track-left">
-    <app-track-details></app-track-details>
+  <div class="nav">
+    <h3>← Add Helper</h3>
   </div>
-  <div class="form-right">
-    <app-helper-form></app-helper-form>
+
+  <div class="content-flex">
+    <div class="track-left">
+      <app-track-details></app-track-details>
+    </div>
+    <div class="form-right">
+      <app-helper-form></app-helper-form>
+    </div>
   </div>
 </div>
+
 
 <div *ngIf="!showHelperForm" class="layout-wrapper">
   <div class="left-section">

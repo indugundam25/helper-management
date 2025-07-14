@@ -1,6 +1,7 @@
   .helper-form {
     max-width: 800px;
     margin: 0 auto;
+    align-items: stretch; /* Ensures equal height */
     padding: 2rem;
     background-color: #ffffff;
     border-radius: 12px;

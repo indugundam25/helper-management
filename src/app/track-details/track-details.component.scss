@@ -1,12 +1,15 @@
 .vertical-step-tracker {
-    background-color: #ccd9df;
-    max-width: 200px;
-    max-height: 100%  ;
-    margin: 0 auto;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #dadfe2;
+  width: 100%;
+  height: 94%; /* Full height of the viewport */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
 
 .step {
   display: flex;
@@ -43,7 +46,7 @@ p {
 .line {
   width: 2px;
   height: 30px;
-  background-color: rgb(1, 5, 21);
+  background-color: rgb(80, 94, 148);
   margin-left: 7px;
   margin-bottom: 1rem;
 }
