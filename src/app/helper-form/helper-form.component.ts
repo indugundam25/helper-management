@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// Angular Material modules
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -27,10 +26,9 @@ import { MatOptionModule } from '@angular/material/core';
   ]
 })
 export class HelperFormComponent {
-  // Define all properties used in the template to avoid "does not exist" errors
-  serviceTypes = ['Cook', 'Maid', 'Driver', 'Cleaner'];
-  organizations = ['Org1', 'Org2'];
-  languageOptions = ['English', 'Hindi', 'Telugu'];
+  serviceTypes = ['Cook', 'Maid', 'Driver', 'Cleaner', 'Lawyer', 'Plumber', 'Nurse'];
+  organizations = ['ASBL', 'Spring Helpers'];
+  languageOptions = ['English', 'Hindi', 'Telugu', 'Bengali', 'Tamil', 'Kannada', 'Tulu'];
   role = '';
   organization = '';
   name = '';
@@ -50,7 +48,6 @@ export class HelperFormComponent {
   }
 
   onSubmit() {
-    // Your form logic here
     console.log({
       role: this.role,
       organization: this.organization,

@@ -1,23 +1,25 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-helper-list',
   standalone: true,
-  imports : [CommonModule],
+  imports: [CommonModule],
   templateUrl: './helper-list.component.html',
   styleUrls: ['./helper-list.component.scss']
 })
 export class HelperListComponent {
-  @Output() helperSelected = new EventEmitter<any>();
+  @Input() helpers: any[] = [];
+  @Input() selectedHelperId: string | null = null;
 
-  helpers = [
-    { name: 'Alice', role: 'Nurse' },
-    { name: 'Bob', role: 'Attendant' },
-    { name: 'Charlie', role: 'Technician' }
-  ];
+  @Output() selectHelper = new EventEmitter<any>();
+  @Output() addHelper = new EventEmitter<void>();
 
-  selectHelper(helper: any) {
-    this.helperSelected.emit(helper);
+  onSelect(helper: any) {
+    this.selectHelper.emit(helper);
+  }
+
+  onAdd() {
+    this.addHelper.emit();
   }
 }

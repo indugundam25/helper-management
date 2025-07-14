@@ -3,7 +3,13 @@
 <app-helper-form *ngIf="showHelperForm"></app-helper-form>
 <div class="layout-wrapper">
   <div class="left-section">
-    <app-helper-list (helperSelected)="selectedHelper = $event"></app-helper-list>
+    <!-- <app-helper-list (helperSelected)="selectedHelper = $event"></app-helper-list> -->
+      <!-- <app-helper-list
+    [helpers]="helpers"
+    [selectedHelperId]="selectedHelperId"
+    (selectHelper)="onSelectHelper($event)"
+    (addHelper)="onAddHelper()"
+  ></app-helper-list> -->
   </div>
   <div class="right-section">
     <app-helper-details [helper]="selectedHelper"></app-helper-details>

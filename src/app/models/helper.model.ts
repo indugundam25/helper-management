@@ -1,5 +1,5 @@
 export interface Helper {
-  photo?: File | string;         
+  photo?: File | string;   
   role: string;
   organization: string;
   name: string;
