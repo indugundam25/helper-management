@@ -1,4 +1,4 @@
-<div *ngIf="helper">
+<div *ngIf="helper" class = "container">
   <h3 class = "name">{{ helper.name }}</h3>
   <p class = "role">{{ helper.role }}</p>
   <h3>PERSONAL DETAILS</h3>
@@ -21,6 +21,6 @@
     </div>
 
 </div>
-<div *ngIf="!helper">
+<div *ngIf="!helper" class = "container">
   <p>Select a helper to view details.</p>
 </div>

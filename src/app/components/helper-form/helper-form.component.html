@@ -7,7 +7,7 @@
     Upload<br />Photo
   </label>
   <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" />
-  <!-- <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" /> -->
+  <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
   <p>Upload photo(.png, .jpeg) size 5Mb</p>
 </div>
     <mat-form-field appearance="outline">

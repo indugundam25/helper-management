@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
-import { HelperFormComponent } from './helper-form/helper-form.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AddHelperComponent } from './pages/add-helper/add-helper.component';
+
 
 export const routes: Routes = [
-  { path: 'helper-list', component: HelperFormComponent },
+  {path : '', component : HomeComponent},
+  {path: 'helperlist', component: AddHelperComponent },
 ];
