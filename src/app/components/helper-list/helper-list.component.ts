@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HelperTabComponent } from '../helper-tab/helper-tab.component';
 
 @Component({
   selector: 'app-helper-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HelperTabComponent],
   templateUrl: './helper-list.component.html',
   styleUrls: ['./helper-list.component.scss']
 })

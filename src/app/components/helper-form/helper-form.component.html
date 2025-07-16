@@ -14,19 +14,27 @@
     <mat-select formControlName="role" required>
       <mat-option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="helperForm.get('role')?.hasError('required') && helperForm.get('role')?.touched">
+  Role is required
+</mat-error>
   </mat-form-field>
-
   <mat-form-field appearance="outline">
     <mat-label>Organization</mat-label>
     <mat-select formControlName="organization" required>
       <mat-option *ngFor="let org of organizations" [value]="org">{{ org }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="helperForm.get('role')?.hasError('required') && helperForm.get('role')?.touched">
+  Organization is required
+</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Full Name</mat-label>
-    <input matInput formControlName="name" required />
-  </mat-form-field>
+  <mat-label>Full Name</mat-label>
+  <input matInput formControlName="name" required />
+  <mat-error *ngIf="helperForm.get('name')?.hasError('required') && helperForm.get('name')?.touched">
+    Name is required
+  </mat-error>
+</mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Languages</mat-label>
@@ -44,15 +52,25 @@
     </mat-radio-group>
   </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Phone Number</mat-label>
-    <input matInput formControlName="phone" required />
-  </mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Phone Number</mat-label>
+  <input matInput formControlName="phone" required />
+  <mat-error *ngIf="helperForm.get('phone')?.hasError('required') && helperForm.get('phone')?.touched">
+    Phone number is required
+  </mat-error>
+  <mat-error *ngIf="helperForm.get('phone')?.hasError('pattern') && helperForm.get('phone')?.touched">
+    Phone number must be exactly 10 digits
+  </mat-error>
+</mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
-  </mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Email</mat-label>
+  <input matInput formControlName="email"  placeholder="example@abc.com"/>
+  <mat-error *ngIf="helperForm.get('email')?.hasError('email') && helperForm.get('email')?.touched">
+    Enter a valid email address
+  </mat-error>
+</mat-form-field>
+
 
   <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid">
     Add Helper

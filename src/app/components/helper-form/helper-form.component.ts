@@ -10,6 +10,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   standalone: true,
@@ -38,8 +39,9 @@ export class HelperFormComponent implements OnInit {
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
   languageOptions = ['English', 'Hindi', 'Telugu', 'Tamil', 'Kannada', 'Urdu'];
+  onCloseModel: any;
   
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private helperService : HelperService) {}
 
   ngOnInit(): void {
     this.helperForm = this.fb.group({
@@ -48,8 +50,11 @@ export class HelperFormComponent implements OnInit {
       organization: ['', Validators.required],
       name: ['', Validators.required],
       languages: [[]],
-      gender: ['Male', Validators.required],
-      phone: ['', Validators.required],
+      gender: ['', Validators.required],
+      phone: ['', [
+        Validators.required,
+        Validators.pattern(/^\d{10}$/) 
+      ]],
       email: ['']
     });
   }
@@ -66,9 +71,17 @@ export class HelperFormComponent implements OnInit {
     }
   }
 
+  onClose() {
+    this.onCloseModel.emit(false);
+  }
   onSubmit(): void {
     if (this.helperForm.valid) {
-      console.log(this.helperForm.value);
+      // console.log(this.helperForm.value);
+      this.helperService.addHelper(this.helperForm.value).subscribe({
+        next:(response) => {
+          this.onClose();
+        }
+      })
     }
   }
 }

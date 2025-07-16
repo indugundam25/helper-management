@@ -1,26 +1,54 @@
-<div *ngIf="helper" class = "container">
-  <h3 class = "name">{{ helper.name }}</h3>
-  <p class = "role">{{ helper.role }}</p>
-  <h3>PERSONAL DETAILS</h3>
-    <div class = "personal_details">
-      <p class = "heading">Gender</p>
-      <p class = "value">{{helper.gender}}</p>
-      <p class = "heading">Language(s)</p>
-      <p class = "value">{{helper.language}}</p>
-      <p class = "heading">Mobile no</p>
-      <p class = "value">{{helper.phone}}</p>
-      <p class = "heading">Email</p>
-      <p class = "value">{{helper.email}}</p> 
+<div class="helper-details-container">
+  <div class="profile-header">
+    <div class="profile-card">
+      <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
+      <div class="profile-info">
+        <h2 class="profile-name">{{ helper.name }}</h2>
+        <p class="profile-role">{{ helper.role }}</p>
+      </div>
+      <div class = "edit-buttons">
+        <button type="button" class="edit-btn"><lucide-icon [name]="pencil"></lucide-icon></button>
+        <button type="button" class="trash-btn"><lucide-icon [name]="trash"></lucide-icon></button>
+      </div>
     </div>
-    <h3>SERVICE DETAILS</h3>
-    <div class = "service_details">
-      <p class = "heading">Type</p>
-      <p class = "value">{{helper.role}}</p>
-       <p class = "heading">Organization</p>
-      <p class = "value">{{helper.organization}}</p>
-    </div>
+  </div>
 
-</div>
-<div *ngIf="!helper" class = "container">
-  <p>Select a helper to view details.</p>
+  <div class="section">
+    <div>
+    <h4>PERSONAL DETAILS</h4>
+    <span></span>
+    </div>
+    <div class="info-block">
+      <div class="info-item">
+        <p class="label">Gender</p>
+        <p class="value">{{ helper.gender }}</p>
+      </div>
+      <div class="info-item">
+        <p class="label">Language(s)</p>
+        <p class="value">{{ helper.languages?.join(', ') }}</p>
+      </div>
+      <div class="info-item">
+        <p class="label">Mobile no</p>
+        <p class="value">{{ helper.phone }}</p>
+      </div>
+      <div class="info-item">
+        <p class="label">Email</p>
+        <p class="value">{{ helper.email || '-' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>SERVICE DETAILS</h4>
+    <div class="info-block">
+      <div class="info-item">
+        <p class="label">Type</p>
+        <p class="value">{{ helper.role }}</p>
+      </div>
+      <div class="info-item">
+        <p class="label">Organization</p>
+        <p class="value">{{ helper.organization }}</p>
+      </div>
+    </div>
+  </div>
 </div>

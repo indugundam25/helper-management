@@ -1,7 +1,5 @@
 <div class = "container">
 <ul class="helper-list">
-   <li *ngFor="let helper of helpers" (click)="onSelect(helper)">
-    {{ helper.name }} - {{helper.role}}
-  </li>
+  <app-helper-tab></app-helper-tab>
 </ul>
 </div>
