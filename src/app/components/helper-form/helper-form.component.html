@@ -4,7 +4,7 @@
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
   <div class="photo-upload">
     <label for="photo">Upload<br />Photo</label>
-    <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" />
+    <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" required/>
     <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
     <p>Upload photo(.png, .jpeg) size 5Mb</p>
   </div>
@@ -71,6 +71,25 @@
   </mat-error>
 </mat-form-field>
 
+<mat-form-field appearance="outline">
+    <mat-label> Choose Vehicle Type</mat-label>
+    <mat-select formControlName="vehicleType">
+      <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle }}</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline" *ngIf="helperForm.get('vehicleType')?.value !== 'None'">
+  <mat-label>Vehicle Number</mat-label>
+  <input matInput formControlName="number" required />
+  <mat-error *ngIf="helperForm.get('number')?.hasError('required') && helperForm.get('number')?.touched">
+    Vehicle number is required
+  </mat-error>
+</mat-form-field>
+
+  <div class="doc-upload">
+  <mat-label>KYC Document</mat-label>
+  <label for="doc" (click)="openDialog()">+</label>
+  </div>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid">
     Add Helper

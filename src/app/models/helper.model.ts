@@ -13,4 +13,7 @@ export interface IHelper {
   gender: 'Male' | 'Female' | 'Other';
   phone: string;
   email?: string;
+  vehicleType : string;
+  number ?: string;
+  doc ?: string
 }

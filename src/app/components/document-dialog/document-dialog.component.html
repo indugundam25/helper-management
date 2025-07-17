@@ -1,0 +1,29 @@
+<div class="dialog-content">
+    <div class="heading">
+        <h3>Upload KYC documents</h3>
+        <lucide-icon [name]="x" (click)="close()"></lucide-icon>
+    </div>
+    <label>Select document type</label>
+    <select name="docs" id="docs" placeholder="Document Type">
+        <option value="aadhar">Aadhar card</option>
+        <option value="voter">Voter ID</option>
+        <option value="pan">PAN card</option>
+        <option value="passport">Passport</option>
+    </select>
+    <div class="doc-upload">
+        <p>Please ensure both sides of the document are uploaded</p>
+
+        <label for="doc" class="upload-box">
+            <lucide-icon [name]="cloudUpload" size="32"></lucide-icon>
+            <span>Click to upload</span>
+        </label>
+
+        <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept="image/*" />
+    </div>
+
+    <div class="buttons">
+        <button mat-raised-button color="primary" (click)="close()">cancel</button>
+        <button mat-raised-button color="primary" (click)="close()">save</button>
+    </div>
+
+</div>

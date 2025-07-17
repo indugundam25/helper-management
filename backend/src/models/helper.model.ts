@@ -9,6 +9,8 @@ export interface IHelper extends Document {
   gender: 'Male' | 'Female' | 'Other';
   phone: string;
   email?: string;
+  vehicleType ?: string;
+  doc : string
 }
 
 const HelperSchema: Schema = new Schema(
@@ -46,6 +48,15 @@ const HelperSchema: Schema = new Schema(
       type: String,
       match: /.+\@.+\..+/,
     },
+    vehicleType : {
+      type : String
+    },
+    number : {
+      type : String
+    },
+    doc : {
+      type : String
+    }
   },
   {
     timestamps: true, 
