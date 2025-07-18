@@ -5,8 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-helper-success-dialog',
   template: `
     <div class="dialog-content">
-      <h2>Success!</h2>
-      <p>{{ data?.message || 'Helper is added successfully' }}</p>
+     <img src="assets/success.gif" alt="Success Animation" />
+      <p>Helper added</p>
       <button mat-raised-button color="primary" (click)="close()">OK</button>
     </div>
   `,
@@ -25,6 +25,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     }
     button {
       min-width: 100px;
+      background-color : #4B0082;
     }
   `],
   standalone: true,
@@ -34,7 +35,7 @@ export class HelperSuccessDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
-  ) {}
+  ) { }
   close() {
     this.dialogRef.close();
   }

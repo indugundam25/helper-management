@@ -4,7 +4,7 @@
         <lucide-icon [name]="x" (click)="close()"></lucide-icon>
     </div>
     <label>Select document type</label>
-    <select name="docs" id="docs" placeholder="Document Type">
+    <select name="docs" id="docs" placeholder="Document Type" (change)="onDocumentTypeChange($event)">
         <option value="aadhar">Aadhar card</option>
         <option value="voter">Voter ID</option>
         <option value="pan">PAN card</option>
@@ -18,12 +18,14 @@
             <span>Click to upload</span>
         </label>
 
-        <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept="image/*" />
+        <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
+        <!-- <img *ngIf="docUrl" [src]="docUrl" class="avatar-preview" alt="Avatar Preview" /> -->
+        <div *ngIf="selectedFile" class="file-name">{{ selectedFile?.name }}</div>
     </div>
 
     <div class="buttons">
         <button mat-raised-button color="primary" (click)="close()">cancel</button>
-        <button mat-raised-button color="primary" (click)="close()">save</button>
+        <button mat-raised-button color="primary" (click)="save()">save</button>
     </div>
 
 </div>

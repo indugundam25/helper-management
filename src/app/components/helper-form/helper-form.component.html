@@ -1,97 +1,163 @@
-<div class="helper-form">
+<div class="helper-form" *ngIf="step === 1">
   <h2>Helper details</h2>
   <p>Track, Add and manage all your helpers at one place</p>
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
-  <div class="photo-upload">
-    <label for="photo">Upload<br />Photo</label>
-    <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" required/>
-    <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
-    <p>Upload photo(.png, .jpeg) size 5Mb</p>
-  </div>
+    <div class="photo-upload">
+      <label for="photo">Upload<br />Photo</label>
+      <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" />
+      <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
+      <p>Upload photo (.png, .jpeg) size up to 5MB</p>
+    </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Type of Service</mat-label>
-    <mat-select formControlName="role" required>
-      <mat-option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</mat-option>
-    </mat-select>
-    <mat-error *ngIf="helperForm.get('role')?.hasError('required') && helperForm.get('role')?.touched">
-  Role is required
-</mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Organization</mat-label>
-    <mat-select formControlName="organization" required>
-      <mat-option *ngFor="let org of organizations" [value]="org">{{ org }}</mat-option>
-    </mat-select>
-    <mat-error *ngIf="helperForm.get('role')?.hasError('required') && helperForm.get('role')?.touched">
-  Organization is required
-</mat-error>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Type of Service</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="helperForm.get('role')?.hasError('required') && helperForm.get('role')?.touched">
+        Role is required
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-  <mat-label>Full Name</mat-label>
-  <input matInput formControlName="name" required />
-  <mat-error *ngIf="helperForm.get('name')?.hasError('required') && helperForm.get('name')?.touched">
-    Name is required
-  </mat-error>
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Organization</mat-label>
+      <mat-select formControlName="organization">
+        <mat-option *ngFor="let org of organizations" [value]="org">{{ org }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="helperForm.get('organization')?.hasError('required') && helperForm.get('organization')?.touched">
+        Organization is required
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Languages</mat-label>
-    <mat-select formControlName="languages" multiple>
-      <mat-option *ngFor="let lang of languageOptions" [value]="lang">{{ lang }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="helperForm.get('name')?.hasError('required') && helperForm.get('name')?.touched">
+        Name is required
+      </mat-error>
+    </mat-form-field>
 
-  <div class="gender-group">
-    <label>Gender:</label>
-    <mat-radio-group formControlName="gender">
-      <mat-radio-button value="Male">Male</mat-radio-button>
-      <mat-radio-button value="Female">Female</mat-radio-button>
-      <mat-radio-button value="Other">Other</mat-radio-button>
-    </mat-radio-group>
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Languages</mat-label>
+      <mat-select formControlName="languages" multiple>
+        <mat-option *ngFor="let lang of languageOptions" [value]="lang">{{ lang }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<mat-form-field appearance="outline">
-  <mat-label>Phone Number</mat-label>
-  <input matInput formControlName="phone" required />
-  <mat-error *ngIf="helperForm.get('phone')?.hasError('required') && helperForm.get('phone')?.touched">
-    Phone number is required
-  </mat-error>
-  <mat-error *ngIf="helperForm.get('phone')?.hasError('pattern') && helperForm.get('phone')?.touched">
-    Phone number must be exactly 10 digits
-  </mat-error>
-</mat-form-field>
+    <div class="gender-group">
+      <label>Gender:</label>
+      <mat-radio-group formControlName="gender">
+        <mat-radio-button value="Male">Male</mat-radio-button>
+        <mat-radio-button value="Female">Female</mat-radio-button>
+        <mat-radio-button value="Other">Other</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-<mat-form-field appearance="outline">
-  <mat-label>Email</mat-label>
-  <input matInput formControlName="email"  placeholder="example@abc.com"/>
-  <mat-error *ngIf="helperForm.get('email')?.hasError('email') && helperForm.get('email')?.touched">
-    Enter a valid email address
-  </mat-error>
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phone" />
+      <mat-error *ngIf="helperForm.get('phone')?.hasError('required') && helperForm.get('phone')?.touched">
+        Phone number is required
+      </mat-error>
+      <mat-error *ngIf="helperForm.get('phone')?.hasError('pattern') && helperForm.get('phone')?.touched">
+        Phone number must be exactly 10 digits
+      </mat-error>
+    </mat-form-field>
 
-<mat-form-field appearance="outline">
-    <mat-label> Choose Vehicle Type</mat-label>
-    <mat-select formControlName="vehicleType">
-      <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle }}</mat-option>
-    </mat-select>
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="example@abc.com" />
+      <mat-error *ngIf="helperForm.get('email')?.hasError('email') && helperForm.get('email')?.touched">
+        Enter a valid email address
+      </mat-error>
+    </mat-form-field>
 
-<mat-form-field appearance="outline" *ngIf="helperForm.get('vehicleType')?.value !== 'None'">
-  <mat-label>Vehicle Number</mat-label>
-  <input matInput formControlName="number" required />
-  <mat-error *ngIf="helperForm.get('number')?.hasError('required') && helperForm.get('number')?.touched">
-    Vehicle number is required
-  </mat-error>
-</mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose Vehicle Type</mat-label>
+      <mat-select formControlName="vehicleType">
+        <mat-option *ngFor="let vehicle of vehicleTypes" [value]="vehicle">{{ vehicle }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
+    <mat-form-field appearance="outline" *ngIf="helperForm.get('vehicleType')?.value !== 'None'">
+      <mat-label>Vehicle Number</mat-label>
+      <input matInput formControlName="number" />
+      <mat-error *ngIf="helperForm.get('number')?.hasError('required') && helperForm.get('number')?.touched">
+        Vehicle number is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="doc-upload">
+      <mat-label>KYC Document</mat-label>
+      <label for="upload" (click)="openDialog()"><lucide-icon [name]="plus"></lucide-icon></label>
+    </div>
+
+    <div class="step-controls">
+      <button type="button" class="prev-btn" (click)="prevStep()" disabled
+        style="background-color: rgb(250, 252, 253); color: black;">Prev</button>
+      <button type="button" class="next-btn" (click)="nextStep()">Next</button>
+    </div>
+  </form>
+</div>
+
+<div class="helper-form" *ngIf="step === 2">
+  <h3>Additional Documents</h3>
+  <p>Upload related documents. This step is optional</p>
   <div class="doc-upload">
-  <mat-label>KYC Document</mat-label>
-  <label for="doc" (click)="openDialog()">+</label>
+    <label for="doc">
+      <lucide-icon [name]="plus"></lucide-icon>
+    </label>
+    <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
+    <div *ngIf="selectedFile" class="file-name">{{ selectedFile?.name }}</div>
   </div>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid">
-    Add Helper
-  </button>
-</form>
+  <div class="step-controls">
+    <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
+    <button type="button" class="next-btn" (click)="nextStep()">Next</button>
+  </div>
+</div>
+
+<div class="helper-form" *ngIf="step === 3">
+  <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
+    <h2>Preview Helper Details</h2>
+    <div class="preview-section">
+      <div class="preview-photo">
+        <img *ngIf="helperForm.value.photo" [src]="'data:image/jpeg;base64,' + helperForm.value.photo"
+          class="avatar-preview" alt="Photo Preview" />
+        <div class="preview-text">
+          <p class="name">{{ helperForm.value.name }}</p>
+          <p class="role">{{ helperForm.value.role }}</p>
+        </div>
+      </div>
+
+      <div class="preview-info">
+        <h3>PERSONAL DETAILS</h3>
+        <p><strong>Gender:</strong> {{ helperForm.value.gender }}</p>
+        <p><strong>Languages:</strong> {{ helperForm.value.languages?.join(', ') }}</p>
+        <p><strong>Phone:</strong> {{ helperForm.value.phone }}</p>
+        <p><strong>Email:</strong> {{ helperForm.value.email || '-' }}</p>
+        <div class="preview-documents" *ngIf="helperForm.value.documents && helperForm.value.documents.length">
+          <h3>Uploaded Documents</h3>
+          <ul>
+            <li *ngFor="let doc of helperForm.value.documents">
+              <strong>{{ doc.type | titlecase }}:</strong> {{ doc.fileName }}
+              <div *ngIf="doc.base64Data">
+                <!-- <img [src]="'data:image/jpeg;base64,' + doc.base64Data" class="avatar-preview" alt="Document Preview" -->
+                <!-- style="max-width: 120px; max-height: 120px; margin-top: 8px;" /> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+        <h3>SERVICE DETAILS</h3>
+        <p><strong>Type:</strong> {{ helperForm.value.role }}</p>
+        <p><strong>Organization:</strong> {{ helperForm.value.organization }}</p>
+      </div>
+
+    </div>
+    <div class="step-controls">
+      <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid">Add Helper</button>
+    </div>
+  </form>
+</div>

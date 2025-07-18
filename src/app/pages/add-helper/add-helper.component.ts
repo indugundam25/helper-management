@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TrackDetailsComponent } from '../../components/track-details/track-details.component';
 import { HelperFormComponent } from '../../components/helper-form/helper-form.component';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, ChevronLeft} from 'lucide-angular';
+import { LucideAngularModule, ChevronLeft } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -14,6 +14,11 @@ import { RouterLink } from '@angular/router';
 })
 export class AddHelperComponent {
   readonly chevronleft = ChevronLeft;
+  step: number = 1;
+
+  updateStep(step: number) {
+    this.step = step;
+  }
 }
 
 

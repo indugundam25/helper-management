@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
@@ -14,6 +14,8 @@ import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
+import { LucideAngularModule, Plus } from 'lucide-angular';
+import { HelperDetailsComponent } from '../helper-details/helper-details.component';
 
 @Component({
   standalone: true,
@@ -31,14 +33,18 @@ import { DocumentDialogComponent } from '../document-dialog/document-dialog.comp
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DocumentDialogComponent
+    DocumentDialogComponent,
+    LucideAngularModule,
+    HelperDetailsComponent
   ]
 })
 export class HelperFormComponent implements OnInit {
-  
+
+  readonly plus = Plus;
   helperForm!: FormGroup;
   photoUrl: string | ArrayBuffer | null = null;
-  
+  filename: string = '';
+  selectedFile: File | undefined;
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
   languageOptions = ['English', 'Hindi', 'Telugu', 'Tamil', 'Kannada', 'Urdu'];
@@ -47,54 +53,56 @@ export class HelperFormComponent implements OnInit {
   onCloseModel: any;
   showSuccess = false;
   @Output() helperAdded = new EventEmitter<string>();
+  @Output() stepOutPut = new EventEmitter<number>();
+  @Input() step: number = 1;
 
-  
-  
-  constructor(private fb: FormBuilder, private helperService : HelperService,
-    private dialog: MatDialog) {}
+
+  constructor(private fb: FormBuilder, private helperService: HelperService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
-  this.helperForm = this.fb.group({
-    photo: [null],
-    role: ['', Validators.required],
-    organization: ['', Validators.required],
-    name: ['', Validators.required],
-    languages: [[]],
-    gender: ['', Validators.required],
-    phone: ['', [
-      Validators.required,
-      Validators.pattern(/^\d{10}$/) 
-    ]],
-    email: [''],
-    vehicleType: ['None'],
-    doc: [null, Validators.required]
-  });
-  
+    this.helperForm = this.fb.group({
+      photo: [null],
+      role: ['', Validators.required],
+      organization: ['', Validators.required],
+      name: ['', Validators.required],
+      languages: [[]],
+      gender: ['', Validators.required],
+      phone: ['', [
+        Validators.required,
+        Validators.pattern(/^\d{10}$/)
+      ]],
+      email: ['', Validators.email],
+      vehicleType: ['None'],
+      documents: [[]]
+    });
 
-  this.helperForm.get('vehicleType')?.valueChanges.subscribe((value) => {
-    const form = this.helperForm;
 
-    if (value && value !== 'None') {
-      if (!form.get('number')) {
-        form.addControl('number', this.fb.control('', Validators.required));
+    this.helperForm.get('vehicleType')?.valueChanges.subscribe((value) => {
+      const form = this.helperForm;
+
+      if (value && value !== 'None') {
+        if (!form.get('number')) {
+          form.addControl('number', this.fb.control('', Validators.required));
+        }
+      } else {
+        if (form.get('number')) {
+          form.removeControl('number');
+        }
       }
-    } else {
-      if (form.get('number')) {
-        form.removeControl('number');
-      }
-    }
-  });
-}
-
+    });
+  }
 
   onPhotoChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
-      this.helperForm.patchValue({ photo: file });
-
       const reader = new FileReader();
-      reader.onload = () => this.photoUrl = reader.result;
+      reader.onload = () => {
+        this.photoUrl = reader.result;
+        const base64String = (reader.result as string).split(',')[1];
+        this.helperForm.patchValue({ photo: base64String });
+      };
       reader.readAsDataURL(file);
     }
   }
@@ -121,16 +129,54 @@ export class HelperFormComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.docUrl = reader.result;
+        const base64String = (reader.result as string).split(',')[1];
+        this.helperForm.patchValue({ doc: base64String });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DocumentDialogComponent, {
+      data: { flag: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result && result.base64Data) {
+        // Add the document to the documents array in the form
+        const currentDocuments = this.helperForm.get('documents')?.value || [];
+        const newDocument = {
+          type: result.documentType,
+          fileName: result.fileName,
+          base64Data: result.base64Data
+        };
+        this.helperForm.patchValue({
+          documents: [...currentDocuments, newDocument]
+        });
+        console.log('Document added:', newDocument);
+      }
     });
   }
 
   closeDialog() {
     this.showSuccess = true;
+  }
+
+  nextStep() {
+    this.step++;
+    console.log("step is incremented", this.step);
+  }
+
+  prevStep() {
+    this.step--;
+    console.log("step is decremented", this.step);
   }
 }

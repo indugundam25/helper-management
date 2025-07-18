@@ -1,7 +1,13 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+export interface IDocument {
+  type: string;
+  fileName: string;
+  base64Data: string;
+}
+
 export interface IHelper extends Document {
-  photo?: string; 
+  photo?: string;
   role: string;
   organization: string;
   name: string;
@@ -9,14 +15,30 @@ export interface IHelper extends Document {
   gender: 'Male' | 'Female' | 'Other';
   phone: string;
   email?: string;
-  vehicleType ?: string;
-  doc : string
+  vehicleType?: string;
+  number?: string;
+  documents?: IDocument[];
 }
+
+const DocumentSchema: Schema = new Schema({
+  type: {
+    type: String,
+    required: true,
+  },
+  fileName: {
+    type: String,
+    required: true,
+  },
+  base64Data: {
+    type: String,
+    required: true,
+  }
+});
 
 const HelperSchema: Schema = new Schema(
   {
     photo: {
-      type: String, 
+      type: String,
     },
     role: {
       type: String,
@@ -48,18 +70,16 @@ const HelperSchema: Schema = new Schema(
       type: String,
       match: /.+\@.+\..+/,
     },
-    vehicleType : {
-      type : String
+    vehicleType: {
+      type: String
     },
-    number : {
-      type : String
+    number: {
+      type: String
     },
-    doc : {
-      type : String
-    }
+    documents: [DocumentSchema]
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
