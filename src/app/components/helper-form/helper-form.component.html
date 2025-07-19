@@ -109,7 +109,7 @@
       <lucide-icon [name]="plus"></lucide-icon>
     </label>
     <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
-    <div *ngIf="selectedFile" class="file-name">{{ selectedFile?.name }}</div>
+    <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div>
   </div>
 
   <div class="step-controls">
@@ -143,8 +143,6 @@
             <li *ngFor="let doc of helperForm.value.documents">
               <strong>{{ doc.type | titlecase }}:</strong> {{ doc.fileName }}
               <div *ngIf="doc.base64Data">
-                <!-- <img [src]="'data:image/jpeg;base64,' + doc.base64Data" class="avatar-preview" alt="Document Preview" -->
-                <!-- style="max-width: 120px; max-height: 120px; margin-top: 8px;" /> -->
               </div>
             </li>
           </ul>

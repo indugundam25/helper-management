@@ -156,7 +156,6 @@
     }
   }
 
-  /* Preview Step Styling */
   .preview-section {
     display: flex;
     flex-direction: column;
@@ -164,7 +163,6 @@
     margin-top: 1rem;
   }
 
-  /* Image + Name + Role (like WhatsApp contact card) */
   .preview-photo {
     display: flex;
     align-items: center;
@@ -193,7 +191,8 @@
   .preview-text .name {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-top: 10px;
+    margin-bottom: 6px;
   }
 
   .preview-text .role {
@@ -201,7 +200,6 @@
     color: #666;
   }
 
-  /* Section Headings */
   .preview-info h3 {
     margin-top: 1rem;
     font-size: 1.1rem;
@@ -210,13 +208,11 @@
     color: #333;
   }
 
-  /* Detail Rows */
   .preview-info p {
     margin: 6px 0;
     font-size: 0.95rem;
   }
 
-  /* Uploaded Documents */
   .preview-documents {
     margin-top: 1rem;
   }
@@ -230,7 +226,6 @@
     margin-bottom: 10px;
   }
 
-  /* Buttons */
   .step-controls {
     display: flex;
     justify-content: flex-end;

@@ -1,6 +1,6 @@
 export interface ApiResponse<T> {
   message?: string;
-  data: T;
+  helpers: T;
 }
 
 export interface IDocument {

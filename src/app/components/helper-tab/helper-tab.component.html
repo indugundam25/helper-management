@@ -1,35 +1,8 @@
-<div class="profile-card" (click) = "displayHelper()">
-  <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
+<div class="profile-card" *ngFor="let helper of helpers" (click)="displayHelper(helper)">
+  <img [src]="helper.photo ? 'data:image/jpeg;base64,' + helper.photo : '../../../assets/profile.jpg'"
+    alt="Profile Photo" class="profile-img" />
   <div class="profile-info">
-    <h3 class="profile-name">Indu Gundam</h3>
-    <p class="profile-role">Software Developer</p>
-  </div>
-</div>
-<div class="profile-card">
-  <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
-  <div class="profile-info">
-    <h3 class="profile-name">Indu Gundam</h3>
-    <p class="profile-role">Software Developer</p>
-  </div>
-</div>
-<div class="profile-card">
-  <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
-  <div class="profile-info">
-    <h3 class="profile-name">Indu Gundam</h3>
-    <p class="profile-role">Software Developer</p>
-  </div>
-</div>
-<div class="profile-card">
-  <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
-  <div class="profile-info">
-    <h3 class="profile-name">Indu Gundam</h3>
-    <p class="profile-role">Software Developer</p>
-  </div>
-</div>
-<div class="profile-card">
-  <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
-  <div class="profile-info">
-    <h3 class="profile-name">Indu Gundam</h3>
-    <p class="profile-role">Software Developer</p>
+    <h3 class="profile-name">{{ helper.name }}</h3>
+    <p class="profile-role">{{ helper.role }}</p>
   </div>
 </div>

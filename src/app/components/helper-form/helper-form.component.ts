@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
 import { LucideAngularModule, Plus } from 'lucide-angular';
 import { HelperDetailsComponent } from '../helper-details/helper-details.component';
+import { SharedStepService } from '../../services/shared.service';
 
 @Component({
   standalone: true,
@@ -58,7 +59,7 @@ export class HelperFormComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private helperService: HelperService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog, private sharedStepService: SharedStepService) { }
 
   ngOnInit(): void {
     this.helperForm = this.fb.group({
@@ -121,7 +122,7 @@ export class HelperFormComponent implements OnInit {
       this.helperService.addHelper(this.helperForm.value).subscribe({
         next: (response) => {
           dialogRef.afterClosed().subscribe(() => {
-            this.helperAdded.emit(response.data._id);
+            this.helperAdded.emit(response.helpers._id);
             this.onClose();
           });
         }
@@ -172,11 +173,11 @@ export class HelperFormComponent implements OnInit {
 
   nextStep() {
     this.step++;
-    console.log("step is incremented", this.step);
+    this.sharedStepService.setStep(this.step);
   }
 
   prevStep() {
     this.step--;
-    console.log("step is decremented", this.step);
+    this.sharedStepService.setStep(this.step)
   }
 }

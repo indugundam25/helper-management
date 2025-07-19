@@ -1,9 +1,9 @@
-<div class = "header">
- <h2 class = "title">Helpers</h2>
- <button class="menu-btn">⋮</button>
+<div class="header">
+  <h2 class="title">Helpers</h2>
+  <button class="menu-btn">⋮</button>
 </div>
 <hr>
-<div> 
+<div>
   <app-toolbar (addHelperClicked)="toggleHelperForm()"></app-toolbar>
 </div>
 
@@ -11,11 +11,12 @@
 <div class="layout-wrapper">
   <div class="content-flex">
     <div class="left-section">
-      <app-helper-list (helperSelected)="selectedHelper = $event"></app-helper-list> 
+      <app-helper-list [helpers]="helpers" [selectedHelperId]="currentHelperId"
+        (selectedHelperChange)="onHelperSelected($event)"></app-helper-list>
+
     </div>
     <div class="right-section">
       <app-helper-details [helper]="selectedHelper"></app-helper-details>
     </div>
   </div>
 </div>
-

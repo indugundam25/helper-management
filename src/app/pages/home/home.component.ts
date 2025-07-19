@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { HelperListComponent } from '../../components/helper-list/helper-list.component';
 import { HelperDetailsComponent } from '../../components/helper-details/helper-details.component';
-
-import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ChevronLeft } from 'lucide-angular';
+import { IHelper } from '../../models/helper.model';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +13,8 @@ import { ChevronLeft } from 'lucide-angular';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-   showHelperForm = false;
+  showHelperForm = false;
+  currentHelperId: string | null = null;
 
   toggleHelperForm() {
     this.showHelperForm = !this.showHelperForm;
@@ -23,13 +22,13 @@ export class HomeComponent {
 
   readonly chevronleft = ChevronLeft;
 
-  helpers = [];  
+  helpers = [];
   selectedHelperId: string | null = null;
   selectedHelper: any = null;
 
-  onSelectHelper(helper: any) {
+  onHelperSelected(helper: IHelper) {
     this.selectedHelper = helper;
-    this.selectedHelperId = helper?.id || null;
+    this.currentHelperId = helper._id ?? null;
   }
-   
+
 }

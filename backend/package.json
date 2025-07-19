@@ -15,6 +15,7 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "mongoose": "^8.16.3",
+    "morgan": "^1.10.1",
     "nodemon": "^3.1.10",
     "path": "^0.12.7",
     "ts-node": "^10.9.2",
@@ -22,6 +23,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.0.14",
     "ts-node": "^10.9.2",

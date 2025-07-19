@@ -7,7 +7,7 @@ export class HelperService {
   }
 
   static async getHelpers(query: any) {
-    const { filter = {}, sort = {}, search = '', page = 1, limit = 10 } = query;
+    const { filter = {}, sort = {}, search = '', page = 1 } = query;
     let mongoFilter: FilterQuery<IHelper> = { ...filter };
     if (search) {
       mongoFilter = {
@@ -21,11 +21,10 @@ export class HelperService {
         ],
       };
     }
-    const skip = (page - 1) * limit;
+    const skip = (page - 1);
     const helpers = await Helper.find(mongoFilter)
       .sort(sort)
-      .skip(skip)
-      .limit(Number(limit));
+      .skip(skip);
     const total = await Helper.countDocuments(mongoFilter);
     return { helpers, total };
   }

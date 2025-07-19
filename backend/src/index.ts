@@ -1,12 +1,15 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
+
 import bodyParser from 'body-parser';
+
 import { connectDB } from './db/connection';
 import helperRoutes from './routes/helper.routes';
 
 const app = express();
 const PORT = 3000;
-
+app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
 

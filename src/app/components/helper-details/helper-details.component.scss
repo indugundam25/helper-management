@@ -84,7 +84,7 @@
 
 .profile-role {
   margin-top: 4px;
-  font-size: 0.5rem;
+  font-size: 0.85rem;
   color: #666;
 }
 
@@ -94,7 +94,7 @@
   h4 {
     font-size: 1rem;
     margin-bottom: 0.5rem;
-    color: #858383;
+    color: #6f6d6d;
     display: block;
   }
 
@@ -106,26 +106,53 @@
   }
 }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.info-flex {
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
+  flex-direction: column;
   padding-bottom: 10px;
 }
 
 .info-item {
-  padding-bottom: 10px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-width: 200px;
 
   .label {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #888;
+    font-weight: 300;
     margin: 0;
+    min-width: 90px;
   }
 
   .value {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #222;
-    margin: 0.2rem 0 0;
+    margin: 0;
+    margin-left: 100px;
   }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.title h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.title .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ccc;
 }

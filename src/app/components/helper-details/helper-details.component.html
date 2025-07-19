@@ -6,7 +6,7 @@
         <h2 class="profile-name">{{ helper.name }}</h2>
         <p class="profile-role">{{ helper.role }}</p>
       </div>
-      <div class = "edit-buttons">
+      <div class="edit-buttons">
         <button type="button" class="edit-btn"><lucide-icon [name]="pencil"></lucide-icon></button>
         <button type="button" class="trash-btn"><lucide-icon [name]="trash"></lucide-icon></button>
       </div>
@@ -14,11 +14,11 @@
   </div>
 
   <div class="section">
-    <div>
-    <h4>PERSONAL DETAILS</h4>
-    <span></span>
+    <div class="title">
+      <h4>PERSONAL DETAILS</h4>
+      <span class="line"></span>
     </div>
-    <div class="info-block">
+    <div class="info-flex">
       <div class="info-item">
         <p class="label">Gender</p>
         <p class="value">{{ helper.gender }}</p>
@@ -39,8 +39,11 @@
   </div>
 
   <div class="section">
-    <h4>SERVICE DETAILS</h4>
-    <div class="info-block">
+    <div class="title">
+      <h4>SERVICE DETAILS</h4>
+      <span class="line"></span>
+    </div>
+    <div class="info-flex">
       <div class="info-item">
         <p class="label">Type</p>
         <p class="value">{{ helper.role }}</p>

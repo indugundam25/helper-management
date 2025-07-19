@@ -1,26 +1,45 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HelperTabComponent } from '../helper-tab/helper-tab.component';
+import { IHelper } from '../../models/helper.model';
+import { HelperService } from '../../services/helper.service';
+import axios from 'axios';
 
 @Component({
   selector: 'app-helper-list',
   standalone: true,
-  imports: [CommonModule, HelperTabComponent],
+  imports: [CommonModule],
   templateUrl: './helper-list.component.html',
   styleUrls: ['./helper-list.component.scss']
 })
-export class HelperListComponent {
-  @Input() helpers: any[] = [];
+export class HelperListComponent implements OnInit {
+  @Input() helpers: IHelper[] = [];
   @Input() selectedHelperId: string | null = null;
 
-  @Output() selectHelper = new EventEmitter<any>();
+  @Output() selectedHelperChange = new EventEmitter<IHelper>();
   @Output() addHelper = new EventEmitter<void>();
 
-  onSelect(helper: any) {
-    this.selectHelper.emit(helper);
+  constructor(private helperService: HelperService) { }
+
+  ngOnInit(): void {
+    axios.get('http://localhost:3000/api/helpers')
+      .then((response) => {
+        console.log(response.data.helpers);
+        this.helpers = response.data.helpers;
+      })
+      .catch((error) => {
+        console.error('Error fetching helpers:', error);
+      });
+    this.selectedHelperChange.emit(this.helpers[0]);
   }
 
-  onAdd() {
+
+  onSelect(helper: IHelper): void {
+    this.selectedHelperChange.emit(helper);
+  }
+
+  onAdd(): void {
     this.addHelper.emit();
   }
+
+
 }

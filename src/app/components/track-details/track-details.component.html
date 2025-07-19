@@ -1,25 +1,21 @@
-<div class="vertical-step-tracker">
-  <div class="step">
-    <div class="circle"></div>
-    <div class="step-text">
-      <h3 class="heading">Helper Details</h3>
-      <p>Add helper details</p>
-    </div>
-  </div>
-  <span class="line"></span>
-  <div class="step">
-    <div class="circle"></div>
-    <div class="step-text">
-      <h3 class="heading">Documents</h3>
-      <p>Upload related documents</p>
-    </div>
-  </div>
-  <span class="line"></span>
-  <div class="step">
-    <div class="circle"></div>
-    <div class="step-text">
-      <h3 class="heading">Review</h3>
-      <p>Check the information and review</p>
-    </div>
-  </div>
-</div>
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Helper Details<br>
+        <p class="para">Add helper details</p>
+      </ng-template>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Documents<br>
+        <p class="para">Upload related documents</p>
+      </ng-template>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Review<br>
+      <p class="para">Check the information and confirm</p>
+    </ng-template>
+  </mat-step>
+</mat-stepper>

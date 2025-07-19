@@ -20,7 +20,7 @@
 
         <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
         <!-- <img *ngIf="docUrl" [src]="docUrl" class="avatar-preview" alt="Avatar Preview" /> -->
-        <div *ngIf="selectedFile" class="file-name">{{ selectedFile?.name }}</div>
+        <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div>
     </div>
 
     <div class="buttons">

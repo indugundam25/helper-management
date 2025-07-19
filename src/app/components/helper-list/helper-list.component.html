@@ -1,5 +1,10 @@
-<div class = "container">
-<ul class="helper-list">
-  <app-helper-tab></app-helper-tab>
-</ul>
+<div class="helper-list-scroll-container">
+  <div class="profile-card" *ngFor="let helper of helpers" (click)="onSelect(helper)">
+    <img [src]="helper.photo ? 'data:image/jpeg;base64,' + helper.photo : '../../../assets/profile.jpg'"
+      alt="Profile Photo" class="profile-img" />
+    <div class="profile-info">
+      <h3 class="profile-name">{{ helper.name }}</h3>
+      <p class="profile-role">{{ helper.role }}</p>
+    </div>
+  </div>
 </div>
