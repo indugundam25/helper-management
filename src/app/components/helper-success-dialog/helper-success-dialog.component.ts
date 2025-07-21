@@ -1,13 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-helper-success-dialog',
   template: `
     <div class="dialog-content">
      <img src="assets/success.gif" alt="Success Animation" />
-      <p>Helper added</p>
-      <button mat-raised-button color="primary" (click)="close()">OK</button>
+      <p>{{data.name}} added</p>
+      <a [routerLink]='[""]'>
+     <button mat-raised-button color="primary" (click)="close()">OK</button>
+     </a>
+
     </div>
   `,
   styles: [
@@ -25,18 +29,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     }
     button {
       min-width: 100px;
-      background-color : #4B0082;
+      min-height : 30px;
+      border-radius : 5px;
+      background-color : #83baeaff;
     }
   `],
   standalone: true,
-  imports: []
+  imports: [RouterLink]
 })
 export class HelperSuccessDialogComponent {
+
   constructor(
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message?: string }
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }
   ) { }
+
+
   close() {
     this.dialogRef.close();
   }
+
 } 

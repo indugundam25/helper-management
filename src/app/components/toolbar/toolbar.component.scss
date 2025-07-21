@@ -59,12 +59,21 @@
       }
     }
 
+    .close-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-40%);
+      left: 320px;
+      cursor: pointer;
+      color: #888;
+    }
+
     .search-icon {
       position: absolute;
       top: 50%;
       left: 10px;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
+      transform: translateY(-40%);
+      cursor: pointer;
       color: #888;
     }
   }
@@ -105,4 +114,10 @@
       }
     }
   }
+}
+
+.emp-count {
+  padding-left: 70px;
+  margin-top: 10px;
+  color: grey;
 }

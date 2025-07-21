@@ -1,28 +1,31 @@
 .header {
-  display : flex;
+  display: flex;
 
   .title {
     text-align: left;
-    flex : 1;
+    flex: 1;
     margin: 10px 0 0 0;
   }
-   hr {
-    margin: 0; 
-    color: #a4a2a2;
+
+  hr {
+    margin: 0;
+    color: #cfcdcd;
   }
+
   .menu-btn {
-  background: none;
-  text-align: right;
-  flex : 2;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+    background: none;
+    text-align: right;
+    flex: 2;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 
 }
+
 .layout-wrapper {
   padding: 16px;
-  display: block; 
+  display: block;
 
   .header {
     display: flex;
@@ -65,7 +68,7 @@
 
 .form-layout-wrapper {
   padding: 16px;
-  display: block; 
+  display: block;
 
   .nav {
     text-align: left;

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { HelperListComponent } from '../../components/helper-list/helper-list.component';
 import { HelperDetailsComponent } from '../../components/helper-details/helper-details.component';
 import { ChevronLeft } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,25 @@ import { IHelper } from '../../models/helper.model';
 })
 export class HomeComponent {
   showHelperForm = false;
-  currentHelperId: string | null = null;
+  selectedHelper: IHelper | null = null;
+  helpers: IHelper[] = [];
+
+  constructor(private helperService: HelperService) { }
+
+  ngOnInit() {
+    this.loadHelpers();
+    console.log(this.helpers.length);
+
+  }
+
+  loadHelpers() {
+    this.helperService.getAllHelpers().subscribe((res) => {
+      this.helpers = res.helpers;
+      if (this.helpers.length > 0) {
+        this.selectedHelper = this.helpers[0];
+      }
+    });
+  }
 
   toggleHelperForm() {
     this.showHelperForm = !this.showHelperForm;
@@ -22,13 +41,9 @@ export class HomeComponent {
 
   readonly chevronleft = ChevronLeft;
 
-  helpers = [];
-  selectedHelperId: string | null = null;
-  selectedHelper: any = null;
-
   onHelperSelected(helper: IHelper) {
     this.selectedHelper = helper;
-    this.currentHelperId = helper._id ?? null;
   }
 
 }
+

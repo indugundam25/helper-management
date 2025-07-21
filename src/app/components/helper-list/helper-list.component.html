@@ -1,7 +1,14 @@
 <div class="helper-list-scroll-container">
-  <div class="profile-card" *ngFor="let helper of helpers" (click)="onSelect(helper)">
-    <img [src]="helper.photo ? 'data:image/jpeg;base64,' + helper.photo : '../../../assets/profile.jpg'"
-      alt="Profile Photo" class="profile-img" />
+  <div class="profile-card" *ngFor="let helper of helpers" (click)="onCardClick(helper)">
+    <ng-container *ngIf="helper.photo; else initialsBlock">
+      <img [src]="'data:image/jpeg;base64,' + helper.photo" alt="Profile Photo" class="profile-img" />
+    </ng-container>
+
+    <ng-template #initialsBlock>
+      <div class="profile-img initials-avatar">
+        {{ getInitials(helper.name) }}
+      </div>
+    </ng-template>
     <div class="profile-info">
       <h3 class="profile-name">{{ helper.name }}</h3>
       <p class="profile-role">{{ helper.role }}</p>

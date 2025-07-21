@@ -82,7 +82,7 @@
 
     <mat-form-field appearance="outline" *ngIf="helperForm.get('vehicleType')?.value !== 'None'">
       <mat-label>Vehicle Number</mat-label>
-      <input matInput formControlName="number" />
+      <input matInput formControlName="number" placeholder="TG01AB1234" />
       <mat-error *ngIf="helperForm.get('number')?.hasError('required') && helperForm.get('number')?.touched">
         Vehicle number is required
       </mat-error>
@@ -94,8 +94,6 @@
     </div>
 
     <div class="step-controls">
-      <button type="button" class="prev-btn" (click)="prevStep()" disabled
-        style="background-color: rgb(250, 252, 253); color: black;">Prev</button>
       <button type="button" class="next-btn" (click)="nextStep()">Next</button>
     </div>
   </form>
@@ -123,8 +121,15 @@
     <h2>Preview Helper Details</h2>
     <div class="preview-section">
       <div class="preview-photo">
-        <img *ngIf="helperForm.value.photo" [src]="'data:image/jpeg;base64,' + helperForm.value.photo"
-          class="avatar-preview" alt="Photo Preview" />
+        <ng-container *ngIf="helperForm.value.photo; else initialsBlock">
+          <img [src]="'data:image/jpeg;base64,' + helperForm.value.photo" class="avatar-preview" alt="Photo Preview" />
+        </ng-container>
+        <ng-template #initialsBlock>
+          <div class="profile-img initials-avatar">
+            {{ getInitials(helperForm.value.name) }}
+          </div>
+        </ng-template>
+
         <div class="preview-text">
           <p class="name">{{ helperForm.value.name }}</p>
           <p class="role">{{ helperForm.value.role }}</p>
@@ -133,10 +138,10 @@
 
       <div class="preview-info">
         <h3>PERSONAL DETAILS</h3>
-        <p><strong>Gender:</strong> {{ helperForm.value.gender }}</p>
-        <p><strong>Languages:</strong> {{ helperForm.value.languages?.join(', ') }}</p>
-        <p><strong>Phone:</strong> {{ helperForm.value.phone }}</p>
-        <p><strong>Email:</strong> {{ helperForm.value.email || '-' }}</p>
+        <p><strong>Gender:</strong>&nbsp; &nbsp; {{ helperForm.value.gender }}</p>
+        <p><strong>Languages:</strong>&nbsp;&nbsp; {{ helperForm.value.languages?.join(', ') }}</p>
+        <p><strong>Phone:</strong>&nbsp;&nbsp; {{ helperForm.value.phone }}</p>
+        <p><strong>Email:</strong>&nbsp;&nbsp; {{ helperForm.value.email || '-' }}</p>
         <div class="preview-documents" *ngIf="helperForm.value.documents && helperForm.value.documents.length">
           <h3>Uploaded Documents</h3>
           <ul>

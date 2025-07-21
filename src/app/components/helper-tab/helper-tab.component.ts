@@ -14,7 +14,7 @@ export class HelperTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.helperService.getAllHelpers().subscribe({
-      next: (res) => this.helpers = res.data,
+      next: (res) => this.helpers = res.helpers,
       error: (err) => console.error('Failed to fetch helpers:', err)
     });
   }

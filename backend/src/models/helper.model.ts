@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IDocument {
+export interface IDocument { //schema for document
   type: string;
   fileName: string;
   base64Data: string;
@@ -8,6 +8,7 @@ export interface IDocument {
 
 export interface IHelper extends Document {
   photo?: string;
+  empId: number;
   role: string;
   organization: string;
   name: string;
@@ -17,7 +18,7 @@ export interface IHelper extends Document {
   email?: string;
   vehicleType?: string;
   number?: string;
-  documents?: IDocument[];
+  documents?: IDocument[]; //We can select any number of documents, so we have to take array
 }
 
 const DocumentSchema: Schema = new Schema({
@@ -39,6 +40,9 @@ const HelperSchema: Schema = new Schema(
   {
     photo: {
       type: String,
+    },
+    empId: {
+      type: Number,
     },
     role: {
       type: String,

@@ -12,6 +12,7 @@ export interface IDocument {
 export interface IHelper {
   _id?: string;
   photo?: string;
+  empId: number;
   role: string;
   organization: string;
   name: string;

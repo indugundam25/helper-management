@@ -42,7 +42,7 @@ import { SharedStepService } from '../../services/shared.service';
 export class HelperFormComponent implements OnInit {
 
   readonly plus = Plus;
-  helperForm!: FormGroup;
+  // helperForm!: FormGroup;
   photoUrl: string | ArrayBuffer | null = null;
   filename: string = '';
   selectedFile: File | undefined;
@@ -56,7 +56,14 @@ export class HelperFormComponent implements OnInit {
   @Output() helperAdded = new EventEmitter<string>();
   @Output() stepOutPut = new EventEmitter<number>();
   @Input() step: number = 1;
+  @Input() helperForm !: FormGroup;
 
+  prevId: number = 10000;
+  empIdCounter: number = this.prevId + 1;
+
+  generateId(): void {
+    this.helperForm.patchValue({ empId: this.empIdCounter });
+  }
 
   constructor(private fb: FormBuilder, private helperService: HelperService,
     private dialog: MatDialog, private sharedStepService: SharedStepService) { }
@@ -64,6 +71,7 @@ export class HelperFormComponent implements OnInit {
   ngOnInit(): void {
     this.helperForm = this.fb.group({
       photo: [null],
+      empId: [''],
       role: ['', Validators.required],
       organization: ['', Validators.required],
       name: ['', Validators.required],
@@ -94,6 +102,9 @@ export class HelperFormComponent implements OnInit {
     });
   }
 
+  getInitials(name: string): string {
+    return name ? name.trim().substring(0, 2).toUpperCase() : '';
+  }
   onPhotoChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
@@ -109,6 +120,7 @@ export class HelperFormComponent implements OnInit {
   }
 
 
+
   onClose() {
     this.onCloseModel.emit(false);
   }
@@ -117,8 +129,9 @@ export class HelperFormComponent implements OnInit {
       const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
         width: '350px',
         disableClose: true,
-        data: { message: 'Helper is added successfully' }
+        data: { name: this.helperForm.value.name }
       });
+      this.generateId();
       this.helperService.addHelper(this.helperForm.value).subscribe({
         next: (response) => {
           dialogRef.afterClosed().subscribe(() => {
@@ -171,10 +184,30 @@ export class HelperFormComponent implements OnInit {
     this.showSuccess = true;
   }
 
-  nextStep() {
-    this.step++;
-    this.sharedStepService.setStep(this.step);
+  nextStep(): void {
+    if (this.step === 1) {
+      if (
+        this.helperForm.get('role')?.valid &&
+        this.helperForm.get('organization')?.valid &&
+        this.helperForm.get('name')?.valid &&
+        this.helperForm.get('phone')?.valid &&
+        (this.helperForm.get('vehicleType')?.value === 'None' || this.helperForm.get('number')?.valid)
+      ) {
+        this.step++;
+      } else {
+        this.helperForm.get('role')?.markAsTouched();
+        this.helperForm.get('organization')?.markAsTouched();
+        this.helperForm.get('name')?.markAsTouched();
+        this.helperForm.get('phone')?.markAsTouched();
+        if (this.helperForm.get('vehicleType')?.value !== 'None') {
+          this.helperForm.get('number')?.markAsTouched();
+        }
+      }
+    } else {
+      this.step++;
+    }
   }
+
 
   prevStep() {
     this.step--;

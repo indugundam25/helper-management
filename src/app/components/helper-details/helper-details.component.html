@@ -1,18 +1,41 @@
-<div class="helper-details-container">
+<div class="helper-details-container" *ngIf="selectedHelper; else noHelper">
   <div class="profile-header">
     <div class="profile-card">
-      <img src="../../../assets/profile.jpg" alt="Profile Photo" class="profile-img" />
+      <ng-container *ngIf="helper.photo; else initialsBlock">
+        <img [src]="'data:image/jpeg;base64,' + selectedHelper.photo" alt="Profile Photo" class="profile-img" />
+      </ng-container>
+      <ng-template #initialsBlock>
+        <div class="profile-img initials-avatar">
+          {{ getInitials(helper.name) }}
+        </div>
+      </ng-template>
       <div class="profile-info">
-        <h2 class="profile-name">{{ helper.name }}</h2>
-        <p class="profile-role">{{ helper.role }}</p>
+        <h2 class="profile-name">{{ selectedHelper.name }}</h2>
+        <p class="profile-role">{{ selectedHelper.role }}</p>
       </div>
       <div class="edit-buttons">
-        <button type="button" class="edit-btn"><lucide-icon [name]="pencil"></lucide-icon></button>
-        <button type="button" class="trash-btn"><lucide-icon [name]="trash"></lucide-icon></button>
+        <button type="button" class="edit-btn">
+          <lucide-icon [name]="pencil"></lucide-icon>
+        </button>
+        <button type="button" class="trash-btn" (click)="trashHelper()">
+          <lucide-icon [name]="trash"></lucide-icon>
+        </button>
       </div>
     </div>
   </div>
 
+  <div class="section">
+    <div class="title">
+      <h4>EMPLOYEE ID</h4>
+      <span class="line"></span>
+    </div>
+    <div class="info-flex">
+      <div class="info-item">
+        <p class="label">Employee code</p>
+        <p class="value">{{selectedHelper.empId}}</p>
+      </div>
+    </div>
+  </div>
   <div class="section">
     <div class="title">
       <h4>PERSONAL DETAILS</h4>
@@ -21,20 +44,29 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Gender</p>
-        <p class="value">{{ helper.gender }}</p>
+        <p class="value">{{ selectedHelper.gender }}</p>
       </div>
       <div class="info-item">
         <p class="label">Language(s)</p>
-        <p class="value">{{ helper.languages?.join(', ') }}</p>
+        <p class="value">{{ selectedHelper.languages?.join(', ') }}</p>
       </div>
       <div class="info-item">
         <p class="label">Mobile no</p>
-        <p class="value">{{ helper.phone }}</p>
+        <p class="value">{{ selectedHelper.phone }}</p>
       </div>
       <div class="info-item">
         <p class="label">Email</p>
-        <p class="value">{{ helper.email || '-' }}</p>
+        <p class="value">{{ selectedHelper.email || '-' }}</p>
       </div>
+      <div class="info-item">
+        <p class="label">KYC Document</p>
+        <div class="viewdoc">
+          <button mat-raised-button color="primary" class="value view-button" (click)="openDoc()">
+            <lucide-icon [name]="eye"></lucide-icon>&nbsp;&nbsp;view
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -46,12 +78,20 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Type</p>
-        <p class="value">{{ helper.role }}</p>
+        <p class="value">{{ selectedHelper.role }}</p>
       </div>
       <div class="info-item">
         <p class="label">Organization</p>
-        <p class="value">{{ helper.organization }}</p>
+        <p class="value">{{ selectedHelper.organization }}</p>
+      </div>
+      <div class="info-item">
+        <p class="label">Joined on</p>
+        <p class="value">{{ selectedHelper.createdAt | date: 'dd-MM-yyyy' }}</p>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noHelper>
+  <p>No helper selected.</p>
+</ng-template>
