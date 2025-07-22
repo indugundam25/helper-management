@@ -1,0 +1,11 @@
+<div class="dialog-content">
+    <div class="header">
+        <h3 class="one">Delete {{data.name}} ({{data.role}})</h3>
+        <button class="two" (click)="closeClick()"><lucide-icon [name]="x"></lucide-icon></button>
+    </div>
+    <p>you can't undo this action</p>
+    <div class="buttons">
+        <button class="cancel-btn" (click)="closeClick()">cancel</button>
+        <button class="del-btn" (click)="deleteClick()"><lucide-icon [name]="trash"></lucide-icon>Delete</button>
+    </div>
+</div>

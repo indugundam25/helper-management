@@ -91,6 +91,13 @@
     <div class="doc-upload">
       <mat-label>KYC Document</mat-label>
       <label for="upload" (click)="openDialog()"><lucide-icon [name]="plus"></lucide-icon></label>
+      <p *ngIf="helperForm.value.documents?.length">
+        {{ helperForm.value.documents[0]?.fileName }}
+      </p>
+
+      <mat-error *ngIf="!helperForm.value.documents?.length">
+        Document is required
+      </mat-error>
     </div>
 
     <div class="step-controls">
@@ -106,7 +113,7 @@
     <label for="doc">
       <lucide-icon [name]="plus"></lucide-icon>
     </label>
-    <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
+    <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
     <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div>
   </div>
 

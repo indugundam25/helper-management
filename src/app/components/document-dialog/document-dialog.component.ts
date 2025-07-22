@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
@@ -17,10 +17,9 @@ export class DocumentDialogComponent {
   docUrl: string | ArrayBuffer | null = null;
   readonly cloudUpload = CloudUpload;
   readonly x = X;
-  selectedFile: File | undefined;
+  @Input() selectedFile: File | undefined;
   selectedDocumentType: string = 'aadhar';
   base64Data: string | null = null;
-
   constructor(
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
@@ -56,6 +55,7 @@ export class DocumentDialogComponent {
         fileName: this.selectedFile.name,
         base64Data: this.base64Data
       });
+
     }
   }
 

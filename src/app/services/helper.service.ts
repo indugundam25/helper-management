@@ -25,9 +25,8 @@ export class HelperService {
     return this.http.get<ApiResponse<IHelper>>(`${this.apiUrl}/${id}`);
 
   }
-
   getAllHelpers(): Observable<ApiResponse<IHelper[]>> {
-   return this.http.get<ApiResponse<IHelper[]>>(`${this.apiUrl}`);
+    return this.http.get<ApiResponse<IHelper[]>>(`${this.apiUrl}`);
 
   }
 

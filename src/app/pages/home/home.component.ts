@@ -22,7 +22,6 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadHelpers();
-    console.log(this.helpers.length);
 
   }
 

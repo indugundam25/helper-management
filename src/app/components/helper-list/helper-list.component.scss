@@ -74,3 +74,11 @@
 .helper-list-scroll-container::-webkit-scrollbar-track {
     background: transparent;
 }
+
+.households {
+    align-items: end;
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    color: grey;
+}

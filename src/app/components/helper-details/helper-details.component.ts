@@ -4,10 +4,11 @@ import { LucideAngularModule, Pencil, Trash, Eye } from 'lucide-angular';
 import { KYCDocComponent } from '../kycdoc/kycdoc.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from '../../services/helper.service';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 @Component({
   selector: 'app-helper-details',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, KYCDocComponent],
+  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent],
   templateUrl: './helper-details.component.html',
   styleUrls: ['./helper-details.component.scss']
 })
@@ -26,26 +27,49 @@ export class HelperDetailsComponent implements OnChanges {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
   }
   trashHelper(): void {
-    // if (!this.selectedHelper || !this.selectedHelper.id) return;
     console.log("Helper deleted");
-    this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
-      next: () => console.log("Success indu"),
-      error: (err) => console.log(err)
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      width: '500px',
+      disableClose: true,
+      data: {
+        name: this.selectedHelper.name,
+        role: this.selectedHelper.role
+      }
     });
-    window.location.reload();
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
+          next: () => {
+            console.log("Helper deleted successfully");
+            window.location.reload();
+          },
+          error: (err) => console.error("Error deleting helper:", err),
+        });
+      } else {
+        dialogRef.close();
+      }
+    });
+
   }
 
   openDoc() {
-    const dialogRef = this.dialog.open(KYCDocComponent, {
-      width: '350px',
-      disableClose: true,
-      data: { doc: 'data:application/pdf;base64,' + this.selectedHelper.docUrl }
-    })
+    if (this.selectedHelper.documents?.length) {
+      const dialogRef = this.dialog.open(KYCDocComponent, {
+        width: '800px',
+        disableClose: true,
+        data: {
+          doc: 'data:application/pdf;base64,' + this.selectedHelper.documents[0].base64Data
+        }
+      });
+    } else {
+      console.error('No document available');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['helper']) {
       this.selectedHelper = this.helper || null;
+      console.log(this.selectedHelper.documents[0].base64Data);
     }
   }
 }

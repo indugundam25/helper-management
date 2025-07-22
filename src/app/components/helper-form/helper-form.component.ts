@@ -83,7 +83,7 @@ export class HelperFormComponent implements OnInit {
       ]],
       email: ['', Validators.email],
       vehicleType: ['None'],
-      documents: [[]]
+      documents: [[], Validators.required]
     });
 
 
@@ -152,7 +152,6 @@ export class HelperFormComponent implements OnInit {
       reader.onload = () => {
         this.docUrl = reader.result;
         const base64String = (reader.result as string).split(',')[1];
-        this.helperForm.patchValue({ doc: base64String });
       };
       reader.readAsDataURL(file);
     }

@@ -5,7 +5,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HelperService } from '../../services/helper.service';
-import { IHelper } from '../../models/helper.model';
 
 @Component({
   selector: 'app-toolbar',

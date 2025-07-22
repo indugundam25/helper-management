@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, Inject, OnInit, Input } from '@angular/core';
 import { HelperDetailsComponent } from '../helper-details/helper-details.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { HelperService } from '../../services/helper.service';
+import { IDocument } from '../../models/helper.model';
 @Component({
   selector: 'app-kycdoc',
   standalone: true,
@@ -9,17 +11,26 @@ import { CommonModule } from '@angular/common';
   templateUrl: './kycdoc.component.html',
   styleUrl: './kycdoc.component.scss'
 })
-export class KYCDocComponent {
+export class KYCDocComponent implements OnInit {
 
-  @Output() docOpened = new EventEmitter<string>();
+  @Input() selectedHelper: any;
+  // doc: IDocument | undefined;
 
-  // constructor(
-  //   private dialogRef: MatDialogRef<KYCDocComponent>,
-  //   @Inject(MAT_DIALOG_DATA) public data: { message?: string }
-  // ) { }
-  // close() {
-  //   this.dialogRef.close();
-  // }
+  constructor(private helperService: HelperService,
+    private dialogRef: MatDialogRef<KYCDocComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+
+  ngOnInit(): void {
+    // this.doc = this.helperService.getHelper().subscribe()
+  }
+
+
+
+
+  close() {
+    this.dialogRef.close();
+  }
 
 
 }
