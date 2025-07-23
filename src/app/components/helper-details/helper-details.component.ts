@@ -69,7 +69,6 @@ export class HelperDetailsComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['helper']) {
       this.selectedHelper = this.helper || null;
-      console.log(this.selectedHelper.documents[0].base64Data);
     }
   }
 }

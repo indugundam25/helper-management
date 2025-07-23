@@ -4,7 +4,7 @@
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
     <div class="photo-upload">
       <label for="photo">Upload<br />Photo</label>
-      <input type="file" id="photo" (change)="onPhotoChange($event)" accept="image/*" />
+      <input type="file" id="photo" name="profile" (change)="onPhotoChange($event)" accept="image/*" />
       <img *ngIf="photoUrl" [src]="photoUrl" class="avatar-preview" alt="Avatar Preview" />
       <p>Upload photo (.png, .jpeg) size up to 5MB</p>
     </div>

@@ -1,11 +1,20 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IDocument { //schema for document
+export interface IDocument {
   type: string;
   fileName: string;
   base64Data: string;
 }
+export interface ICounter extends Document {
+  _id: string;
+  seq: number;
+}
 
+const CounterSchema: Schema = new Schema({
+  _id: { type: String, required: true },
+  seq: { type: Number, default: 10000 },
+});
+const CounterModel = mongoose.model<ICounter>('Counter', CounterSchema);
 export interface IHelper extends Document {
   photo?: string;
   empId: number;
@@ -18,48 +27,26 @@ export interface IHelper extends Document {
   email?: string;
   vehicleType?: string;
   number?: string;
-  documents?: IDocument[]; //We can select any number of documents, so we have to take array
+  documents?: IDocument[];
+  empCode?: number;
 }
 
+// 3. Document schema
 const DocumentSchema: Schema = new Schema({
-  type: {
-    type: String,
-    required: true,
-  },
-  fileName: {
-    type: String,
-    required: true,
-  },
-  base64Data: {
-    type: String,
-    required: true,
-  }
+  type: { type: String, required: true },
+  fileName: { type: String, required: true },
+  base64Data: { type: String, required: true },
 });
 
+// 4. Helper schema
 const HelperSchema: Schema = new Schema(
   {
-    photo: {
-      type: String,
-    },
-    empId: {
-      type: Number,
-    },
-    role: {
-      type: String,
-      required: true,
-    },
-    organization: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    languages: {
-      type: [String],
-      required: true,
-    },
+    photo: { type: String },
+    empId: { type: Number },
+    role: { type: String, required: true },
+    organization: { type: String, required: true },
+    name: { type: String, required: true },
+    languages: { type: [String], required: true },
     gender: {
       type: String,
       enum: ['Male', 'Female', 'Other'],
@@ -74,17 +61,36 @@ const HelperSchema: Schema = new Schema(
       type: String,
       match: /.+\@.+\..+/,
     },
-    vehicleType: {
-      type: String
+    vehicleType: { type: String },
+    number: { type: String },
+    documents: [DocumentSchema],
+    empCode: {
+      type: Number,
+      required: true,
+      unique: true,
     },
-    number: {
-      type: String
-    },
-    documents: [DocumentSchema]
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
+
+HelperSchema.pre<IHelper>('validate', async function (next) {
+  if (this.isNew) {
+    try {
+      const counter = await CounterModel.findByIdAndUpdate(
+        { _id: 'empCode' },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      );
+
+      this.empCode = counter.seq;
+      this.empId = this.empCode + 1;
+      next();
+    } catch (err) {
+      // next(err);
+    }
+  } else {
+    next();
+  }
+});
 
 export default mongoose.model<IHelper>('Helper', HelperSchema);

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { HelperListComponent } from '../../components/helper-list/helper-list.component';
 import { HelperDetailsComponent } from '../../components/helper-details/helper-details.component';
@@ -22,14 +22,15 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadHelpers();
-
+    const count = signal(0);
+    console.log('The count is: ' + count());
   }
 
   loadHelpers() {
     this.helperService.getAllHelpers().subscribe((res) => {
       this.helpers = res.helpers;
       if (this.helpers.length > 0) {
-        this.selectedHelper = this.helpers[0];
+        this.selectedHelper = this.helpers[0]; //displaying first helper as default
       }
     });
   }

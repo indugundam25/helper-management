@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HelperService } from '../../services/helper.service';
+import { IHelper } from '../../models/helper.model';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,18 +16,19 @@ import { HelperService } from '../../services/helper.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  readonly funnel = Funnel;
-  readonly download = Download;
-  readonly arrowDownUp = ArrowDownUp;
-  readonly calendar = Calendar;
-  readonly search = Search;
+  funnel = Funnel;
+  download = Download;
+  arrowDownUp = ArrowDownUp;
+  calendar = Calendar;
+  search = Search;
   x = X;
   isTouched = false;
   searchText = '';
   helpersCount = 0;
 
-  @Output() addHelperClicked = new EventEmitter<void>();
+  @Output() addHelperClicked = new EventEmitter<void>(); //add helper button to open form
   @Input() count: number = 0;
+  helpers: IHelper[] | any;
 
   constructor(private helperService: HelperService) { };
 
@@ -36,6 +38,7 @@ export class ToolbarComponent implements OnInit {
         this.helpersCount = response.helpers.length;
       }
     });
+    console.log(this.helpers)
   }
 
   onAddHelper() {
@@ -47,7 +50,9 @@ export class ToolbarComponent implements OnInit {
   }
 
   sortByName() {
-
+    this.helperService.sort({}, 'name', 'asc', 1).subscribe((data) => {
+      this.helpers = data.helpers;
+    });
   }
-
 }
+

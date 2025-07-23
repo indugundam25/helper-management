@@ -41,7 +41,7 @@ import { SharedStepService } from '../../services/shared.service';
 })
 export class HelperFormComponent implements OnInit {
 
-  readonly plus = Plus;
+  plus = Plus;
   // helperForm!: FormGroup;
   photoUrl: string | ArrayBuffer | null = null;
   filename: string = '';
@@ -59,11 +59,6 @@ export class HelperFormComponent implements OnInit {
   @Input() helperForm !: FormGroup;
 
   prevId: number = 10000;
-  empIdCounter: number = this.prevId + 1;
-
-  generateId(): void {
-    this.helperForm.patchValue({ empId: this.empIdCounter });
-  }
 
   constructor(private fb: FormBuilder, private helperService: HelperService,
     private dialog: MatDialog, private sharedStepService: SharedStepService) { }
@@ -83,7 +78,7 @@ export class HelperFormComponent implements OnInit {
       ]],
       email: ['', Validators.email],
       vehicleType: ['None'],
-      documents: [[], Validators.required]
+      documents: [[],]
     });
 
 
@@ -109,16 +104,29 @@ export class HelperFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.photoUrl = reader.result;
-        const base64String = (reader.result as string).split(',')[1];
-        this.helperForm.patchValue({ photo: base64String });
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('profile', file);
+
+      // this.helperService.uploadPhoto(formData).subscribe({
+      //   next: (res) => {
+      //     this.photoUrl = res.url; // Set preview
+      //     this.helperForm.patchValue({ photo: res.url });
+      //   },
+      //   error: (err) => {
+      //     console.error('Photo upload failed', err);
+      //   }
+      // });
     }
   }
 
+  base64ToBlob = (base64: string, contentType: string): Blob => {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+      byteCharacters.charCodeAt(i)
+    );
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: contentType });
+  };
 
 
   onClose() {
@@ -131,7 +139,6 @@ export class HelperFormComponent implements OnInit {
         disableClose: true,
         data: { name: this.helperForm.value.name }
       });
-      this.generateId();
       this.helperService.addHelper(this.helperForm.value).subscribe({
         next: (response) => {
           dialogRef.afterClosed().subscribe(() => {
@@ -140,6 +147,18 @@ export class HelperFormComponent implements OnInit {
           });
         }
       });
+      // const formData = new FormData();
+      // formData.append('name', this.helperForm.get('name')?.value);
+      // append all other fields
+
+      // if (this.photoBase64) {
+      //   const blob = base64ToBlob(this.photoBase64, 'image/jpeg'); // or detect mime
+      //   const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+      //   formData.append('photo', file);
+      // }
+
+      // this.helperService.createHelper(formData).subscribe(...);
+
     }
   }
 
@@ -147,15 +166,28 @@ export class HelperFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
-      this.selectedFile = file;
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.docUrl = reader.result;
-        const base64String = (reader.result as string).split(',')[1];
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('document', file);
+
+      // this.helperService.uploadDocument(formData).subscribe({
+      //   next: (res: { url: any; }) => {
+      //     const currentDocs = this.helperForm.get('documents')?.value || [];
+      //     const newDoc = {
+      //       fileName: file.name,
+      //       type: 'kyc',
+      //       url: res.url
+      //     };
+      //     this.helperForm.patchValue({ documents: [...currentDocs, newDoc] });
+      //   },
+      //   error: (err: any) => {
+      //     console.error('Document upload failed', err);
+      //   }
+      // });
     }
   }
+
+
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DocumentDialogComponent, {
@@ -164,7 +196,6 @@ export class HelperFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.base64Data) {
-        // Add the document to the documents array in the form
         const currentDocuments = this.helperForm.get('documents')?.value || [];
         const newDocument = {
           type: result.documentType,
@@ -192,6 +223,8 @@ export class HelperFormComponent implements OnInit {
         this.helperForm.get('phone')?.valid &&
         (this.helperForm.get('vehicleType')?.value === 'None' || this.helperForm.get('number')?.valid)
       ) {
+        const next = this.step;
+        this.sharedStepService.setStep(next);
         this.step++;
       } else {
         this.helperForm.get('role')?.markAsTouched();
@@ -205,6 +238,8 @@ export class HelperFormComponent implements OnInit {
     } else {
       this.step++;
     }
+    const next = this.step;
+    this.sharedStepService.setStep(next);
   }
 
 

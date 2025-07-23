@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class SharedStepService {
@@ -8,5 +8,9 @@ export class SharedStepService {
 
     setStep(step: number) {
         this.stepSource.next(step);
+    }
+
+    get currentStep() {
+        return this.stepSource.getValue();
     }
 }

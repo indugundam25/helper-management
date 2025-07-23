@@ -6,6 +6,9 @@ import { ApiResponse, IHelper } from '../models/helper.model';
 
 @Injectable({ providedIn: 'root' })
 export class HelperService {
+  uploadDocument(formData: FormData) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
@@ -29,5 +32,27 @@ export class HelperService {
     return this.http.get<ApiResponse<IHelper[]>>(`${this.apiUrl}`);
 
   }
+  createHelper(data: FormData) {
+    return this.http.post<{ helper: any }>('http://localhost:3000/api/helpers', data);
+  }
+
+  sort(filter = {}, sortField: string = '', sortOrder: 'asc' | 'desc' = 'asc', page: number = 1) {
+    const params: any = {
+      page,
+      sort: JSON.stringify({ [sortField]: sortOrder === 'asc' ? 1 : -1 }),
+      filter: JSON.stringify(filter)
+    };
+
+    return this.http.get<any>('http://localhost:3000/api/helpers', { params });
+  }
+
+  // uploadPhoto(formData: FormData) {
+  //   return this.http.post<{ url: string }>(`${this.apiUrl}/upload-photo`, formData);
+  // }
+
+  // uploadDocument(formData: FormData) {
+  //   return this.http.post<{ url: string }>(`${this.apiUrl}/upload-doc`, formData);
+  // }
+
 
 }
