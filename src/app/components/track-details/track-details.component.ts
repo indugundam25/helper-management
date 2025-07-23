@@ -29,7 +29,6 @@ export class TrackDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper') stepper!: MatStepper;
 
   step = 1;
-  isLinear = false;
 
   private _formBuilder = inject(FormBuilder);
   constructor(private sharedStepService: SharedStepService) { }

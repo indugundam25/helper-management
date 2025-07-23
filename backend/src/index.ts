@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './db/connection';
 import helperRoutes from './routes/helper.routes';
 import multer from 'multer';
+const upload = multer({ dest: './uploads' })
 
 dotenv.config();
 
@@ -16,6 +17,10 @@ app.use(express.json());
 
 app.use('/api/helpers', helperRoutes);
 
+
+app.post('/', upload.single('image'), (req, res) => {
+  res.send("Hello")
+})
 app.get('/', (req, res) => {
   res.send('API is working!');
 });

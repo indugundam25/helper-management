@@ -1,8 +1,8 @@
 <form class="helper-form">
   <div class="left-section">
-    <button type="button" class="filter-btn" matButton [matMenuTriggerFor]="filter"><lucide-icon
+    <button type="button" class="filter-btn" matButton [matMenuTriggerFor]="sort"><lucide-icon
         [name]="arrowDownUp"></lucide-icon></button>
-    <mat-menu #filter="matMenu">
+    <mat-menu #sort="matMenu">
       <button mat-menu-item (click)="sortByName()">Helpers Name(A-Z)</button>
       <button mat-menu-item>Employee ID</button>
     </mat-menu>

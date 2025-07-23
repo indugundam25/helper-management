@@ -1,10 +1,19 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+
 export interface IDocument {
   type: string;
   fileName: string;
   base64Data: string;
 }
+
+const DocumentSchema: Schema = new Schema({
+  type: { type: String, required: true },
+  fileName: { type: String, required: true },
+  base64Data: { type: String, required: true },
+});
+
+
 export interface ICounter extends Document {
   _id: string;
   seq: number;
@@ -14,10 +23,14 @@ const CounterSchema: Schema = new Schema({
   _id: { type: String, required: true },
   seq: { type: Number, default: 10000 },
 });
+
 const CounterModel = mongoose.model<ICounter>('Counter', CounterSchema);
+
 export interface IHelper extends Document {
   photo?: string;
-  empId: number;
+  photoUrl?: string;
+  photoPublicId?: string;
+  empCode: number;
   role: string;
   organization: string;
   name: string;
@@ -28,21 +41,14 @@ export interface IHelper extends Document {
   vehicleType?: string;
   number?: string;
   documents?: IDocument[];
-  empCode?: number;
 }
 
-// 3. Document schema
-const DocumentSchema: Schema = new Schema({
-  type: { type: String, required: true },
-  fileName: { type: String, required: true },
-  base64Data: { type: String, required: true },
-});
-
-// 4. Helper schema
 const HelperSchema: Schema = new Schema(
   {
     photo: { type: String },
-    empId: { type: Number },
+    photoUrl: { type: String },
+    photoPublicId: { type: String },
+    empCode: { type: Number, unique: true }, // Auto-incremented
     role: { type: String, required: true },
     organization: { type: String, required: true },
     name: { type: String, required: true },
@@ -64,14 +70,10 @@ const HelperSchema: Schema = new Schema(
     vehicleType: { type: String },
     number: { type: String },
     documents: [DocumentSchema],
-    empCode: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
   },
   { timestamps: true }
 );
+
 
 HelperSchema.pre<IHelper>('validate', async function (next) {
   if (this.isNew) {
@@ -83,10 +85,9 @@ HelperSchema.pre<IHelper>('validate', async function (next) {
       );
 
       this.empCode = counter.seq;
-      this.empId = this.empCode + 1;
       next();
     } catch (err) {
-      // next(err);
+      // next(err); // Proper error propagation
     }
   } else {
     next();
