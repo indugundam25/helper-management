@@ -1,7 +1,6 @@
-import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
 
 @Component({
@@ -13,15 +12,17 @@ import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
 })
 export class DocumentDialogComponent {
   flag: boolean = true;
-  message: string = "";
+  message: string = '';
   docUrl: string | ArrayBuffer | null = null;
+
   readonly cloudUpload = CloudUpload;
   readonly x = X;
+
   @Input() selectedFile: File | undefined;
   selectedDocumentType: string = 'aadhar';
-  base64Data: string | null = null;
+
   constructor(
-    private dialogRef: MatDialogRef<HelperSuccessDialogComponent>,
+    private dialogRef: MatDialogRef<DocumentDialogComponent>, // ✅ Fix wrong component injected
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
   ) { }
 
@@ -31,13 +32,10 @@ export class DocumentDialogComponent {
     if (input.files?.length) {
       const file = input.files[0];
       this.selectedFile = file;
+
       const reader = new FileReader();
       reader.onload = () => {
-        this.docUrl = reader.result;
-        // const base64String = (reader.result as string).split(',')[1];
-        // this.helperForm.patchValue({ doc: base64String });
-        this.base64Data = (reader.result as string).split(',')[1];
-
+        this.docUrl = reader.result; // used only for preview
       };
       reader.readAsDataURL(file);
     }
@@ -48,18 +46,16 @@ export class DocumentDialogComponent {
     this.selectedDocumentType = select.value;
   }
 
-  save() {
-    if (this.base64Data && this.selectedFile) {
+  save(): void {
+    if (this.selectedFile) {
       this.dialogRef.close({
         documentType: this.selectedDocumentType,
-        fileName: this.selectedFile.name,
-        base64Data: this.base64Data
+        file: this.selectedFile
       });
-
     }
   }
 
-  close() {
+  close(): void {
     this.dialogRef.close();
   }
 }

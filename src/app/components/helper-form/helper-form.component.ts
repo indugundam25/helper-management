@@ -43,6 +43,7 @@ export class HelperFormComponent implements OnInit {
   photoUrl: string | ArrayBuffer | null = null;
   filename: string = '';
   selectedFile: File | undefined;
+  selectedDocuments: File[] = [];
 
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
@@ -122,29 +123,27 @@ export class HelperFormComponent implements OnInit {
       return;
     }
 
-    // Step 1: Create FormData object
     const formData = new FormData();
 
-    // Step 2: Append photo (file)
     if (this.selectedFile) {
       formData.append('photo', this.selectedFile);
     }
 
-    // Step 3: Remove UI-only field
+    this.selectedDocuments.forEach(file => {
+      formData.append('documents', file);
+    });
+
     const helperData = { ...this.helperForm.value };
     delete helperData.photoPreview;
-
-    // Step 4: Append form data as JSON
+    // delete helperData.documents;
     formData.append('helperData', JSON.stringify(helperData));
 
-    // Step 5: Open dialog
     const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
       width: '350px',
       disableClose: true,
       data: { name: this.helperForm.value.name }
     });
 
-    // Step 6: Submit to backend
     this.helperService.addHelper(formData).subscribe({
       next: (response) => {
         dialogRef.afterClosed().subscribe(() => {
@@ -160,9 +159,9 @@ export class HelperFormComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
-      const file = input.files[0];
-      const formData = new FormData();
-      formData.append('document', file);
+      for (let i = 0; i < input.files.length; i++) {
+        this.selectedDocuments.push(input.files[i]);
+      }
     }
   }
 
@@ -172,18 +171,11 @@ export class HelperFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.base64Data) {
-        const currentDocuments = this.helperForm.get('documents')?.value || [];
-        const newDocument = {
-          type: result.documentType,
-          fileName: result.fileName,
-          base64Data: result.base64Data
-        };
-        this.helperForm.patchValue({
-          documents: [...currentDocuments, newDocument]
-        });
+      if (result && result.file) {
+        this.selectedDocuments.push(result.file);
       }
     });
+
   }
 
   nextStep(): void {

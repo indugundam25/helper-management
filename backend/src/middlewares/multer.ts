@@ -3,34 +3,54 @@ import { Request, Response, NextFunction } from 'express';
 import cloudinary from '../config/cloudinary';
 import { getDataUri } from '../utils/dataUri';
 
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-export const uploadSingleImage = upload.single('image');
+// Accept multiple fields: photo and documents (optional)
+export const uploadHelperFields = upload.fields([
+    { name: 'photo', maxCount: 1 },
+    { name: 'documents', maxCount: 5 }
+]);
 
-export const cloudinaryUploadMiddleware = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    if (!req.file) {
-        return next();
-    }
 
+export const cloudinaryUploadMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const fileUri = getDataUri(req.file);
-        console.log(fileUri);
-        const result = await cloudinary.uploader.upload(fileUri, {
-            folder: 'helpers',
-        });
-        console.log(result.secure_url);
-        req.body = JSON.parse(req.body.helperData);
-        req.body.photoUrl = result.secure_url;
-        req.body.photoPublicId = result.public_id;
+        const files = req.files as { [key: string]: Express.Multer.File[] };
+
+        // Upload photo
+        if (files?.photo?.length) {
+            const file = files.photo[0];
+            const fileUri = getDataUri(file);
+            const result = await cloudinary.uploader.upload(fileUri, { folder: 'helpers' });
+            req.body.photoUrl = result.secure_url;
+            req.body.photoPublicId = result.public_id;
+        }
+
+        // Upload documents
+        if (files?.documents?.length) {
+            const uploadedDocs = [];
+            for (const file of files.documents) {
+                const fileUri = getDataUri(file);
+                const result = await cloudinary.uploader.upload(fileUri, {
+                    folder: 'helpers/documents',
+                    resource_type: 'raw',
+                    public_id: file.originalname.replace(/\.[^/.]+$/, '')
+                });
+                uploadedDocs.push({
+                    type: file.mimetype,
+                    fileName: file.originalname,
+                    url: result.secure_url,
+                    publicId: result.public_id
+                });
+            }
+            req.body.documents = uploadedDocs;
+            console.log(uploadedDocs);
+        }
 
         next();
-    } catch (error) {
-        console.error('Cloudinary Upload Error:', error);
-        return res.status(500).json({ error: 'Image upload failed' });
+    } catch (err) {
+        console.error('Cloudinary Upload Error:', err);
+        return res.status(500).json({ error: 'Media upload failed' });
     }
 };

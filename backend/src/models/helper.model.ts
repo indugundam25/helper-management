@@ -4,15 +4,15 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IDocument {
   type: string;
   fileName: string;
-  base64Data: string;
+  url: string;
+  publicId: string;
 }
-
 const DocumentSchema: Schema = new Schema({
   type: { type: String, required: true },
   fileName: { type: String, required: true },
-  base64Data: { type: String, required: true },
+  url: { type: String, required: true },
+  publicId: { type: String, required: true }
 });
-
 
 export interface ICounter extends Document {
   _id: string;

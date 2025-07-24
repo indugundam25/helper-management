@@ -5,9 +5,12 @@ import { getDataUri } from '../utils/dataUri';
 export class HelperController {
   static async createHelper(req: Request, res: Response) {
     try {
-      const { body } = req;
-      console.log(body);
-      const helper = await Helper.create(body);
+      const helperData = JSON.parse(req.body.helperData);
+      helperData.photoUrl = req.body.photoUrl;
+      helperData.photoPublicId = req.body.photoPublicId;
+      helperData.documents = req.body.documents;
+
+      const helper = await Helper.create(helperData);
       res.status(201).json({ helper });
       console.log('Incoming helper data:', req.body);
     } catch (err) {

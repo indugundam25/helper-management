@@ -17,10 +17,6 @@ app.use(express.json());
 
 app.use('/api/helpers', helperRoutes);
 
-
-app.post('/', upload.single('image'), (req, res) => {
-  res.send("Hello")
-})
 app.get('/', (req, res) => {
   res.send('API is working!');
 });

@@ -6,7 +6,8 @@ export interface ApiResponse<T> {
 export interface IDocument {
   type: string;
   fileName: string;
-  base64Data: string;
+  url: string;
+  publicId: string;
 }
 
 export interface IHelper {
