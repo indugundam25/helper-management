@@ -4,21 +4,19 @@ import cloudinary from '../config/cloudinary';
 import { getDataUri } from '../utils/dataUri';
 
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const storage = multer.memoryStorage(); //creating a storage engine
+const upload = multer({ storage }); //creating multer instance
 
-// Accept multiple fields: photo and documents (optional)
 export const uploadHelperFields = upload.fields([
     { name: 'photo', maxCount: 1 },
     { name: 'documents', maxCount: 5 }
 ]);
-
+//photo and documents are two fields in req.files
 
 export const cloudinaryUploadMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const files = req.files as { [key: string]: Express.Multer.File[] };
 
-        // Upload photo
         if (files?.photo?.length) {
             const file = files.photo[0];
             const fileUri = getDataUri(file);
@@ -27,20 +25,25 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
             req.body.photoPublicId = result.public_id;
         }
 
-        // Upload documents
         if (files?.documents?.length) {
             const uploadedDocs = [];
             for (const file of files.documents) {
                 const fileUri = getDataUri(file);
                 const result = await cloudinary.uploader.upload(fileUri, {
                     folder: 'helpers/documents',
+                    resource_type: 'auto',
+                    public_id: file.originalname
+                });
+                const previewUrl = cloudinary.url(result.public_id, {
                     resource_type: 'raw',
-                    public_id: file.originalname.replace(/\.[^/.]+$/, '')
+                    type: 'upload',
+                    flags: 'attachment:false',
+                    secure: true,
                 });
                 uploadedDocs.push({
                     type: file.mimetype,
                     fileName: file.originalname,
-                    url: result.secure_url,
+                    url: previewUrl,
                     publicId: result.public_id
                 });
             }
@@ -54,3 +57,5 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
         return res.status(500).json({ error: 'Media upload failed' });
     }
 };
+
+

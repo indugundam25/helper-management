@@ -1,4 +1,25 @@
 .dialog-content {
     text-align: center;
     padding: 2rem 2.5rem;
+    width: 500px;
+    height: 500px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    lucide-icon {
+        cursor: pointer;
+        font-size: 1.5rem;
+        padding-left: 3rem;
+    }
 }

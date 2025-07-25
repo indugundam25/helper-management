@@ -1,8 +1,8 @@
 <div class="helper-details-container" *ngIf="selectedHelper; else noHelper">
   <div class="profile-header">
     <div class="profile-card">
-      <ng-container *ngIf="helper.photo; else initialsBlock">
-        <img [src]="'data:image/jpeg;base64,' + selectedHelper.photo" alt="Profile Photo" class="profile-img" />
+      <ng-container *ngIf="helper.photoUrl; else initialsBlock">
+        <img [src]="helper.photoUrl" alt="Profile Photo" class="profile-img" />
       </ng-container>
       <ng-template #initialsBlock>
         <div class="profile-img initials-avatar">
@@ -32,7 +32,7 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Employee code</p>
-        <p class="value">{{selectedHelper.empCode}}</p>
+        <p class="value emp">{{selectedHelper.empCode}}</p>
       </div>
     </div>
   </div>

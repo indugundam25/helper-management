@@ -1,0 +1,21 @@
+.container {
+    width: fit-content;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.buttons button {
+    background-color: rgb(153, 153, 242);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}

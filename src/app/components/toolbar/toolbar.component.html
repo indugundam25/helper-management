@@ -3,16 +3,11 @@
     <button type="button" class="filter-btn" matButton [matMenuTriggerFor]="sort"><lucide-icon
         [name]="arrowDownUp"></lucide-icon></button>
     <mat-menu #sort="matMenu">
-      <button mat-menu-item (click)="sortByName()">Helpers Name(A-Z)</button>
+      <button mat-menu-item (click)="sortHelper()">Helpers Name(A-Z)</button>
       <button mat-menu-item>Employee ID</button>
     </mat-menu>
-    <button type="button" class="sort-btn" matButton [matMenuTriggerFor]="filter"><lucide-icon
+    <button type="button" class="sort-btn" (click)="filterHelpers()"><lucide-icon
         [name]="funnel"></lucide-icon></button>
-    <mat-menu #filter="matMenu">
-      <p>Filter by</p>
-      <button mat-menu-item (click)="sortByName()">Helpers Name(A-Z)</button>
-      <button mat-menu-item>Employee ID</button>
-    </mat-menu>
     <button type="button" class="calendar-btn"><lucide-icon [name]="calendar"></lucide-icon></button>
 
     <div class="input-wrapper">
@@ -23,7 +18,7 @@
       </span>
 
       <span class="close-icon" *ngIf="isTouched">
-        <lucide-icon [name]="x" (click)="displayAll()"></lucide-icon>
+        <lucide-icon [name]="x"></lucide-icon>
       </span>
     </div>
     <div class="emp-count">

@@ -5,9 +5,8 @@
     <div class="photo-upload">
       <label for="photo">Upload<br />Photo</label>
       <input type="file" id="photo" name="image" (change)="onPhotoChange($event)" accept="image/*" />
-      <img *ngIf="helperForm.get('photoPreview')?.value || helperForm.get('photoUrl')?.value"
-        [src]="helperForm.get('photoPreview')?.value || helperForm.get('photoUrl')?.value" class="avatar-preview"
-        alt="Avatar Preview" />
+      <img *ngIf="helperForm.get('photoPreview')?.value" [src]="helperForm.get('photoPreview')?.value"
+        class="avatar-preview" alt="Avatar Preview" />
 
       <p>Upload photo (.png, .jpeg) size up to 5MB</p>
     </div>
@@ -98,9 +97,9 @@
         {{ helperForm.value.documents[0]?.fileName }}
       </p>
 
-      <mat-error *ngIf="!helperForm.value.documents?.length">
+      <!-- <mat-error *ngIf="!helperForm.value.documents?.length">
         Document is required
-      </mat-error>
+      </mat-error> -->
     </div>
 
     <div class="step-controls">
@@ -117,7 +116,7 @@
       <lucide-icon [name]="plus"></lucide-icon>
     </label>
     <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
-    <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div>
+    <!-- <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div> -->
   </div>
 
   <div class="step-controls">
@@ -131,8 +130,9 @@
     <h2>Preview Helper Details</h2>
     <div class="preview-section">
       <div class="preview-photo">
-        <ng-container *ngIf="helperForm.value.photo; else initialsBlock">
-          <img [src]="'data:image/jpeg;base64,' + helperForm.value.photo" class="avatar-preview" alt="Photo Preview" />
+        <ng-container *ngIf="helperForm.get('photoPreview')?.value; else initialsBlock">
+          <img *ngIf="helperForm.get('photoPreview')?.value" [src]="helperForm.get('photoPreview')?.value"
+            class="avatar-preview" alt="Avatar Preview" />
         </ng-container>
         <ng-template #initialsBlock>
           <div class="profile-img initials-avatar">
@@ -157,8 +157,6 @@
           <ul>
             <li *ngFor="let doc of helperForm.value.documents">
               <strong>{{ doc.type | titlecase }}:</strong> {{ doc.fileName }}
-              <div *ngIf="doc.base64Data">
-              </div>
             </li>
           </ul>
         </div>

@@ -5,13 +5,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HelperService } from '../../services/helper.service';
+import { FilterService } from '../../services/filters.service';
 import { IHelper } from '../../models/helper.model';
+import { MatDialog } from '@angular/material/dialog';
+import { FilterComponent } from '../filter/filter.component';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
   imports: [
-    LucideAngularModule, RouterLink, MatButtonModule, MatMenuModule, CommonModule],
+    LucideAngularModule, RouterLink, MatButtonModule, MatMenuModule, CommonModule, FilterComponent],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
@@ -26,32 +29,51 @@ export class ToolbarComponent implements OnInit {
   searchText = '';
   helpersCount = 0;
 
-  @Output() addHelperClicked = new EventEmitter<void>(); //add helper button to open form
+  @Output() addHelperClicked = new EventEmitter<void>();
   @Input() count: number = 0;
-  helpers: IHelper[] | any;
+  helpers: IHelper[] = [];
 
-  constructor(private helperService: HelperService) { };
+  constructor(private dialog: MatDialog, private helperService: HelperService, private filterService: FilterService) { };
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.helperService.getAllHelpers().subscribe((response) => {
       if (response?.helpers) {
         this.helpersCount = response.helpers.length;
       }
     });
-    console.log(this.helpers)
+    this.helperService.getAllUsers();
+    // this.helpersCount = (await this.helperService.getAllHelpers()).length;
+
   }
 
   onAddHelper() {
     this.addHelperClicked.emit();
+    console.log(this.helperService._users());
   }
 
-  displayAll() {
-
+  sortHelper() {
+    this.filterService.sortByName('asc');
   }
 
-  sortByName() {
-    this.helperService.sort({}, 'name', 'asc', 1).subscribe((data) => {
-      this.helpers = data.helpers;
+  searchHelper() {
+    // this.filterService.searchHelpers('john').subscribe(helpers => {
+    //   this.helpers = helpers;
+    // });
+  }
+
+  filterHelpers() {
+    const dialogRef = this.dialog.open(FilterComponent, {
+      width: '300px',
+      height: '300px',
+      disableClose: false,
+      panelClass: 'top-right-dialog',
+      position: {
+        top: '50px',
+        left: '50px',
+      },
+      data: {
+
+      }
     });
   }
 }

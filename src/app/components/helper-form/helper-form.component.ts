@@ -40,7 +40,6 @@ import { LucideAngularModule, Plus } from 'lucide-angular';
 })
 export class HelperFormComponent implements OnInit {
   plus = Plus;
-  photoUrl: string | ArrayBuffer | null = null;
   filename: string = '';
   selectedFile: File | undefined;
   selectedDocuments: File[] = [];
@@ -65,7 +64,6 @@ export class HelperFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.helperForm = this.fb.group({
-      photo: [null],
       photoUrl: [''],
       photoPublicId: [''],
       photoPreview: [''],
@@ -108,7 +106,6 @@ export class HelperFormComponent implements OnInit {
 
       const reader = new FileReader();
       reader.onload = () => {
-        this.photoUrl = reader.result;
         this.helperForm.patchValue({
           photoPreview: reader.result
         });
@@ -135,7 +132,6 @@ export class HelperFormComponent implements OnInit {
 
     const helperData = { ...this.helperForm.value };
     delete helperData.photoPreview;
-    // delete helperData.documents;
     formData.append('helperData', JSON.stringify(helperData));
 
     const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
@@ -146,6 +142,8 @@ export class HelperFormComponent implements OnInit {
 
     this.helperService.addHelper(formData).subscribe({
       next: (response) => {
+        const users = [this.helperService._users(), response];
+        this.helperService._users.set(users);
         dialogRef.afterClosed().subscribe(() => {
           this.helperAdded.emit(response.helpers._id);
         });

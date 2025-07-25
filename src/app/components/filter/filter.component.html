@@ -1,0 +1,39 @@
+<div class="container">
+    <h3>Filter By</h3>
+
+    <!-- Service Filter -->
+    <p>Service</p>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Select service</mat-label>
+        <mat-select [(ngModel)]="selectedRoles" multiple>
+            <mat-option (click)="toggleAll('service')">
+                {{ isAllSelected('service') ? 'Deselect All' : 'Select All' }}
+            </mat-option>
+
+            <mat-option *ngFor="let role of roles" [value]="role">
+                {{ role }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- Organization Filter -->
+    <p>Organization</p>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Select organization</mat-label>
+        <mat-select [(ngModel)]="selectedOrgs" multiple>
+            <mat-option (click)="toggleAll('organization')">
+                {{ isAllSelected('organization') ? 'Deselect All' : 'Select All' }}
+            </mat-option>
+
+            <mat-option *ngFor="let org of orgs" [value]="org">
+                {{ org }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- Buttons -->
+    <div class="buttons">
+        <button mat-stroked-button color="warn" (click)="resetFilters()">Reset</button>
+        <button mat-flat-button color="primary" (click)="applyFilters()">Apply</button>
+    </div>
+</div>

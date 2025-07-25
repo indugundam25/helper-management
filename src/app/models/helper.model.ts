@@ -6,15 +6,13 @@ export interface ApiResponse<T> {
 export interface IDocument {
   type: string;
   fileName: string;
-  url: string;
-  publicId: string;
+  base64Data: string;
 }
 
 export interface IHelper {
   _id?: string;
   photo?: string;
   photoUrl?: string;
-  photoPublicId?: string;
   empId: number;
   role: string;
   organization: string;

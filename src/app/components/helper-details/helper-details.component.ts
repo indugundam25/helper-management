@@ -58,7 +58,7 @@ export class HelperDetailsComponent implements OnChanges {
         width: '800px',
         disableClose: true,
         data: {
-          doc: 'data:application/pdf;base64,' + this.selectedHelper.documents[0].base64Data
+          url: this.selectedHelper.documents[0].url
         }
       });
     } else {

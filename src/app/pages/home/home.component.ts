@@ -22,17 +22,16 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadHelpers();
-    const count = signal(0);
-    console.log('The count is: ' + count());
   }
 
-  loadHelpers() {
+  async loadHelpers() {
     this.helperService.getAllHelpers().subscribe((res) => {
       this.helpers = res.helpers;
       if (this.helpers.length > 0) {
-        this.selectedHelper = this.helpers[0]; //displaying first helper as default
+        this.selectedHelper = this.helpers[0];
       }
     });
+    // this.helpers = await this.helperService.getAllHelpers();
   }
 
   toggleHelperForm() {

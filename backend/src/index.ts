@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/helpers', helperRoutes);
+app.use('/api/helpers', helperRoutes); //use the routes and prefix them with /api/helpers
 
 app.get('/', (req, res) => {
   res.send('API is working!');

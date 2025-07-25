@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import Helper from '../models/helper.model';
-import { getDataUri } from '../utils/dataUri';
 
 export class HelperController {
   static async createHelper(req: Request, res: Response) {
@@ -10,8 +9,8 @@ export class HelperController {
       helperData.photoPublicId = req.body.photoPublicId;
       helperData.documents = req.body.documents;
 
-      const helper = await Helper.create(helperData);
-      res.status(201).json({ helper });
+      const helper = await Helper.create(helperData); // Helper is the mongoose model
+      res.status(201).json({ helper });  //helper is the data object which contain helper data
       console.log('Incoming helper data:', req.body);
     } catch (err) {
       console.error('Error creating helper:', err);

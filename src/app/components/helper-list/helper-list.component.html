@@ -1,5 +1,5 @@
 <div class="helper-list-scroll-container">
-  <div class="profile-card" *ngFor="let helper of helpers" (click)="onCardClick(helper)">
+  <div class="profile-card" *ngFor="let helper of helperService._users()" (click)="onCardClick(helper)">
     <ng-container *ngIf="helper.photoUrl; else initialsBlock">
       <img [src]="helper.photoUrl" alt="Profile Photo" class="profile-img" />
     </ng-container>

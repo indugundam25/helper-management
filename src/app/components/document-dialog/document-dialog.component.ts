@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
@@ -11,32 +11,25 @@ import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
   styleUrl: './document-dialog.component.scss'
 })
 export class DocumentDialogComponent {
-  flag: boolean = true;
-  message: string = '';
-  docUrl: string | ArrayBuffer | null = null;
-
   readonly cloudUpload = CloudUpload;
   readonly x = X;
 
-  @Input() selectedFile: File | undefined;
+  selectedFile?: File;
   selectedDocumentType: string = 'aadhar';
-
+  previewUrl: string | ArrayBuffer | null = null;
+  @Output() fileSelected = new EventEmitter<any>();
   constructor(
-    private dialogRef: MatDialogRef<DocumentDialogComponent>, // ✅ Fix wrong component injected
+    private dialogRef: MatDialogRef<DocumentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
   ) { }
 
   onFileSelected(event: Event): void {
-    if (!this.flag) return;
     const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      const file = input.files[0];
+    const file = input.files?.[0];
+    if (file) {
       this.selectedFile = file;
-
       const reader = new FileReader();
-      reader.onload = () => {
-        this.docUrl = reader.result; // used only for preview
-      };
+      reader.onload = () => (this.previewUrl = reader.result);
       reader.readAsDataURL(file);
     }
   }
@@ -46,11 +39,15 @@ export class DocumentDialogComponent {
     this.selectedDocumentType = select.value;
   }
 
+  sendFile(filename: string) {
+    this.fileSelected.emit(filename);
+  }
   save(): void {
     if (this.selectedFile) {
       this.dialogRef.close({
         documentType: this.selectedDocumentType,
-        file: this.selectedFile
+        file: this.selectedFile,
+        fileName: this.selectedFile.name,
       });
     }
   }

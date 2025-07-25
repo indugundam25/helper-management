@@ -4,15 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, IHelper } from '../models/helper.model';
 
+import axios from 'axios';
+import { signal } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class HelperService {
+
+  _users = signal<any[]>([]);
 
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
 
-  addHelper(data: any) {
-    return this.http.post<{ helpers: any }>('http://localhost:3000/api/helpers', data);
+  addHelper(data: FormData) {
+    return this.http.post<{ helpers: any }>(`${this.apiUrl}`, data);
   }
 
   updateHelper(id: string, helper: IHelper): Observable<ApiResponse<IHelper>> {
@@ -31,19 +35,26 @@ export class HelperService {
     return this.http.get<ApiResponse<IHelper[]>>(`${this.apiUrl}`);
 
   }
-  createHelper(data: FormData) {
-    return this.http.post<{ helper: any }>('http://localhost:3000/api/helpers', data);
+
+  getAllUsers() {
+    this.getAllHelpers().subscribe({
+      next: (res) => {
+        this._users.set(res.helpers);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
-  sort(filter = {}, sortField: string = '', sortOrder: 'asc' | 'desc' = 'asc', page: number = 1) {
-    const params: any = {
-      page,
-      sort: JSON.stringify({ [sortField]: sortOrder === 'asc' ? 1 : -1 }),
-      filter: JSON.stringify(filter)
-    };
-
-    return this.http.get<any>('http://localhost:3000/api/helpers', { params });
-  }
 
 
+  // async getAllHelpers(): Promise<IHelper[]> {
+  //   const response = await axios.get(this.apiUrl);
+  //   return response.data;
+  // }
+
+  // createHelper(data: FormData) {
+  //   return this.http.post<{ helper: any }>('http://localhost:3000/api/helpers', data);
+  // }
 }

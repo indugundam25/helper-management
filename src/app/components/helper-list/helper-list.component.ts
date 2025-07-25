@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IHelper } from '../../models/helper.model';
+import { HelperService } from '../../services/helper.service';
 import axios from 'axios';
 
 @Component({
@@ -14,6 +15,8 @@ export class HelperListComponent implements OnInit {
   @Input() helpers: IHelper[] = [];
   @Output() sendCount = new EventEmitter<number>();
   @Output() helperSelected = new EventEmitter<IHelper>();
+
+  constructor(public helperService: HelperService) { };
 
   onCardClick(helper: IHelper) {
     this.helperSelected.emit(helper);
