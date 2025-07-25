@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, IHelper } from '../models/helper.model';
 
-import axios from 'axios';
 import { signal } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class HelperService {
 
   _users = signal<any[]>([]);
+  _dupusers = signal<any[]>([]);
 
   private apiUrl = 'http://localhost:3000/api/helpers';
 
@@ -40,21 +40,11 @@ export class HelperService {
     this.getAllHelpers().subscribe({
       next: (res) => {
         this._users.set(res.helpers);
+        this._dupusers.set(res.helpers);
       },
       error: (error) => {
         console.log(error);
       }
     })
   }
-
-
-
-  // async getAllHelpers(): Promise<IHelper[]> {
-  //   const response = await axios.get(this.apiUrl);
-  //   return response.data;
-  // }
-
-  // createHelper(data: FormData) {
-  //   return this.http.post<{ helper: any }>('http://localhost:3000/api/helpers', data);
-  // }
 }

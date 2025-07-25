@@ -4,20 +4,21 @@
         [name]="arrowDownUp"></lucide-icon></button>
     <mat-menu #sort="matMenu">
       <button mat-menu-item (click)="sortHelper()">Helpers Name(A-Z)</button>
-      <button mat-menu-item>Employee ID</button>
+      <button mat-menu-item (click)="sortByID()">Employee ID</button>
     </mat-menu>
     <button type="button" class="sort-btn" (click)="filterHelpers()"><lucide-icon
         [name]="funnel"></lucide-icon></button>
     <button type="button" class="calendar-btn"><lucide-icon [name]="calendar"></lucide-icon></button>
 
     <div class="input-wrapper">
-      <input type="text" placeholder="Name, Employee ID, Role" (focus)="isTouched = true" />
+      <input type="text" id="text" placeholder="Name, Employee ID, Role" (focus)="isTouched = true"
+        (input)="searchHelper()">
 
       <span class="search-icon">
         <lucide-icon [name]="search"></lucide-icon>
       </span>
 
-      <span class="close-icon" *ngIf="isTouched">
+      <span class="close-icon" *ngIf="isTouched" (click)="resetFilters()">
         <lucide-icon [name]="x"></lucide-icon>
       </span>
     </div>

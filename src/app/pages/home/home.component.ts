@@ -28,6 +28,7 @@ export class HomeComponent {
     this.helperService.getAllHelpers().subscribe((res) => {
       this.helpers = res.helpers;
       if (this.helpers.length > 0) {
+        // this.selectedHelper = this.helperService._users()[0];
         this.selectedHelper = this.helpers[0];
       }
     });

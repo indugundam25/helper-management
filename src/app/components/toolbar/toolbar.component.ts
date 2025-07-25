@@ -32,6 +32,7 @@ export class ToolbarComponent implements OnInit {
   @Output() addHelperClicked = new EventEmitter<void>();
   @Input() count: number = 0;
   helpers: IHelper[] = [];
+  typedText: string = '';
 
   constructor(private dialog: MatDialog, private helperService: HelperService, private filterService: FilterService) { };
 
@@ -42,8 +43,6 @@ export class ToolbarComponent implements OnInit {
       }
     });
     this.helperService.getAllUsers();
-    // this.helpersCount = (await this.helperService.getAllHelpers()).length;
-
   }
 
   onAddHelper() {
@@ -55,12 +54,25 @@ export class ToolbarComponent implements OnInit {
     this.filterService.sortByName('asc');
   }
 
+  sortByID() {
+    this.filterService.sortByID();
+  }
   searchHelper() {
-    // this.filterService.searchHelpers('john').subscribe(helpers => {
-    //   this.helpers = helpers;
-    // });
+    const input = document.getElementById('text') as HTMLInputElement;
+    this.typedText = input?.value ?? '';
+
+    if (this.typedText.length) {
+      this.filterService.searchHelpers(this.typedText);
+    }
   }
 
+  resetFilters() {
+    const inputEl = document.getElementById('text') as HTMLInputElement;
+    if (inputEl) {
+      inputEl.value = '';
+      this.helperService._users.set(this.helperService._dupusers());
+    }
+  }
   filterHelpers() {
     const dialogRef = this.dialog.open(FilterComponent, {
       width: '300px',
