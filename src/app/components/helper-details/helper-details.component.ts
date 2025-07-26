@@ -4,11 +4,15 @@ import { LucideAngularModule, Pencil, Trash, Eye } from 'lucide-angular';
 import { KYCDocComponent } from '../kycdoc/kycdoc.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from '../../services/helper.service';
+import { RouterLink } from '@angular/router';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-helper-details',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent],
+  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent, RouterLink],
   templateUrl: './helper-details.component.html',
   styleUrls: ['./helper-details.component.scss']
 })
@@ -18,10 +22,10 @@ export class HelperDetailsComponent implements OnChanges {
   readonly eye = Eye;
 
   @Input() helper: any;
-
+  // @Input() helperFormEdit!: FormGroup;
   selectedHelper: any;
 
-  constructor(private dialog: MatDialog, private helperService: HelperService) { };
+  constructor(private dialog: MatDialog, private helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) { };
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
@@ -41,7 +45,10 @@ export class HelperDetailsComponent implements OnChanges {
         this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
           next: () => {
             console.log("Helper deleted successfully");
-            window.location.reload();
+            // window.location.reload();
+            // this.helperService._users.set(this.helperService._users());
+            this.toastr.success('Helper deleted successfully');
+
           },
           error: (err) => console.error("Error deleting helper:", err),
         });
@@ -49,7 +56,12 @@ export class HelperDetailsComponent implements OnChanges {
         dialogRef.close();
       }
     });
+  }
 
+  editHelper() {
+    //   this.helperFormEdit = this.fb.group({
+    //     role: [this.selectedHelper.helperData.role]
+    //   })
   }
 
   openDoc() {

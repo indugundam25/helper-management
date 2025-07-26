@@ -66,7 +66,7 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-  resetFilters() {
+  clearSearch() {
     const inputEl = document.getElementById('text') as HTMLInputElement;
     if (inputEl) {
       inputEl.value = '';
@@ -76,7 +76,7 @@ export class ToolbarComponent implements OnInit {
   filterHelpers() {
     const dialogRef = this.dialog.open(FilterComponent, {
       width: '300px',
-      height: '300px',
+      height: '320px',
       disableClose: false,
       panelClass: 'top-right-dialog',
       position: {

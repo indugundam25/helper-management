@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IHelper } from '../../models/helper.model';
 import { HelperService } from '../../services/helper.service';
-import axios from 'axios';
 
 @Component({
   selector: 'app-helper-list',
@@ -33,13 +32,7 @@ export class HelperListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    axios.get('http://localhost:3000/api/helpers')
-      .then((response) => {
-        this.helpers = response.data.helpers;
-      })
-      .catch((error) => {
-        console.error('Error fetching helpers:', error);
-      });
+    this.helpers = this.helperService._users();
   }
 
 }

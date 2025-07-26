@@ -14,9 +14,11 @@
         <p class="profile-role">{{ selectedHelper.role }}</p>
       </div>
       <div class="edit-buttons">
-        <button type="button" class="edit-btn">
-          <lucide-icon [name]="pencil"></lucide-icon>
-        </button>
+        <a [routerLink]='["addHelper"]'>
+          <button type="button" class="edit-btn">
+            <lucide-icon [name]="pencil" (click)="editHelper()"></lucide-icon>
+          </button>
+        </a>
         <button type="button" class="trash-btn" (click)="trashHelper()">
           <lucide-icon [name]="trash"></lucide-icon>
         </button>

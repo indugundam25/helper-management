@@ -54,6 +54,8 @@ export class HelperFormComponent implements OnInit {
   @Output() stepOutPut = new EventEmitter<number>();
   @Input() step: number = 1;
   @Input() helperForm!: FormGroup;
+  @Input() helperFormEdit!: FormGroup;
+
 
   constructor(
     private fb: FormBuilder,
@@ -92,6 +94,7 @@ export class HelperFormComponent implements OnInit {
       }
     });
   }
+
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';

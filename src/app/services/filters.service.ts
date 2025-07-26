@@ -26,12 +26,29 @@ export class FilterService {
     }
 
     searchHelpers(keyword: string) {
-        const lowerKeyword = keyword.toLowerCase();
-        const filtered = this.helperService._dupusers().filter(h =>
-            h.name.toLowerCase().includes(lowerKeyword) ||
-            h.phone.toLowerCase().includes(lowerKeyword)
-        );
+        if (keyword.length > 0) {
+            const lowerKeyword = keyword.toLowerCase();
+            const filtered = this.helperService._dupusers().filter(h =>
+                h.name.toLowerCase().includes(lowerKeyword) ||
+                h.phone.toLowerCase().includes(lowerKeyword)
+            );
+            this.helperService._users.set(filtered);  //_dupusers iis the original users without changes
+        }
+        else {
+            this.helperService._users.set(this.helperService._users());
+        }
+    }
+    filterHelpers(roles: string[], orgs: string[]): void {
+        const allHelpers = this.helperService._dupusers();
+
+        const filtered = allHelpers.filter(helper => {
+            const matchRole = roles.length ? roles.includes(helper.role) : true;
+            const matchOrg = orgs.length ? orgs.includes(helper.organization) : true;
+            return matchRole && matchOrg;
+        });
+
         this.helperService._users.set(filtered);
     }
+
 
 }

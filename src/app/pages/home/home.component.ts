@@ -32,7 +32,6 @@ export class HomeComponent {
         this.selectedHelper = this.helpers[0];
       }
     });
-    // this.helpers = await this.helperService.getAllHelpers();
   }
 
   toggleHelperForm() {
