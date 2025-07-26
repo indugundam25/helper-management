@@ -45,10 +45,13 @@ export class HelperDetailsComponent implements OnChanges {
         this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
           next: () => {
             console.log("Helper deleted successfully");
-            // window.location.reload();
-            // this.helperService._users.set(this.helperService._users());
-            this.toastr.success('Helper deleted successfully');
 
+            const updatedHelpers = this.helperService._users().filter(
+              h => h._id !== this.selectedHelper._id
+            );
+            this.helperService._users.set(updatedHelpers);
+
+            this.toastr.success('Helper deleted successfully');
           },
           error: (err) => console.error("Error deleting helper:", err),
         });
@@ -56,6 +59,7 @@ export class HelperDetailsComponent implements OnChanges {
         dialogRef.close();
       }
     });
+
   }
 
   editHelper() {

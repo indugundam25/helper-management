@@ -15,8 +15,8 @@
       </div>
       <div class="edit-buttons">
         <a [routerLink]='["addHelper"]'>
-          <button type="button" class="edit-btn">
-            <lucide-icon [name]="pencil" (click)="editHelper()"></lucide-icon>
+          <button type="button" class="edit-btn" (click)="editHelper()">
+            <lucide-icon [name]="pencil"></lucide-icon>
           </button>
         </a>
         <button type="button" class="trash-btn" (click)="trashHelper()">

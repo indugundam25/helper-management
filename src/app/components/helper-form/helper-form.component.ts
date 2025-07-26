@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import { DocumentDialogComponent } from '../document-dialog/document-dialog.comp
 import { HelperDetailsComponent } from '../helper-details/helper-details.component';
 import { SharedStepService } from '../../services/shared.service';
 import { LucideAngularModule, Plus } from 'lucide-angular';
+import { FilterService } from '../../services/filters.service';
 
 @Component({
   standalone: true,
@@ -61,7 +62,8 @@ export class HelperFormComponent implements OnInit {
     private fb: FormBuilder,
     private helperService: HelperService,
     private dialog: MatDialog,
-    private sharedStepService: SharedStepService
+    private sharedStepService: SharedStepService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit(): void {
@@ -94,7 +96,21 @@ export class HelperFormComponent implements OnInit {
       }
     });
   }
-
+  patchForm(helper: any) {
+    this.helperForm.patchValue({
+      name: helper.name,
+      role: helper.role,
+      organization: helper.organization,
+      gender: helper.gender,
+      phone: helper.phone,
+      email: helper.email,
+      languages: helper.languages || [],
+      number: helper.number || '',
+      vehicleType: helper.vehicleType,
+      photoPreview: helper.photoUrl,
+      documents: helper.documents || []
+    });
+  }
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
@@ -172,8 +188,14 @@ export class HelperFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.file) {
-        this.selectedDocuments.push(result.file);
+      if (result) {
+        this.helperForm.patchValue({
+          documents: [{
+            type: result.documentType,
+            fileName: result.fileName,
+            file: result.file,
+          }]
+        });
       }
     });
 

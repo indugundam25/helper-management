@@ -48,7 +48,7 @@ const HelperSchema: Schema = new Schema(
     photo: { type: String },
     photoUrl: { type: String },
     photoPublicId: { type: String },
-    empCode: { type: Number, unique: true }, // Auto-incremented
+    empCode: { type: Number, unique: true },
     role: { type: String, required: true },
     organization: { type: String, required: true },
     name: { type: String, required: true },

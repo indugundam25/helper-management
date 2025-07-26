@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HelperService } from './helper.service';
+import { IHelper } from '../models/helper.model';
 
 @Injectable({ providedIn: 'root' })
 export class FilterService {
@@ -48,6 +49,16 @@ export class FilterService {
         });
 
         this.helperService._users.set(filtered);
+    }
+
+    editHelperSignal = signal<IHelper | null>(null);
+
+    setHelper(helper: IHelper) {
+        this.editHelperSignal.set(helper);
+    }
+
+    clearHelper() {
+        this.editHelperSignal.set(null);
     }
 
 

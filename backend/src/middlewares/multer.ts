@@ -31,22 +31,18 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
                 const fileUri = getDataUri(file);
                 const result = await cloudinary.uploader.upload(fileUri, {
                     folder: 'helpers/documents',
-                    resource_type: 'auto',
-                    public_id: file.originalname
-                });
-                const previewUrl = cloudinary.url(result.public_id, {
                     resource_type: 'raw',
-                    type: 'upload',
-                    flags: 'attachment:false',
-                    secure: true,
+                    public_id: file.originalname,
                 });
+
                 uploadedDocs.push({
                     type: file.mimetype,
                     fileName: file.originalname,
-                    url: previewUrl,
-                    publicId: result.public_id
+                    url: result.secure_url,
+                    publicId: result.public_id,
                 });
             }
+
             req.body.documents = uploadedDocs;
             console.log(uploadedDocs);
         }
