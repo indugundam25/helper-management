@@ -59,12 +59,6 @@ export class HelperDetailsComponent implements OnChanges {
 
   }
 
-  editHelper() {
-    //   this.helperFormEdit = this.fb.group({
-    //     role: [this.selectedHelper.helperData.role]
-    //   })
-  }
-
   openDoc() {
     if (this.selectedHelper.documents?.length) {
       const dialogRef = this.dialog.open(KYCDocComponent, {

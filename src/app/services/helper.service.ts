@@ -27,9 +27,9 @@ export class HelperService {
   }
 
   getHelper(id: string) {
-    return this.http.get<{ helpers: any }>(`${this.apiUrl}/${id}`);
-
+    return this.http.get<IHelper>(`${this.apiUrl}/${id}`);
   }
+
   getAllHelpers() {
     return this.http.get<{ helpers: any }>(`${this.apiUrl}`);
 
