@@ -18,6 +18,7 @@ export class KYCDocComponent implements OnInit {
   @Input() selectedHelper: any;
   x = X;
   sanitizedUrl: SafeResourceUrl | undefined;
+  message: string = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -26,12 +27,15 @@ export class KYCDocComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.url);
+    if (this.data) {
+      this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.data.url);
+    }
+    else {
+      this.message = "No documents are available";
+    }
   }
 
   close() {
     this.dialogRef.close();
   }
-
-
 }

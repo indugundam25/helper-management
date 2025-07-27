@@ -1,21 +1,18 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { IHelper } from '../models/helper.model';
 
 @Injectable({ providedIn: 'root' })
 export class FilterService {
-    private readonly baseUrl = 'http://localhost:3000/api/helpers';
+    private baseUrl = 'http://localhost:3000/api/helpers';
 
-    constructor(private http: HttpClient, private helperService: HelperService) { }
+    constructor(private helperService: HelperService) { }
 
     users = this.helperService._users;
 
-    sortByName(order: 'asc' | 'desc' = 'asc') {
+    sortByName() {
         const sorted = [...this.users()].sort((a, b) => {
-            return order === 'asc'
-                ? a.name.localeCompare(b.name)
-                : b.name.localeCompare(a.name);
+            return a.name.localeCompare(b.name)
         });
         this.helperService._users.set(sorted);
     }
@@ -27,17 +24,13 @@ export class FilterService {
     }
 
     searchHelpers(keyword: string) {
-        if (keyword.length > 0) {
-            const lowerKeyword = keyword.toLowerCase();
-            const filtered = this.helperService._dupusers().filter(h =>
-                h.name.toLowerCase().includes(lowerKeyword) ||
-                h.phone.toLowerCase().includes(lowerKeyword)
-            );
-            this.helperService._users.set(filtered);  //_dupusers iis the original users without changes
-        }
-        else {
-            this.helperService._users.set(this.helperService._users());
-        }
+        const lowerKeyword = keyword.toLowerCase();
+        const filtered = this.helperService._dupusers().filter(h =>
+            h.name.toLowerCase().includes(lowerKeyword) ||
+            h.phone.toLowerCase().includes(lowerKeyword)
+        );
+        this.helperService._users.set(filtered);  //_dupusers is the original users without changes
+
     }
     filterHelpers(roles: string[], orgs: string[]): void {
         const allHelpers = this.helperService._dupusers();
@@ -60,6 +53,4 @@ export class FilterService {
     clearHelper() {
         this.editHelperSignal.set(null);
     }
-
-
 }

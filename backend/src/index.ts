@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import { connectDB } from './db/connection';
 import helperRoutes from './routes/helper.routes';
 import multer from 'multer';
-const upload = multer({ dest: './uploads' })
 
 dotenv.config();
 

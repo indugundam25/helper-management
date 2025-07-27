@@ -1,8 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiResponse, IHelper } from '../models/helper.model';
+import { IHelper } from '../models/helper.model';
 
 import { signal } from '@angular/core';
 @Injectable({ providedIn: 'root' })
@@ -19,20 +18,20 @@ export class HelperService {
     return this.http.post<{ helpers: any }>(`${this.apiUrl}`, data);
   }
 
-  updateHelper(id: string, helper: IHelper): Observable<ApiResponse<IHelper>> {
-    return this.http.put<ApiResponse<IHelper>>(`${this.apiUrl}/${id}`, helper);
+  updateHelper(id: string, helper: IHelper) {
+    return this.http.put<{ helpers: any }>(`${this.apiUrl}/${id}`, helper);
   }
 
-  deleteHelper(id: string): Observable<any> {
+  deleteHelper(id: string) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  getHelper(id: string): Observable<ApiResponse<IHelper>> {
-    return this.http.get<ApiResponse<IHelper>>(`${this.apiUrl}/${id}`);
+  getHelper(id: string) {
+    return this.http.get<{ helpers: any }>(`${this.apiUrl}/${id}`);
 
   }
-  getAllHelpers(): Observable<ApiResponse<IHelper[]>> {
-    return this.http.get<ApiResponse<IHelper[]>>(`${this.apiUrl}`);
+  getAllHelpers() {
+    return this.http.get<{ helpers: any }>(`${this.apiUrl}`);
 
   }
 

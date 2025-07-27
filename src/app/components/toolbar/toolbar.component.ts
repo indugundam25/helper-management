@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LucideAngularModule, Funnel, Download, ArrowDownUp, Calendar, Search, X } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
@@ -29,8 +29,6 @@ export class ToolbarComponent implements OnInit {
   searchText = '';
   helpersCount = 0;
 
-  @Output() addHelperClicked = new EventEmitter<void>();
-  @Input() count: number = 0;
   helpers: IHelper[] = [];
   typedText: string = '';
 
@@ -45,13 +43,8 @@ export class ToolbarComponent implements OnInit {
     this.helperService.getAllUsers();
   }
 
-  onAddHelper() {
-    this.addHelperClicked.emit();
-    console.log(this.helperService._users());
-  }
-
   sortHelper() {
-    this.filterService.sortByName('asc');
+    this.filterService.sortByName();
   }
 
   sortByID() {
@@ -61,8 +54,11 @@ export class ToolbarComponent implements OnInit {
     const input = document.getElementById('text') as HTMLInputElement;
     this.typedText = input?.value ?? '';
 
-    if (this.typedText.length) {
+    if (this.typedText.length > 0) {
       this.filterService.searchHelpers(this.typedText);
+    }
+    else {
+      this.helperService._users.set(this.helperService._dupusers());
     }
   }
 

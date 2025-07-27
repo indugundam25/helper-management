@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LucideAngularModule, Trash2, X } from 'lucide-angular';
 @Component({
@@ -8,7 +8,7 @@ import { LucideAngularModule, Trash2, X } from 'lucide-angular';
   templateUrl: './delete-confirmation.component.html',
   styleUrl: './delete-confirmation.component.scss'
 })
-export class DeleteConfirmationComponent implements OnInit {
+export class DeleteConfirmationComponent {
 
   trash = Trash2;
   x = X;
@@ -17,9 +17,6 @@ export class DeleteConfirmationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
-  ngOnInit(): void {
-    console.log("Hello")
-  }
   closeClick() {
     this.dialogRef.close(false);
   }

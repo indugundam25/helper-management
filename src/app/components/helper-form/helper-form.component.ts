@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, effect } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -152,7 +152,6 @@ export class HelperFormComponent implements OnInit {
     const helperData = { ...this.helperForm.value };
     delete helperData.photoPreview;
     formData.append('helperData', JSON.stringify(helperData));
-
     const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
       width: '350px',
       disableClose: true,

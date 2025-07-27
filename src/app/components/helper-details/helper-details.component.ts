@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from '../../services/helper.service';
 import { RouterLink } from '@angular/router';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -31,7 +31,6 @@ export class HelperDetailsComponent implements OnChanges {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
   }
   trashHelper(): void {
-    console.log("Helper deleted");
     const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '500px',
       disableClose: true,
@@ -44,8 +43,6 @@ export class HelperDetailsComponent implements OnChanges {
       if (confirmed) {
         this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
           next: () => {
-            console.log("Helper deleted successfully");
-
             const updatedHelpers = this.helperService._users().filter(
               h => h._id !== this.selectedHelper._id
             );
@@ -71,14 +68,18 @@ export class HelperDetailsComponent implements OnChanges {
   openDoc() {
     if (this.selectedHelper.documents?.length) {
       const dialogRef = this.dialog.open(KYCDocComponent, {
-        width: '800px',
+        width: '600px',
         disableClose: true,
         data: {
           url: this.selectedHelper.documents[0].url
         }
       });
     } else {
-      console.error('No document available');
+      // console.error('No document available');
+      const dialogRef = this.dialog.open(KYCDocComponent, {
+        width: '600px',
+        disableClose: true,
+      });
     }
   }
 

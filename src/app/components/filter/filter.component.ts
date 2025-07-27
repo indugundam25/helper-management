@@ -39,8 +39,6 @@ export class FilterComponent {
       : this.selectedOrgs.length === this.orgs.length;
   }
 
-
-
   resetFilters(): void {
     this.selectedRoles = [];
     this.selectedOrgs = [];

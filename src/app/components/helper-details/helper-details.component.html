@@ -1,4 +1,4 @@
-<div class="helper-details-container" *ngIf="selectedHelper; else noHelper">
+<div class="helper-details-container" *ngIf="helper; else noHelper">
   <div class="profile-header">
     <div class="profile-card">
       <ng-container *ngIf="helper.photoUrl; else initialsBlock">
@@ -10,8 +10,8 @@
         </div>
       </ng-template>
       <div class="profile-info">
-        <h2 class="profile-name">{{ selectedHelper.name }}</h2>
-        <p class="profile-role">{{ selectedHelper.role }}</p>
+        <h2 class="profile-name">{{ helper.name }}</h2>
+        <p class="profile-role">{{ helper.role }}</p>
       </div>
       <div class="edit-buttons">
         <a [routerLink]='["addHelper"]'>
@@ -34,7 +34,7 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Employee code</p>
-        <p class="value emp">{{selectedHelper.empCode}}</p>
+        <p class="value emp">{{helper.empCode}}</p>
       </div>
     </div>
   </div>
@@ -46,24 +46,24 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Gender</p>
-        <p class="value">{{ selectedHelper.gender }}</p>
+        <p class="value">{{ helper.gender }}</p>
       </div>
       <div class="info-item">
         <p class="label">Language(s)</p>
-        <p class="value">{{ selectedHelper.languages?.join(', ') }}</p>
+        <p class="value">{{ helper.languages?.join(', ') }}</p>
       </div>
       <div class="info-item">
         <p class="label">Mobile no</p>
-        <p class="value">{{ selectedHelper.phone }}</p>
+        <p class="value">{{ helper.phone }}</p>
       </div>
       <div class="info-item">
         <p class="label">Email</p>
-        <p class="value">{{ selectedHelper.email || '-' }}</p>
+        <p class="value">{{ helper.email || '-' }}</p>
       </div>
       <div class="info-item">
         <p class="label">KYC Document</p>
         <div class="viewdoc">
-          <button mat-raised-button color="primary" class="value view-button" (click)="openDoc()">
+          <button class="view-button" (click)="openDoc()">
             <lucide-icon [name]="eye"></lucide-icon>&nbsp;&nbsp;view
           </button>
         </div>
@@ -80,15 +80,15 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Type</p>
-        <p class="value">{{ selectedHelper.role }}</p>
+        <p class="value">{{ helper.role }}</p>
       </div>
       <div class="info-item">
         <p class="label">Organization</p>
-        <p class="value">{{ selectedHelper.organization }}</p>
+        <p class="value">{{ helper.organization }}</p>
       </div>
       <div class="info-item">
         <p class="label">Joined on</p>
-        <p class="value">{{ selectedHelper.createdAt | date: 'dd-MM-yyyy' }}</p>
+        <p class="value">{{ helper.createdAt | date: 'dd-MM-yyyy' }}</p>
       </div>
     </div>
   </div>

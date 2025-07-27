@@ -44,9 +44,7 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
             }
 
             req.body.documents = uploadedDocs;
-            console.log(uploadedDocs);
         }
-
         next();
     } catch (err) {
         console.error('Cloudinary Upload Error:', err);

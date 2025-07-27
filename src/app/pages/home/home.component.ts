@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { HelperListComponent } from '../../components/helper-list/helper-list.component';
 import { HelperDetailsComponent } from '../../components/helper-details/helper-details.component';
@@ -14,9 +14,9 @@ import { HelperService } from '../../services/helper.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  showHelperForm = false;
   selectedHelper: IHelper | null = null;
   helpers: IHelper[] = [];
+  chevronleft = ChevronLeft;
 
   constructor(private helperService: HelperService) { }
 
@@ -33,15 +33,8 @@ export class HomeComponent {
       }
     });
   }
-
-  toggleHelperForm() {
-    this.showHelperForm = !this.showHelperForm;
-  }
-
-  readonly chevronleft = ChevronLeft;
-
   onHelperSelected(helper: IHelper) {
-    this.selectedHelper = helper;
+    this.selectedHelper = helper;   //emitted from cardclick()
   }
 
 }

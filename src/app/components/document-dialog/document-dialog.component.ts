@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
@@ -11,12 +11,11 @@ import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
   styleUrl: './document-dialog.component.scss'
 })
 export class DocumentDialogComponent {
-  readonly cloudUpload = CloudUpload;
-  readonly x = X;
+  cloudUpload = CloudUpload;
+  x = X;
 
   selectedFile?: File;
   selectedDocumentType: string = 'aadhar';
-  previewUrl: string | ArrayBuffer | null = null;
   @Output() fileSelected = new EventEmitter<any>();
   constructor(
     private dialogRef: MatDialogRef<DocumentDialogComponent>,
@@ -28,9 +27,6 @@ export class DocumentDialogComponent {
     const file = input.files?.[0];
     if (file) {
       this.selectedFile = file;
-      const reader = new FileReader();
-      reader.onload = () => (this.previewUrl = reader.result);
-      reader.readAsDataURL(file);
     }
   }
 
@@ -48,7 +44,7 @@ export class DocumentDialogComponent {
         documentType: this.selectedDocumentType,
         file: this.selectedFile,
         fileName: this.selectedFile.name,
-      });
+      }); //stores this data when dialogRef.afterClosed() is used.  This data is the result
     }
   }
 
