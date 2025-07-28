@@ -20,28 +20,8 @@ export class HelperController {
 
   static async getHelpers(req: Request, res: Response) {
     try {
-      const { filter = {}, sort = {}, search = '', page = 1 }: any = req.query;
-      let mongoFilter = { ...filter };
-
-      if (search) {
-        mongoFilter = {
-          ...mongoFilter,
-          $or: [
-            { name: { $regex: search, $options: 'i' } },
-            { role: { $regex: search, $options: 'i' } },
-            { organization: { $regex: search, $options: 'i' } },
-            { phone: { $regex: search, $options: 'i' } },
-            { email: { $regex: search, $options: 'i' } },
-          ],
-        };
-      }
-
-      const skip = (Number(page) - 1);
-      const helpers = await Helper.find(mongoFilter)
-        .sort(sort)
-        .skip(skip);
-      const total = await Helper.countDocuments(mongoFilter);
-      res.json({ helpers, total });
+      const helpers = await Helper.find()
+      res.json({ helpers });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       res.status(500).json({ error: message });

@@ -9,7 +9,7 @@ export interface IHelper {
     _id?: string;
     photo?: string;
     photoUrl?: string;
-    empId: number;
+    empCode: number;
     role: string;
     organization: string;
     name: string;

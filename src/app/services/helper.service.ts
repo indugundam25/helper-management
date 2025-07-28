@@ -13,9 +13,10 @@ export class HelperService {
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
-
+  // uploading = false;
   addHelper(data: FormData) {
-    return this.http.post<{ helpers: any }>(`${this.apiUrl}`, data);
+    // this.uploading = true
+    return this.http.post<{ helpers: IHelper }>(`${this.apiUrl}`, data);
   }
 
   updateHelper(id: string, helper: IHelper) {

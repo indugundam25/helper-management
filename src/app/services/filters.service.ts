@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HelperService } from './helper.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root' }) //we can create instances for this service in other components
 export class FilterService {
 
     constructor(private helperService: HelperService) { }

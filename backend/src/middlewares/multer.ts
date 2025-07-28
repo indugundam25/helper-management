@@ -2,6 +2,7 @@ import multer from 'multer';
 import { Request, Response, NextFunction } from 'express';
 import cloudinary from '../config/cloudinary';
 import { getDataUri } from '../utils/dataUri';
+import path from 'path';
 
 
 const storage = multer.memoryStorage(); //creating a storage engine
@@ -29,10 +30,12 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
             const uploadedDocs = [];
             for (const file of files.documents) {
                 const fileUri = getDataUri(file);
+                const filenameWithoutExt = path.parse(file.originalname).name;
                 const result = await cloudinary.uploader.upload(fileUri, {
                     folder: 'helpers/documents',
-                    resource_type: 'raw',
-                    public_id: file.originalname,
+                    resource_type: 'auto',
+                    // public_id: file.originalname,
+                    public_id: filenameWithoutExt,
                 });
 
                 uploadedDocs.push({

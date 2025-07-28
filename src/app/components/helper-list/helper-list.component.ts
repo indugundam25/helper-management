@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IHelper } from '../../models/helper.model';
+// import { IHelper } from '../../models/helper.model';
+import { IHelper } from '../../../../backend/src/models/helper.model';
 import { HelperService } from '../../services/helper.service';
 
 @Component({

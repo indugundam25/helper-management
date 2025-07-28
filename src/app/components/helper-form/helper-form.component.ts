@@ -13,10 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
-import { HelperDetailsComponent } from '../helper-details/helper-details.component';
 import { SharedStepService } from '../../services/shared.service';
 import { LucideAngularModule, Plus } from 'lucide-angular';
-import { FilterService } from '../../services/filters.service';
 
 @Component({
   standalone: true,
@@ -34,9 +32,7 @@ import { FilterService } from '../../services/filters.service';
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DocumentDialogComponent,
     LucideAngularModule,
-    HelperDetailsComponent
   ]
 })
 export class HelperFormComponent implements OnInit {
@@ -63,9 +59,7 @@ export class HelperFormComponent implements OnInit {
     private helperService: HelperService,
     private dialog: MatDialog,
     private sharedStepService: SharedStepService,
-    private filterService: FilterService
   ) { }
-
   ngOnInit(): void {
     this.helperForm = this.fb.group({
       photoUrl: [''],
@@ -152,16 +146,18 @@ export class HelperFormComponent implements OnInit {
     const helperData = { ...this.helperForm.value };
     delete helperData.photoPreview;
     formData.append('helperData', JSON.stringify(helperData));
-    const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
-      width: '350px',
-      disableClose: true,
-      data: { name: this.helperForm.value.name }
-    });
 
     this.helperService.addHelper(formData).subscribe({
       next: (response) => {
         const users = [this.helperService._users(), response];
         this.helperService._users.set(users);
+
+        const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
+          width: '350px',
+          disableClose: true,
+          data: { name: this.helperForm.value.name }
+        });
+
         dialogRef.afterClosed().subscribe(() => {
           this.helperAdded.emit(response.helpers._id);
         });
@@ -192,12 +188,11 @@ export class HelperFormComponent implements OnInit {
           documents: [{
             type: result.documentType,
             fileName: result.fileName,
-            file: result.file,
           }]
         });
+        this.selectedDocuments.push(result.file);
       }
     });
-
   }
 
   nextStep(): void {
