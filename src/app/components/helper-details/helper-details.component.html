@@ -1,20 +1,20 @@
-<div class="helper-details-container" *ngIf="helper; else noHelper">
+<div class="helper-details-container" *ngIf="helperService._selectedHelper(); else noHelper">
   <div class="profile-header">
     <div class="profile-card">
-      <ng-container *ngIf="helper.photoUrl; else initialsBlock">
-        <img [src]="helper.photoUrl" alt="Profile Photo" class="profile-img" />
+      <ng-container *ngIf="helperService._selectedHelper().photoUrl; else initialsBlock">
+        <img [src]="helperService._selectedHelper().photoUrl" alt="Profile Photo" class="profile-img" />
       </ng-container>
       <ng-template #initialsBlock>
         <div class="profile-img initials-avatar">
-          {{ getInitials(helper.name) }}
+          {{ getInitials(helperService._selectedHelper().name) }}
         </div>
       </ng-template>
       <div class="profile-info">
-        <h2 class="profile-name">{{ helper.name }}</h2>
-        <p class="profile-role">{{ helper.role }}</p>
+        <h2 class="profile-name">{{ helperService._selectedHelper().name }}</h2>
+        <p class="profile-role">{{ helperService._selectedHelper().role }}</p>
       </div>
       <div class="edit-buttons">
-        <a [routerLink]="['/editHelper', helper._id]">
+        <a [routerLink]="['/editHelper', helperService._selectedHelper()._id]">
           <button type="button" class="edit-btn">
             <lucide-icon [name]="pencil"></lucide-icon>
           </button>
@@ -34,7 +34,7 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Employee code</p>
-        <p class="value emp">{{helper.empCode}}</p>
+        <p class="value emp">{{helperService._selectedHelper().empCode}}</p>
       </div>
     </div>
   </div>
@@ -46,19 +46,19 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Gender</p>
-        <p class="value">{{ helper.gender }}</p>
+        <p class="value">{{ helperService._selectedHelper().gender }}</p>
       </div>
       <div class="info-item">
         <p class="label">Language(s)</p>
-        <p class="value">{{ helper.languages?.join(', ') }}</p>
+        <p class="value">{{ helperService._selectedHelper().languages?.join(', ') }}</p>
       </div>
       <div class="info-item">
         <p class="label">Mobile no</p>
-        <p class="value">{{ helper.phone }}</p>
+        <p class="value">{{ helperService._selectedHelper().phone }}</p>
       </div>
       <div class="info-item">
         <p class="label">Email</p>
-        <p class="value">{{ helper.email || '-' }}</p>
+        <p class="value">{{ helperService._selectedHelper().email || '-' }}</p>
       </div>
       <div class="info-item">
         <p class="label">KYC Document</p>
@@ -80,20 +80,20 @@
     <div class="info-flex">
       <div class="info-item">
         <p class="label">Type</p>
-        <p class="value">{{ helper.role }}</p>
+        <p class="value">{{ helperService._selectedHelper().role }}</p>
       </div>
       <div class="info-item">
         <p class="label">Organization</p>
-        <p class="value">{{ helper.organization }}</p>
+        <p class="value">{{ helperService._selectedHelper().organization }}</p>
       </div>
       <div class="info-item">
         <p class="label">Joined on</p>
-        <p class="value">{{ helper.createdAt | date: 'dd-MM-yyyy' }}</p>
+        <p class="value">{{ helperService._selectedHelper().createdAt | date: 'dd-MM-yyyy' }}</p>
       </div>
     </div>
   </div>
 </div>
 
 <ng-template #noHelper>
-  <p>No helper selected.</p>
+  <p>No Helper selected.</p>
 </ng-template>

@@ -1,10 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HelperService } from './helper.service';
-import { IHelper } from '../models/helper.model';
 
 @Injectable({ providedIn: 'root' })
 export class FilterService {
-    private baseUrl = 'http://localhost:3000/api/helpers';
 
     constructor(private helperService: HelperService) { }
 
@@ -15,12 +13,14 @@ export class FilterService {
             return a.name.localeCompare(b.name)
         });
         this.helperService._users.set(sorted);
+        this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
 
     sortByID() {
         this.helperService._users.set(
             this.users().sort((a, b) => a.empCode - b.empCode)
         )
+        this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
 
     searchHelpers(keyword: string) {
@@ -29,8 +29,8 @@ export class FilterService {
             h.name.toLowerCase().includes(lowerKeyword) ||
             h.phone.toLowerCase().includes(lowerKeyword)
         );
-        this.helperService._users.set(filtered);  //_dupusers is the original users without changes
-
+        this.helperService._users.set(filtered);
+        this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
     filterHelpers(roles: string[], orgs: string[]): void {
         const allHelpers = this.helperService._dupusers();
@@ -42,15 +42,6 @@ export class FilterService {
         });
 
         this.helperService._users.set(filtered);
-    }
-
-    editHelperSignal = signal<IHelper | null>(null);
-
-    setHelper(helper: IHelper) {
-        this.editHelperSignal.set(helper);
-    }
-
-    clearHelper() {
-        this.editHelperSignal.set(null);
+        this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
 }

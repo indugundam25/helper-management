@@ -96,10 +96,6 @@
       <p *ngIf="helperForm.value.documents?.length">
         {{ helperForm.value.documents[0]?.fileName }}
       </p>
-
-      <!-- <mat-error *ngIf="!helperForm.value.documents?.length">
-        Document is required
-      </mat-error> -->
     </div>
 
     <div class="step-controls">
@@ -116,7 +112,6 @@
       <lucide-icon [name]="plus"></lucide-icon>
     </label>
     <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
-    <!-- <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div> -->
   </div>
 
   <div class="step-controls">

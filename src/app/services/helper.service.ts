@@ -1,14 +1,14 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IHelper } from '../models/helper.model';
-
 import { signal } from '@angular/core';
+
 @Injectable({ providedIn: 'root' })
 export class HelperService {
 
   _users = signal<any[]>([]);
   _dupusers = signal<any[]>([]);
+  _selectedHelper = signal<any>(this._users()[0]);
 
   private apiUrl = 'http://localhost:3000/api/helpers';
 
@@ -35,15 +35,20 @@ export class HelperService {
 
   }
 
-  getAllUsers() {
-    this.getAllHelpers().subscribe({
+  async getAllUsers() {
+    await this.getAllHelpers().subscribe({
       next: (res) => {
         this._users.set(res.helpers);
         this._dupusers.set(res.helpers);
+        this._selectedHelper.set(this._users()[0]);
       },
       error: (error) => {
         console.log(error);
       }
     })
+  }
+
+  onSelecthelper(User: any) {
+    this._selectedHelper.set(User);
   }
 }

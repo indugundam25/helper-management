@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Pencil, Trash, Eye } from 'lucide-angular';
 import { KYCDocComponent } from '../kycdoc/kycdoc.component';
@@ -16,16 +16,14 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './helper-details.component.html',
   styleUrls: ['./helper-details.component.scss']
 })
-export class HelperDetailsComponent implements OnChanges {
+export class HelperDetailsComponent {
   readonly pencil = Pencil;
   readonly trash = Trash;
   readonly eye = Eye;
 
-  @Input() helper: any;
-  // @Input() helperFormEdit!: FormGroup;
   selectedHelper: any;
 
-  constructor(private dialog: MatDialog, private helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) { };
+  constructor(private dialog: MatDialog, public helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) { };
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
@@ -35,18 +33,19 @@ export class HelperDetailsComponent implements OnChanges {
       width: '500px',
       disableClose: true,
       data: {
-        name: this.selectedHelper.name,
-        role: this.selectedHelper.role
+        name: this.helperService._selectedHelper().name,
+        role: this.helperService._selectedHelper().role
       }
     });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.helperService.deleteHelper(this.selectedHelper._id).subscribe({
+        this.helperService.deleteHelper(this.helperService._selectedHelper()._id).subscribe({
           next: () => {
             const updatedHelpers = this.helperService._users().filter(
-              h => h._id !== this.selectedHelper._id
+              h => h._id !== this.helperService._selectedHelper()._id
             );
             this.helperService._users.set(updatedHelpers);
+            this.helperService._selectedHelper.set(this.helperService._users()[0]);
 
             this.toastr.success('Helper deleted successfully');
           },
@@ -60,26 +59,19 @@ export class HelperDetailsComponent implements OnChanges {
   }
 
   openDoc() {
-    if (this.selectedHelper.documents?.length) {
+    if (this.helperService._selectedHelper().documents?.length) {
       const dialogRef = this.dialog.open(KYCDocComponent, {
         width: '600px',
         disableClose: true,
         data: {
-          url: this.selectedHelper.documents[0].url
+          url: this.helperService._selectedHelper().documents[0].url
         }
       });
     } else {
-      // console.error('No document available');
       const dialogRef = this.dialog.open(KYCDocComponent, {
         width: '600px',
         disableClose: true,
       });
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['helper']) {
-      this.selectedHelper = this.helper || null;
     }
   }
 }

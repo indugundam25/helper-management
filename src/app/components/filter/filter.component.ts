@@ -44,6 +44,8 @@ export class FilterComponent {
     this.selectedOrgs = [];
     this.dialogRef.close();
     this.helperService._users.set(this.helperService._dupusers());
+    this.helperService.onSelecthelper(this.helperService._users()[0]);
+
   }
 
   applyFilters(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { LucideAngularModule, Funnel, Download, ArrowDownUp, Calendar, Search, X } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,20 +27,13 @@ export class ToolbarComponent implements OnInit {
   x = X;
   isTouched = false;
   searchText = '';
-  helpersCount = 0;
-
   helpers: IHelper[] = [];
   typedText: string = '';
 
-  constructor(private dialog: MatDialog, private helperService: HelperService, private filterService: FilterService) { };
+  constructor(private dialog: MatDialog, public helperService: HelperService, private filterService: FilterService) { };
 
-  async ngOnInit(): Promise<void> {
-    this.helperService.getAllHelpers().subscribe((response) => {
-      if (response?.helpers) {
-        this.helpersCount = response.helpers.length;
-      }
-    });
-    this.helperService.getAllUsers();
+  async ngOnInit() {
+    await this.helperService.getAllUsers();
   }
 
   sortHelper() {
@@ -59,6 +52,7 @@ export class ToolbarComponent implements OnInit {
     }
     else {
       this.helperService._users.set(this.helperService._dupusers());
+      this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
   }
 
@@ -68,6 +62,7 @@ export class ToolbarComponent implements OnInit {
       inputEl.value = '';
       this.helperService._users.set(this.helperService._dupusers());
     }
+    this.helperService.onSelecthelper(this.helperService._users()[0]);
   }
   filterHelpers() {
     const dialogRef = this.dialog.open(FilterComponent, {

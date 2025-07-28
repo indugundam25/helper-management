@@ -54,12 +54,12 @@ export class EditHelperComponent implements OnInit {
     if (id) {
       this.helperService.getHelper(id).subscribe(helper => {
         this.helperData = helper;
-        this.initForm();
+        this.patchForm();
       });
     }
   }
 
-  initForm() {
+  patchForm() {
     this.editForm = this.fb.group({
       name: [this.helperData?.name, Validators.required],
       role: [this.helperData?.role, Validators.required],

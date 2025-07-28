@@ -4,7 +4,6 @@ import { HelperListComponent } from '../../components/helper-list/helper-list.co
 import { HelperDetailsComponent } from '../../components/helper-details/helper-details.component';
 import { ChevronLeft } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
-import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -14,28 +13,10 @@ import { HelperService } from '../../services/helper.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  selectedHelper: IHelper | null = null;
   helpers: IHelper[] = [];
   chevronleft = ChevronLeft;
 
-  constructor(private helperService: HelperService) { }
-
-  ngOnInit() {
-    this.loadHelpers();
-  }
-
-  async loadHelpers() {
-    this.helperService.getAllHelpers().subscribe((res) => {
-      this.helpers = res.helpers;
-      if (this.helpers.length > 0) {
-        // this.selectedHelper = this.helperService._users()[0];
-        this.selectedHelper = this.helpers[0];
-      }
-    });
-  }
-  onHelperSelected(helper: IHelper) {
-    this.selectedHelper = helper;   //emitted from cardclick()
-  }
+  constructor() { }
 
 }
 
