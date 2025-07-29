@@ -46,7 +46,6 @@ export class TrackDetailsComponent implements OnInit, AfterViewInit {
       this.step = currentStep;
       console.log('Step received in TrackDetails:', this.step);
 
-      // step - 1 because stepper index is 0-based
       if (this.stepper) {
         this.stepper.selectedIndex = this.step - 1;
       }
@@ -54,7 +53,6 @@ export class TrackDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Optional: set the initial step when view initializes
     this.stepper.selectedIndex = this.step - 1;
   }
 }

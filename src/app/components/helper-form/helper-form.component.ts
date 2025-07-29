@@ -184,6 +184,7 @@ export class HelperFormComponent implements OnInit {
         }
       });
     }
+
     if (this.helperForm.invalid) {
       this.helperForm.markAllAsTouched();
       return;
@@ -215,12 +216,16 @@ export class HelperFormComponent implements OnInit {
         const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
           width: '350px',
           disableClose: true,
-          data: { name: this.helperForm.value.name }
+          data: {
+            name: this.helperForm.value.name,
+            helper: this.helperForm.value
+          }
         });
 
         dialogRef.afterClosed().subscribe(() => {
           this.helperAdded.emit(response.helpers._id);
         });
+
       },
       error: (err) => {
         console.error('Failed to add helper:', err);

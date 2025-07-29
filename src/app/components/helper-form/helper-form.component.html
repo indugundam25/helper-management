@@ -171,7 +171,7 @@
           Save
         </ng-container>
 
-        <span *ngIf="isLoading" class="loading-container">
+        <span *ngIf="isLoading && !this.helperService.isEditMode" class="loading-container">
           <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
           <span class="loading-text">Adding...</span>
         </span>

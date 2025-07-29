@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
+import { IdCardComponent } from '../id-card/id-card.component';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-helper-success-dialog',
@@ -8,10 +10,7 @@ import { RouterLink } from '@angular/router';
     <div class="dialog-content">
      <img src="assets/success.gif" alt="Success Animation" />
       <p>{{data.name}} added</p>
-      <a [routerLink]='[""]'>
-     <button mat-raised-button color="primary" (click)="close()">OK</button>
-     </a>
-
+     <button mat-raised-button color="primary" (click)="openId()">OK</button>
     </div>
   `,
   styles: [
@@ -39,13 +38,24 @@ import { RouterLink } from '@angular/router';
 })
 export class HelperSuccessDialogComponent {
 
+  currentHelper: any;
   constructor(
-    private dialogRef: MatDialogRef<HelperSuccessDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }
-  ) { }
+    private dialog: MatDialog,
+    private helperService: HelperService,
+    private dialogRef: MatDialogRef<HelperSuccessDialogComponent, IdCardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      helper: any; name: string
+    }
+  ) { this.currentHelper = data.helper; }
 
-
-  close() {
+  openId() {
+    const dialogRef = this.dialog.open(IdCardComponent, {
+      width: '700px',
+      disableClose: true,
+      data: {
+        presentHelper: this.currentHelper
+      }
+    });
     this.dialogRef.close();
   }
 

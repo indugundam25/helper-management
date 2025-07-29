@@ -1,0 +1,52 @@
+<div class="header">
+    <h3>Employee ID</h3>
+    <button class="close" (click)="closeAndNavigateHome()" aria-label="Close">
+        <lucide-icon [name]="x"></lucide-icon>
+    </button>
+</div>
+<div class="container">
+    <div class="left">
+        <div class="profile-image">
+            <img [src]="data.presentHelper.photoPreview" alt="Profile Photo" />
+        </div>
+        <div class="details">
+            <h3 class="name">{{data.presentHelper.name}}</h3>
+            <p class="role">{{data.presentHelper.role}}</p>
+            <p class="emp-id">{{data.presentHelper.empId}}</p>
+        </div>
+        <div class="address">
+            <p>ASBL SPRINGS</p>
+            <p>PSR prime towers</p>
+            <p>Hyderabad, Telangana</p>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="emp-details">
+            <div class="row">
+                <span class="title">Organization</span>
+                <span class="colon">:</span>
+                <span class="value">{{ data.presentHelper.organization }}</span>
+            </div>
+            <div class="row">
+                <span class="title">Emp ID</span>
+                <span class="colon">:</span>
+                <span class="value">{{ data.presentHelper.empId || '20045' }}</span>
+            </div>
+            <div class="row">
+                <span class="title">Phone Number</span>
+                <span class="colon">:</span>
+                <span class="value">{{ data.presentHelper.phone }}</span>
+            </div>
+            <div class="row">
+                <span class="title">Joined on</span>
+                <span class="colon">:</span>
+                <span class="value">{{ data.presentHelper.joinedOn || '29-07-2025' }}</span>
+            </div>
+        </div>
+        <div id="qrcode-container"></div>
+        <div class="message">
+            <p>Unauthorised use of someone else's card could be considered legal offence</p>
+        </div>
+    </div>
+</div>
