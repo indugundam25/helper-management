@@ -4,6 +4,7 @@ import { HelperFormComponent } from '../../components/helper-form/helper-form.co
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, ChevronLeft } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-add-helper',
@@ -16,6 +17,7 @@ export class AddHelperComponent {
   readonly chevronleft = ChevronLeft;
   step: number = 1;
 
+  constructor(public helperService: HelperService) { };
   updateStep(step: number) {
     this.step = step;
   }

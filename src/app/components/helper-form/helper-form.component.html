@@ -164,8 +164,11 @@
     <div class="step-controls">
       <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid || isLoading">
-        <ng-container *ngIf="!isLoading">
+        <ng-container *ngIf="!isLoading && !this.helperService.isEditMode">
           Add Helper
+        </ng-container>
+        <ng-container *ngIf="this.helperService.isEditMode">
+          Save
         </ng-container>
 
         <span *ngIf="isLoading" class="loading-container">
@@ -173,10 +176,6 @@
           <span class="loading-text">Adding...</span>
         </span>
       </button>
-
-
-
-
     </div>
   </form>
 </div>

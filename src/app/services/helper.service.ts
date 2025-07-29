@@ -9,13 +9,11 @@ export class HelperService {
   _users = signal<any[]>([]);
   _dupusers = signal<any[]>([]);
   _selectedHelper = signal<any>(this._users()[0]);
-
+  isEditMode = false;
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
-  // isLoading = false;
   addHelper(data: FormData) {
-    // this.isLoading = true;
     return this.http.post<{ helpers: IHelper }>(`${this.apiUrl}`, data);
   }
 

@@ -22,8 +22,9 @@ export class HelperDetailsComponent {
   readonly eye = Eye;
 
   selectedHelper: any;
-
-  constructor(private dialog: MatDialog, public helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) { };
+  constructor(private dialog: MatDialog, public helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) {
+    // this.helperService.isEditMode = true;
+  };
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';

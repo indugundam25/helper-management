@@ -31,7 +31,7 @@
   <div class="right-buttons">
     <button type="button" class="download-btn"><lucide-icon [name]="download"></lucide-icon></button>
     <a [routerLink]='["addHelper"]'>
-      <button type="button" class="add-btn">
+      <button type="button" class="add-btn" (click)="this.helperService.isEditMode = false">
         <span class="plus-icon">+</span>Add Helper
       </button>
     </a>

@@ -14,11 +14,11 @@
         <p class="profile-role">{{ helperService._selectedHelper().role }}</p>
       </div>
       <div class="edit-buttons">
-        <a [routerLink]="['/editHelper', helperService._selectedHelper()._id]">
-          <button type="button" class="edit-btn">
-            <lucide-icon [name]="pencil"></lucide-icon>
-          </button>
-        </a>
+        <button type="button" class="edit-btn" (click)="this.helperService.isEditMode = true"
+          [routerLink]="['/editHelper', helperService._selectedHelper()._id]">
+          <lucide-icon [name]="pencil"></lucide-icon>
+        </button>
+
         <button type="button" class="trash-btn" (click)="trashHelper()">
           <lucide-icon [name]="trash"></lucide-icon>
         </button>
