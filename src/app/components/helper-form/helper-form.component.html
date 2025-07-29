@@ -163,7 +163,20 @@
     </div>
     <div class="step-controls">
       <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid">Add Helper</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid || isLoading">
+        <ng-container *ngIf="!isLoading">
+          Add Helper
+        </ng-container>
+
+        <span *ngIf="isLoading" class="loading-container">
+          <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
+          <span class="loading-text">Adding...</span>
+        </span>
+      </button>
+
+
+
+
     </div>
   </form>
 </div>

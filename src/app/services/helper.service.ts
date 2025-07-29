@@ -13,9 +13,9 @@ export class HelperService {
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
-  // uploading = false;
+  // isLoading = false;
   addHelper(data: FormData) {
-    // this.uploading = true
+    // this.isLoading = true;
     return this.http.post<{ helpers: IHelper }>(`${this.apiUrl}`, data);
   }
 
@@ -36,8 +36,8 @@ export class HelperService {
 
   }
 
-  async getAllUsers() {
-    await this.getAllHelpers().subscribe({
+  getAllUsers() {
+    this.getAllHelpers().subscribe({
       next: (res) => {
         this._users.set(res.helpers);
         this._dupusers.set(res.helpers);

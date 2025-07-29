@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
@@ -33,6 +35,7 @@ import { LucideAngularModule, Plus } from 'lucide-angular';
     ReactiveFormsModule,
     HttpClientModule,
     LucideAngularModule,
+    MatProgressSpinnerModule
   ]
 })
 export class HelperFormComponent implements OnInit {
@@ -40,6 +43,8 @@ export class HelperFormComponent implements OnInit {
   filename: string = '';
   selectedFile: File | undefined;
   selectedDocuments: File[] = [];
+  isLoading = false;
+
 
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
@@ -56,7 +61,7 @@ export class HelperFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private dialog: MatDialog,
     private sharedStepService: SharedStepService,
   ) { }
@@ -69,7 +74,7 @@ export class HelperFormComponent implements OnInit {
       role: ['', Validators.required],
       organization: ['', Validators.required],
       name: ['', Validators.required],
-      languages: [[]],
+      languages: [[], Validators.required],
       gender: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', Validators.email],
@@ -90,21 +95,21 @@ export class HelperFormComponent implements OnInit {
       }
     });
   }
-  patchForm(helper: any) {
-    this.helperForm.patchValue({
-      name: helper.name,
-      role: helper.role,
-      organization: helper.organization,
-      gender: helper.gender,
-      phone: helper.phone,
-      email: helper.email,
-      languages: helper.languages || [],
-      number: helper.number || '',
-      vehicleType: helper.vehicleType,
-      photoPreview: helper.photoUrl,
-      documents: helper.documents || []
-    });
-  }
+  // patchForm(helper: any) {
+  //   this.helperForm.patchValue({
+  //     name: helper.name,
+  //     role: helper.role,
+  //     organization: helper.organization,
+  //     gender: helper.gender,
+  //     phone: helper.phone,
+  //     email: helper.email,
+  //     languages: helper.languages || [],
+  //     number: helper.number || '',
+  //     vehicleType: helper.vehicleType,
+  //     photoPreview: helper.photoUrl,
+  //     documents: helper.documents || []
+  //   });
+  // }
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
@@ -127,11 +132,15 @@ export class HelperFormComponent implements OnInit {
     }
   }
 
+
+
   onSubmit(): void {
     if (this.helperForm.invalid) {
       this.helperForm.markAllAsTouched();
       return;
     }
+
+    this.isLoading = true;
 
     const formData = new FormData();
 
@@ -152,6 +161,8 @@ export class HelperFormComponent implements OnInit {
         const users = [this.helperService._users(), response];
         this.helperService._users.set(users);
 
+        this.isLoading = false;
+
         const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
           width: '350px',
           disableClose: true,
@@ -164,9 +175,11 @@ export class HelperFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to add helper:', err);
+        this.isLoading = false;
       }
     });
   }
+
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
