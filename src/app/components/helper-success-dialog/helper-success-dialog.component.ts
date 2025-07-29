@@ -39,21 +39,24 @@ import { HelperService } from '../../services/helper.service';
 export class HelperSuccessDialogComponent {
 
   currentHelper: any;
+  currentEmpCode: any;
+
   constructor(
     private dialog: MatDialog,
     private helperService: HelperService,
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent, IdCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      helper: any; name: string
+      helper: any; name: string; empId: number
     }
-  ) { this.currentHelper = data.helper; }
+  ) { this.currentHelper = data.helper; this.currentEmpCode = data.empId }
 
   openId() {
     const dialogRef = this.dialog.open(IdCardComponent, {
       width: '700px',
       disableClose: true,
       data: {
-        presentHelper: this.currentHelper
+        presentHelper: this.currentHelper,
+        presentEmpCode: this.currentEmpCode
       }
     });
     this.dialogRef.close();

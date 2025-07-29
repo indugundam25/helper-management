@@ -14,7 +14,7 @@ export class HelperService {
 
   constructor(private http: HttpClient) { }
   addHelper(data: FormData) {
-    return this.http.post<{ helpers: IHelper }>(`${this.apiUrl}`, data);
+    return this.http.post<{ helper: IHelper }>(`${this.apiUrl}`, data);
   }
 
   updateHelper(id: string, helper: IHelper) {

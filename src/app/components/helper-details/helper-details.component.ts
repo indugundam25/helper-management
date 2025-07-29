@@ -48,7 +48,7 @@ export class HelperDetailsComponent {
             this.helperService._users.set(updatedHelpers);
             this.helperService._selectedHelper.set(this.helperService._users()[0]);
 
-            this.toastr.success('Helper deleted successfully');
+            this.toastr.error('Helper deleted successfully');
           },
           error: (err) => console.error("Error deleting helper:", err),
         });

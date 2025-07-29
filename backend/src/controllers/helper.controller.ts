@@ -10,6 +10,7 @@ export class HelperController {
       helperData.documents = req.body.documents;
 
       const helper = await Helper.create(helperData); // Helper is the mongoose model
+      console.log(helper);
       res.status(201).json({ helper });  //helper is the data object which contain helper data
       console.log('Incoming helper data:', req.body);
     } catch (err) {

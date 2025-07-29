@@ -54,13 +54,13 @@ export class HelperFormComponent implements OnInit {
   vehicleTypes = ['None', 'Auto', 'Bike', 'Car'];
   showSuccess = false;
 
-  @Output() helperAdded = new EventEmitter<string>();
   @Output() stepOutPut = new EventEmitter<number>();
   @Input() step: number = 1;
   @Input() helperForm!: FormGroup;
   @Input() helperFormEdit!: FormGroup;
   helperData!: IHelper;
-
+  id: number | undefined;
+  date: string | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -208,9 +208,10 @@ export class HelperFormComponent implements OnInit {
 
     this.helperService.addHelper(formData).subscribe({
       next: (response) => {
-        const users = [this.helperService._users(), response];
+        const users = [this.helperService._users(), response]; //adding current helper to existing helpers
         this.helperService._users.set(users);
-
+        this.id = response.helper.empCode;
+        // this.date =response.helper.
         this.isLoading = false;
 
         const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
@@ -218,14 +219,10 @@ export class HelperFormComponent implements OnInit {
           disableClose: true,
           data: {
             name: this.helperForm.value.name,
+            empId: this.id,
             helper: this.helperForm.value
           }
         });
-
-        dialogRef.afterClosed().subscribe(() => {
-          this.helperAdded.emit(response.helpers._id);
-        });
-
       },
       error: (err) => {
         console.error('Failed to add helper:', err);
