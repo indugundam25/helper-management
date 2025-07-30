@@ -4,20 +4,22 @@ import { Router, RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import QRCode from 'qrcode';
 import { CommonModule } from '@angular/common';
+import { IHelper } from '../../models/helper.model';
 @Component({
-  selector: 'app-id-card',
+  selector: 'app-show-id',
   standalone: true,
-  imports: [LucideAngularModule, RouterLink, CommonModule],
-  templateUrl: './id-card.component.html',
-  styleUrl: './id-card.component.scss'
+  imports: [CommonModule, RouterLink, LucideAngularModule],
+  templateUrl: './show-id.component.html',
+  styleUrl: './show-id.component.scss'
 })
-export class IdCardComponent {
+export class ShowIDComponent {
   x = X;
 
   constructor(
     private router: Router,
-    private dialogRef: MatDialogRef<IdCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { presentHelper: any, presentEmpCode: any, presentDate: any, presentID: any }
+    private dialogRef: MatDialogRef<ShowIDComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { helper: IHelper }
+
   ) { this.generateQrCodeDataURLForName() }
 
   closeAndNavigateHome() {
@@ -27,7 +29,8 @@ export class IdCardComponent {
 
   async generateQrCodeDataURLForName() {
     try {
-      const name = this.data.presentHelper.name;
+      const name = this.data.helper.name;
+      console.log(this.data.helper);
       const dataUrl = await QRCode.toDataURL(name);
       const imgElement = document.createElement('img');
       imgElement.src = dataUrl;

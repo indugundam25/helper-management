@@ -37,6 +37,16 @@
         <p class="value emp">{{helperService._selectedHelper().empCode}}</p>
       </div>
     </div>
+    <div class="info-flex">
+      <div class="info-item">
+        <p class="label idlabel">Identification card</p>
+        <div class="viewID">
+          <button class="view-button" (click)="openID()">
+            <lucide-icon [name]="eye"></lucide-icon>&nbsp;&nbsp;view
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="section">
     <div class="title">

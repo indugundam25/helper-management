@@ -61,7 +61,6 @@ export class HelperFormComponent implements OnInit {
   helperData!: IHelper;
   id: number | undefined;
   date: string | undefined;
-
   constructor(
     private fb: FormBuilder,
     public helperService: HelperService,
@@ -211,8 +210,6 @@ export class HelperFormComponent implements OnInit {
         const users = [this.helperService._users(), response]; //adding current helper to existing helpers
         this.helperService._users.set(users);
         this.id = response.helper.empCode;
-        console.log(response.helper);
-        console.log(response)
         this.date = response.helper.createdAt;
         this.isLoading = false;
 
@@ -223,7 +220,7 @@ export class HelperFormComponent implements OnInit {
             name: this.helperForm.value.name,
             empId: this.id,
             date: this.date,
-            helper: this.helperForm.value
+            helper: this.helperForm.value,
           }
         });
       },

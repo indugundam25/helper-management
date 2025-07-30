@@ -18,7 +18,7 @@ export class HelperService {
   }
 
   updateHelper(id: string, helper: IHelper) {
-    return this.http.put<{ helpers: any }>(`${this.apiUrl}/${id}`, helper);
+    return this.http.put<{ helper: any }>(`${this.apiUrl}/${id}`, helper);
   }
 
   deleteHelper(id: string) {

@@ -8,11 +8,12 @@ import { RouterLink } from '@angular/router';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ShowIDComponent } from '../show-id/show-id.component';
 
 @Component({
   selector: 'app-helper-details',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent, RouterLink],
+  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent, RouterLink, ShowIDComponent],
   templateUrl: './helper-details.component.html',
   styleUrls: ['./helper-details.component.scss']
 })
@@ -21,7 +22,6 @@ export class HelperDetailsComponent {
   readonly trash = Trash;
   readonly eye = Eye;
 
-  selectedHelper: any;
   constructor(private dialog: MatDialog, public helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) {
   };
 
@@ -57,7 +57,17 @@ export class HelperDetailsComponent {
     });
 
   }
-
+  openID() {
+    const selectedHelper = this.helperService._selectedHelper();
+    const dialogRef = this.dialog.open(ShowIDComponent, {
+      width: '700px',
+      height: '500px',
+      disableClose: true,
+      data: {
+        helper: selectedHelper
+      }
+    })
+  }
   openDoc() {
     if (this.helperService._selectedHelper().documents?.length) {
       const dialogRef = this.dialog.open(KYCDocComponent, {

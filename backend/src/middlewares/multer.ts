@@ -34,7 +34,6 @@ export const cloudinaryUploadMiddleware = async (req: Request, res: Response, ne
                 const result = await cloudinary.uploader.upload(fileUri, {
                     folder: 'helpers/documents',
                     resource_type: 'auto',
-                    // public_id: file.originalname,
                     public_id: filenameWithoutExt,
                 });
 
