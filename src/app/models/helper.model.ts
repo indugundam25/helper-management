@@ -6,6 +6,7 @@ export interface IDocument {
 }
 
 export interface IHelper {
+    createdAt: string | undefined;
     _id?: string;
     photo?: string;
     photoUrl?: string;

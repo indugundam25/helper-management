@@ -162,7 +162,7 @@
 
     </div>
     <div class="step-controls">
-      <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
+      <button type="button" class="prev-btn" (click)="prevStep()" [disabled]="isLoading">Prev</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid || isLoading">
         <ng-container *ngIf="!isLoading && !this.helperService.isEditMode">
           Add Helper

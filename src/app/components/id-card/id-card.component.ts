@@ -3,10 +3,11 @@ import { LucideAngularModule, X } from 'lucide-angular';
 import { Router, RouterLink } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import QRCode from 'qrcode';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-id-card',
   standalone: true,
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink, CommonModule],
   templateUrl: './id-card.component.html',
   styleUrl: './id-card.component.scss'
 })
@@ -16,7 +17,7 @@ export class IdCardComponent {
   constructor(
     private router: Router,
     private dialogRef: MatDialogRef<IdCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { presentHelper: any, presentEmpCode: any }
+    @Inject(MAT_DIALOG_DATA) public data: { presentHelper: any, presentEmpCode: any, presentDate: any }
   ) { this.generateQrCodeDataURLForName() }
 
   closeAndNavigateHome() {

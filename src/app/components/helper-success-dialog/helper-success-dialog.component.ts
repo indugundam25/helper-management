@@ -40,15 +40,16 @@ export class HelperSuccessDialogComponent {
 
   currentHelper: any;
   currentEmpCode: any;
+  currentDate: any;
 
   constructor(
     private dialog: MatDialog,
     private helperService: HelperService,
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent, IdCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      helper: any; name: string; empId: number
+      helper: any; name: string; empId: number; date: string
     }
-  ) { this.currentHelper = data.helper; this.currentEmpCode = data.empId }
+  ) { this.currentHelper = data.helper; this.currentEmpCode = data.empId, this.currentDate = data.date }
 
   openId() {
     const dialogRef = this.dialog.open(IdCardComponent, {
@@ -56,7 +57,8 @@ export class HelperSuccessDialogComponent {
       disableClose: true,
       data: {
         presentHelper: this.currentHelper,
-        presentEmpCode: this.currentEmpCode
+        presentEmpCode: this.currentEmpCode,
+        presentDate: this.currentDate
       }
     });
     this.dialogRef.close();

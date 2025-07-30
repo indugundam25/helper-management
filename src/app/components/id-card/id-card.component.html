@@ -41,7 +41,8 @@
             <div class="row">
                 <span class="title">Joined on</span>
                 <span class="colon">:</span>
-                <span class="value">{{ data.presentHelper.joinedOn || '29-07-2025' }}</span>
+                <span class="value">{{ data.presentDate ? (data.presentDate | date: 'dd-MM-yyyy') : '' }}</span>
+
             </div>
         </div>
         <div id="qrcode-container"></div>

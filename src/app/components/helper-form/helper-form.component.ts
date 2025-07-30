@@ -211,7 +211,9 @@ export class HelperFormComponent implements OnInit {
         const users = [this.helperService._users(), response]; //adding current helper to existing helpers
         this.helperService._users.set(users);
         this.id = response.helper.empCode;
-        // this.date =response.helper.
+        console.log(response.helper);
+        console.log(response)
+        this.date = response.helper.createdAt;
         this.isLoading = false;
 
         const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
@@ -220,6 +222,7 @@ export class HelperFormComponent implements OnInit {
           data: {
             name: this.helperForm.value.name,
             empId: this.id,
+            date: this.date,
             helper: this.helperForm.value
           }
         });

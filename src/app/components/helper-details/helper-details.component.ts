@@ -23,7 +23,6 @@ export class HelperDetailsComponent {
 
   selectedHelper: any;
   constructor(private dialog: MatDialog, public helperService: HelperService, private fb: FormBuilder, private toastr: ToastrService) {
-    // this.helperService.isEditMode = true;
   };
 
   getInitials(name: string): string {
