@@ -177,6 +177,8 @@ export class HelperFormComponent implements OnInit {
             width: '500px',
             disableClose: true
           });
+          this.sharedStepService.setStep(1);
+          this.step = 1;
         },
         error: (err) => {
           console.error('Update failed:', err);
@@ -223,6 +225,8 @@ export class HelperFormComponent implements OnInit {
             helper: this.helperForm.value,
           }
         });
+        this.sharedStepService.setStep(1);
+        this.step = 1;
       },
       error: (err) => {
         console.error('Failed to add helper:', err);

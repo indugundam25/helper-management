@@ -1,14 +1,39 @@
 <form class="helper-form">
   <div class="left-section">
-    <button type="button" class="filter-btn" matButton [matMenuTriggerFor]="sort"><lucide-icon
-        [name]="arrowDownUp"></lucide-icon></button>
+    <button type="button" class="filter-btn" matButton [matMenuTriggerFor]="sort">
+      <lucide-icon [name]="arrowDownUp"></lucide-icon>
+    </button>
     <mat-menu #sort="matMenu">
       <button mat-menu-item (click)="sortHelper()">Helpers Name(A-Z)</button>
       <button mat-menu-item (click)="sortByID()">Employee ID</button>
     </mat-menu>
-    <button type="button" class="sort-btn" (click)="filterHelpers()"><lucide-icon
-        [name]="funnel"></lucide-icon></button>
-    <button type="button" class="calendar-btn"><lucide-icon [name]="calendar"></lucide-icon></button>
+    <button type="button" class="sort-btn" (click)="filterHelpers()">
+      <lucide-icon [name]="funnel"></lucide-icon>
+    </button>
+    <button mat-icon-button (click)="toggleDateFilterPanel()">
+      <lucide-icon [name]="calendar"></lucide-icon>
+    </button>
+
+    <div class="date-filter-panel" *ngIf="showDateFilter">
+      <mat-form-field appearance="outline">
+        <mat-label>From Date</mat-label>
+        <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" name="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>To Date</mat-label>
+        <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" name="toDate">
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="date-filter-actions">
+        <button class="filter-button" (click)="applyDateFilter()">Filter</button>
+        <button class="reset-button" (click)="resetDateFilter()">Reset</button>
+      </div>
+    </div>
 
     <div class="input-wrapper">
       <input type="text" id="text" placeholder="Name, Employee ID, Role" (focus)="isTouched = true"

@@ -44,4 +44,24 @@ export class FilterService {
         this.helperService._users.set(filtered);
         this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
+
+    filterHelpersByDate(from: Date, to: Date): void {
+        const fromDate = new Date(from);
+        fromDate.setHours(0, 0, 0, 0);
+
+        const toDate = new Date(to);
+        toDate.setHours(23, 59, 59, 999);
+
+        const allHelpers = this.helperService._dupusers();
+
+        const filtered = allHelpers.filter(helper => {
+            const createdAt = new Date(helper.createdAt);
+            return createdAt >= fromDate && createdAt <= toDate;
+        });
+        console.log(filtered);
+        this.helperService._users.set(filtered);
+        this.helperService.onSelecthelper(this.helperService._users()[0]);
+    }
+
+
 }

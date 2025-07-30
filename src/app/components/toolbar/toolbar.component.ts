@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LucideAngularModule, Funnel, Download, ArrowDownUp, Calendar, Search, X } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
@@ -9,12 +9,28 @@ import { FilterService } from '../../services/filters.service';
 import { IHelper } from '../../models/helper.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterComponent } from '../filter/filter.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
   imports: [
-    LucideAngularModule, RouterLink, MatButtonModule, MatMenuModule, CommonModule, FilterComponent],
+    LucideAngularModule,
+    RouterLink,
+    MatButtonModule,
+    MatMenuModule,
+    CommonModule,
+    FilterComponent,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    FormsModule
+  ],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
@@ -29,6 +45,9 @@ export class ToolbarComponent implements OnInit {
   searchText = '';
   helpers: IHelper[] = [];
   typedText: string = '';
+  fromDate: Date | null = null;
+  toDate: Date | null = null;
+  showDateFilter = false;
 
   constructor(private dialog: MatDialog, public helperService: HelperService, private filterService: FilterService) { };
 
@@ -79,5 +98,28 @@ export class ToolbarComponent implements OnInit {
       }
     });
   }
+
+  toggleDateFilterPanel() {
+    this.showDateFilter = !this.showDateFilter;
+  }
+
+  applyDateFilter() {
+    if (this.fromDate && this.toDate) {
+      const from = new Date(this.fromDate);
+      const to = new Date(this.toDate);
+      to.setHours(23, 59, 59, 999);
+      this.filterService.filterHelpersByDate(from, to);
+      this.showDateFilter = false;
+    }
+  }
+
+  resetDateFilter() {
+    this.helperService._users.set(this.helperService._dupusers());
+    this.showDateFilter = false;
+    this.helperService._selectedHelper.set(this.helperService._users()[0]);
+    this.fromDate = null;
+    this.toDate = null;
+  }
+
 }
 
