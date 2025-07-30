@@ -42,7 +42,20 @@ export class HelperController {
 
   static async updateHelper(req: Request, res: Response) {
     try {
-      const helper = await Helper.findByIdAndUpdate(req.params['id'], req.body, { new: true });
+      const helperData = { ...req.body };
+      
+      // Handle photo upload if provided
+      if (req.body.photoUrl) {
+        helperData.photoUrl = req.body.photoUrl;
+        helperData.photoPublicId = req.body.photoPublicId;
+      }
+      
+      // Handle documents upload if provided
+      if (req.body.documents) {
+        helperData.documents = req.body.documents;
+      }
+
+      const helper = await Helper.findByIdAndUpdate(req.params['id'], helperData, { new: true });
       if (!helper) return res.status(404).json({ error: 'Helper not found' });
       res.json(helper);
     } catch (error) {

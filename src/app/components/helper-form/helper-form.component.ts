@@ -111,6 +111,10 @@ export class HelperFormComponent implements OnInit {
   }
 
   patchForm() {
+    // Reset file selections when editing
+    this.selectedFile = undefined;
+    this.selectedDocuments = [];
+
     this.helperForm = this.fb.group({
       name: [this.helperData?.name, Validators.required],
       role: [this.helperData?.role, Validators.required],
@@ -121,7 +125,7 @@ export class HelperFormComponent implements OnInit {
       languages: [this.helperData?.languages || []],
       vehicleType: [this.helperData?.vehicleType || 'None'],
       number: [this.helperData?.number || ''],
-      photoPreview: this.helperData.photoUrl,
+      photoPreview: [this.helperData?.photoUrl],
       documents: [this.helperData?.documents || []],
       photoUrl: [this.helperData?.photoUrl],
     });
@@ -166,13 +170,27 @@ export class HelperFormComponent implements OnInit {
         return;
       }
 
-      const updatedData: IHelper = {
-        ...this.helperData,
-        ...this.helperForm.value
-      }; //copying old helperData intp updatedData and then overriding it with new helperForm data
+      this.isLoading = true;
 
-      this.helperService.updateHelper(this.helperData._id, updatedData).subscribe({
+      const formData = new FormData();
+
+      // Handle photo upload if a new photo is selected
+      if (this.selectedFile) {
+        formData.append('photo', this.selectedFile);
+      }
+
+      // Handle document uploads if new documents are selected
+      this.selectedDocuments.forEach(file => {
+        formData.append('documents', file);
+      });
+
+      const helperData = { ...this.helperForm.value };
+      delete helperData.photoPreview;
+      formData.append('helperData', JSON.stringify(helperData));
+
+      this.helperService.updateHelper(this.helperData._id, formData).subscribe({
         next: (res) => {
+          this.isLoading = false;
           this.dialog.open(UpdateDialogComponent, {
             width: '500px',
             disableClose: true
@@ -182,8 +200,10 @@ export class HelperFormComponent implements OnInit {
         },
         error: (err) => {
           console.error('Update failed:', err);
+          this.isLoading = false;
         }
       });
+      return;
     }
 
     if (this.helperForm.invalid) {
