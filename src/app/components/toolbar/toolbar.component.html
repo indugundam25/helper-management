@@ -47,8 +47,11 @@
         <lucide-icon [name]="x"></lucide-icon>
       </span>
     </div>
-    <div class="emp-count">
+    <div class="emp-count" *ngIf="helperService._users().length >= helperService._dupusers().length">
       <p>{{helperService._users().length}} helpers</p>
+    </div>
+    <div class="emp-count" *ngIf="helperService._users().length < helperService._dupusers().length">
+      <p>{{helperService._users().length}} of {{helperService._dupusers().length}} helpers</p>
     </div>
 
   </div>

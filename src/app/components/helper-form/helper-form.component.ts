@@ -10,13 +10,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-
 import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
 import { SharedStepService } from '../../services/shared.service';
-import { LucideAngularModule, Plus } from 'lucide-angular';
+import { LucideAngularModule, Plus, CloudUpload } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
 import { ActivatedRoute } from '@angular/router';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
@@ -43,6 +41,7 @@ import { UpdateDialogComponent } from '../update-dialog/update-dialog.component'
 })
 export class HelperFormComponent implements OnInit {
   plus = Plus;
+  cloudUpload = CloudUpload;
   filename: string = '';
   selectedFile: File | undefined;
   selectedDocuments: File[] = [];
@@ -75,12 +74,12 @@ export class HelperFormComponent implements OnInit {
       photoPublicId: [''],
       photoPreview: [''],
       empId: [''],
-      role: [''],
-      organization: [''],
-      name: [''],
-      languages: [[]],
-      gender: [''],
-      phone: ['', [Validators.pattern(/^\d{10}$/)]],
+      role: ['', Validators.required],
+      organization: ['', Validators.required],
+      name: ['', Validators.required],
+      languages: [[], Validators.required],
+      gender: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', Validators.email],
       vehicleType: ['None'],
       documents: [[]]
@@ -111,7 +110,6 @@ export class HelperFormComponent implements OnInit {
   }
 
   patchForm() {
-    // Reset file selections when editing
     this.selectedFile = undefined;
     this.selectedDocuments = [];
 
@@ -169,17 +167,11 @@ export class HelperFormComponent implements OnInit {
         this.helperForm.markAllAsTouched();
         return;
       }
-
       this.isLoading = true;
-
       const formData = new FormData();
-
-      // Handle photo upload if a new photo is selected
       if (this.selectedFile) {
         formData.append('photo', this.selectedFile);
       }
-
-      // Handle document uploads if new documents are selected
       this.selectedDocuments.forEach(file => {
         formData.append('documents', file);
       });

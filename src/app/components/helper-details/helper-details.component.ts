@@ -9,7 +9,6 @@ import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confi
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShowIDComponent } from '../show-id/show-id.component';
-
 @Component({
   selector: 'app-helper-details',
   standalone: true,
@@ -47,7 +46,10 @@ export class HelperDetailsComponent {
             this.helperService._users.set(updatedHelpers);
             this.helperService._selectedHelper.set(this.helperService._users()[0]);
 
-            this.toastr.error('Helper deleted successfully');
+            this.toastr.error('Helper deleted successfully', '', {
+              positionClass: 'toast-bottom-right'
+            });
+
           },
           error: (err) => console.error("Error deleting helper:", err),
         });

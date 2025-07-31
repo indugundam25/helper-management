@@ -1,9 +1,9 @@
 .helper-details-container {
   max-width: 800px;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 80vh;
   align-items: stretch;
-  padding: 2rem;
+  padding: 1rem;
   background-color: #fdfafa;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -55,7 +55,6 @@
         width: 20px;
         height: 20px;
         stroke-width: 2;
-        color: #333;
       }
     }
   }
@@ -115,9 +114,9 @@
 .info-flex {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem;
   flex-direction: column;
-  padding-bottom: 10px;
+  padding-bottom: 2px;
 }
 
 .info-item {
@@ -138,6 +137,7 @@
     font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
+    color: #454545;
     margin-left: 150px;
   }
 

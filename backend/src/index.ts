@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { connectDB } from './db/connection';
 import helperRoutes from './routes/helper.routes';
-import multer from 'multer';
 
 dotenv.config();
 

@@ -19,13 +19,21 @@
         </label>
 
         <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .doc" />
-        <div *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</div>
+        <div *ngIf="selectedFile && clearFile" class="display-doc">
+            <div class="file-info">
+                <img src="assets/pdfIcon.png" alt="PDF Icon" class="pdf-icon">
+                <div class="file-name">{{ selectedFile.name }}</div>
+            </div>
+            <button type="button" class="trash-btn" (click)="clearSelectedFile()">
+                <lucide-icon [name]="trash"></lucide-icon>
+            </button>
+        </div>
 
     </div>
 
     <div class="buttons">
-        <button mat-raised-button color="primary" (click)="close()">cancel</button>
-        <button mat-raised-button color="primary" (click)="save()">save</button>
+        <button (click)="close()">cancel</button>
+        <button (click)="save()">save</button>
     </div>
 
 </div>

@@ -51,8 +51,8 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private dialog: MatDialog, public helperService: HelperService, private filterService: FilterService) { };
 
-  async ngOnInit() {
-    await this.helperService.getAllUsers();
+  ngOnInit() {
+    this.helperService.getAllUsers();
   }
 
   sortHelper() {

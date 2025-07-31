@@ -3,7 +3,10 @@
   <p>Track, Add and manage all your helpers at one place</p>
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
     <div class="photo-upload">
-      <label for="photo">Upload<br />Photo</label>
+      <label for="photo">
+        <lucide-icon [name]="cloudUpload" size="32"></lucide-icon>
+        Upload<br />Photo
+      </label>
       <input type="file" id="photo" name="image" (change)="onPhotoChange($event)" accept="image/*" />
       <img *ngIf="helperForm.get('photoPreview')?.value" [src]="helperForm.get('photoPreview')?.value"
         class="avatar-preview" alt="Avatar Preview" />

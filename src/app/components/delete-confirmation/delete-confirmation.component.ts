@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LucideAngularModule, Trash2, X } from 'lucide-angular';
+import { LucideAngularModule, Trash2, X, TriangleAlert } from 'lucide-angular';
 @Component({
   selector: 'app-delete-confirmation',
   standalone: true,
@@ -12,6 +12,7 @@ export class DeleteConfirmationComponent {
 
   trash = Trash2;
   x = X;
+  alert = TriangleAlert;
   constructor(
     private dialogRef: MatDialogRef<DeleteConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

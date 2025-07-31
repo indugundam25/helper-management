@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
-
+import { LucideAngularModule, CloudUpload, X, Trash2 } from 'lucide-angular';
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'app-document-dialog',
   standalone: true,
@@ -13,11 +13,14 @@ import { LucideAngularModule, CloudUpload, X } from 'lucide-angular';
 export class DocumentDialogComponent {
   cloudUpload = CloudUpload;
   x = X;
+  trash = Trash2;
 
   selectedFile?: File;
   selectedDocumentType: string = 'aadhar';
+  clearFile: boolean = true;
   @Output() fileSelected = new EventEmitter<any>();
   constructor(
+    public helperService: HelperService,
     private dialogRef: MatDialogRef<DocumentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
   ) { }
@@ -30,14 +33,15 @@ export class DocumentDialogComponent {
     }
   }
 
+  clearSelectedFile() {
+    this.clearFile = false;
+  }
+
   onDocumentTypeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.selectedDocumentType = select.value;
   }
 
-  sendFile(filename: string) {
-    this.fileSelected.emit(filename);
-  }
   save(): void {
     if (this.selectedFile) {
       this.dialogRef.close({

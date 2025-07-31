@@ -87,7 +87,6 @@ HelperSchema.pre<IHelper>('validate', async function (next) {
       this.empCode = counter.seq;
       next();
     } catch (err) {
-      // next(err); // Proper error propagation
     }
   } else {
     next();
