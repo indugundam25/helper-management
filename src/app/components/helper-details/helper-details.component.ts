@@ -28,6 +28,7 @@ export class HelperDetailsComponent {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';
   }
   trashHelper(): void {
+    this.helperService.isDeleteMode = true;
     const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       width: '500px',
       disableClose: true,

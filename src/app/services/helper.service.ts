@@ -10,6 +10,7 @@ export class HelperService {
   _dupusers = signal<any[]>([]);
   _selectedHelper = signal<any>(this._users()[0]);
   isEditMode = false;
+  isDeleteMode = false;
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }

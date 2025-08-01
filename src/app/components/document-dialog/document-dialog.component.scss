@@ -59,11 +59,29 @@
     margin-top: auto;
   }
 
-  button {
+  .trash-btn {
     min-width: 100px;
     border: none;
     background-color: white;
     font-size: medium;
+  }
+
+  .close-btn {
+    border-radius: 1cqi;
+    border-color: #555;
+    min-width: 80px;
+    height: 40px;
+    background-color: white;
+  }
+
+  .save-btn {
+    border-radius: 1rem;
+    border: none;
+    background-color: #4a5eb8;
+    min-width: 80px;
+    height: 40px;
+    color: white;
+
   }
 }
 

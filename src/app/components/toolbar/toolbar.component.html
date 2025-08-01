@@ -47,10 +47,15 @@
         <lucide-icon [name]="x"></lucide-icon>
       </span>
     </div>
-    <div class="emp-count" *ngIf="helperService._users().length >= helperService._dupusers().length">
+    <div class="emp-count"
+      *ngIf="helperService._users().length >= helperService._dupusers().length && !helperService.isDeleteMode">
       <p>{{helperService._users().length}} helpers</p>
     </div>
-    <div class="emp-count" *ngIf="helperService._users().length < helperService._dupusers().length">
+    <div class="emp-count" *ngIf="helperService.isDeleteMode">
+      <p>{{helperService._users().length}} helpers</p>
+    </div>
+    <div class="emp-count"
+      *ngIf="helperService._users().length < helperService._dupusers().length && !helperService.isDeleteMode">
       <p>{{helperService._users().length}} of {{helperService._dupusers().length}} helpers</p>
     </div>
 
