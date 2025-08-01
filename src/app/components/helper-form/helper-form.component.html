@@ -146,10 +146,10 @@
 
       <div class="preview-info">
         <h3>PERSONAL DETAILS</h3>
-        <p><strong>Gender:</strong>&nbsp; &nbsp; {{ helperForm.value.gender }}</p>
-        <p><strong>Languages:</strong>&nbsp;&nbsp; {{ helperForm.value.languages?.join(', ') }}</p>
-        <p><strong>Phone:</strong>&nbsp;&nbsp; {{ helperForm.value.phone }}</p>
-        <p><strong>Email:</strong>&nbsp;&nbsp; {{ helperForm.value.email || '-' }}</p>
+        <p><strong>Gender</strong>&nbsp; &nbsp; {{ helperForm.value.gender }}</p>
+        <p><strong>Languages</strong>&nbsp;&nbsp; {{ helperForm.value.languages?.join(', ') }}</p>
+        <p><strong>Phone</strong>&nbsp;&nbsp; {{ helperForm.value.phone }}</p>
+        <p><strong>Email</strong>&nbsp;&nbsp; {{ helperForm.value.email || '-' }}</p>
         <div class="preview-documents" *ngIf="helperForm.value.documents && helperForm.value.documents.length">
           <h3>Uploaded Documents</h3>
           <ul>
@@ -159,8 +159,8 @@
           </ul>
         </div>
         <h3>SERVICE DETAILS</h3>
-        <p><strong>Type:</strong> {{ helperForm.value.role }}</p>
-        <p><strong>Organization:</strong> {{ helperForm.value.organization }}</p>
+        <p><strong>Type</strong> {{ helperForm.value.role }}</p>
+        <p><strong>Organization</strong> {{ helperForm.value.organization }}</p>
       </div>
 
     </div>

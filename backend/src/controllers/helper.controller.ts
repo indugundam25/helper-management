@@ -43,14 +43,11 @@ export class HelperController {
   static async updateHelper(req: Request, res: Response) {
     try {
       const helperData = req.body.helperData ? JSON.parse(req.body.helperData) : { ...req.body };
-      
-      // Handle photo upload if provided
       if (req.body.photoUrl) {
         helperData.photoUrl = req.body.photoUrl;
         helperData.photoPublicId = req.body.photoPublicId;
       }
-      
-      // Handle documents upload if provided
+
       if (req.body.documents) {
         helperData.documents = req.body.documents;
       }
