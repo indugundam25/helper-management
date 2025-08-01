@@ -30,6 +30,7 @@ export class DocumentDialogComponent {
     const file = input.files?.[0];
     if (file) {
       this.selectedFile = file;
+      this.clearFile = true;
     }
   }
 
