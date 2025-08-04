@@ -1,4 +1,5 @@
-<div class="helper-form" *ngIf="step === 1">
+<div class="helper-form"
+  *ngIf="(step === 1 && !helperService.isEditMode) || (helperService.isEditMode && helperService.isStepOne)">
   <h2>Helper details</h2>
   <p>Track, Add and manage all your helpers at one place</p>
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
@@ -93,7 +94,7 @@
       </mat-error>
     </mat-form-field>
 
-    <div class="doc-upload">
+    <div class="doc-upload" *ngIf="!helperService.isEditMode">
       <mat-label>KYC Document</mat-label>
       <label for="upload" (click)="openDialog()"><lucide-icon [name]="plus"></lucide-icon></label>
       <p *ngIf="helperForm.value.documents?.length">
@@ -115,32 +116,44 @@
         </button>
       </div>
     </ng-template>
-
   </form>
 </div>
 
 <div class="helper-form" *ngIf="step === 2">
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
-    <h3>Additional Documents</h3>
-    <p>Upload related documents. This step is optional</p>
-    <div class="doc-upload">
-      <label for="doc">
-        <lucide-icon [name]="plus"></lucide-icon>
-      </label>
-      <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
-    </div>
+    <div *ngIf="!helperService.isEditMode">
+      <h3>Additional Documents</h3>
+      <p>Upload related documents. This step is optional</p>
+      <div class="doc-upload">
+        <label for="doc">
+          <lucide-icon [name]="plus"></lucide-icon>
+        </label>
+        <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
+      </div>
 
-    <div class="step-controls" *ngIf="!helperService.isEditMode">
-      <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
-      <button type="button" class="next-btn" (click)="nextStep()">Next</button>
+      <div class="step-controls" *ngIf="!helperService.isEditMode">
+        <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
+        <button type="button" class="next-btn" (click)="nextStep()">Next</button>
+      </div>
     </div>
-    <div *ngIf="helperService.isEditMode">
-      <button mat-raised-button color="primary" type="submit"><lucide-icon [name]="save"></lucide-icon>
-        <ng-container *ngIf="helperService.isEditMode && !isSaving">
-          Save
-        </ng-container>
-        <span *ngIf="isSaving && helperService.isEditMode" class="loading-container">
-          <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
+  </form>
+</div>
+
+<div class="helper-form" *ngIf="helperService.isEditMode && helperService.isDocClicked">
+  <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
+    <div class="doc-upload">
+      <mat-label>KYC Document</mat-label>
+      <label for="upload" (click)="openDialog()"><lucide-icon [name]="plus"></lucide-icon></label>
+      <p *ngIf="helperForm.value.documents?.length">
+        {{ helperForm.value.documents[0]?.fileName }}
+      </p>
+    </div>
+    <div class="edit-btns">
+      <button type="submit" class="save-btn" [disabled]="isSaving">
+        <lucide-icon [name]="save"></lucide-icon>
+        Save
+        <span *ngIf="isSaving" class="loading-container">
+          <mat-spinner diameter="20" strokeWidth="3" color="accent"></mat-spinner>
         </span>
       </button>
     </div>

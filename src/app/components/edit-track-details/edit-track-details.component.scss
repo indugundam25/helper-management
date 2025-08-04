@@ -24,18 +24,23 @@ button {
     cursor: pointer;
 }
 
-.details {
-    background-color: rgb(81, 97, 114);
-    color: white;
-}
+// .details {
+//     background-color: rgb(81, 97, 114);
+//     color: white;
+// }
 
-.docs:hover {
-    background-color: rgb(81, 97, 114);
-    color: white;
-}
+// .docs {
+//     background-color: rgb(81, 97, 114);
+//     color: white;
+// }
 
 lucide-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+.selected {
+    background-color: rgb(81, 97, 114);
+    color: white;
 }

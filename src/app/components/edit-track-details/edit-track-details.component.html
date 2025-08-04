@@ -1,9 +1,11 @@
 <div class="container">
-    <button class="details">
+    <button class="details" (click)="selectButton('button1'); openDetails()"
+        [ngClass]="{'selected' : selectedButton === 'button1'}">
         <lucide-icon [name]="hammer"></lucide-icon>
         <span>Helper Details</span>
     </button>
-    <button class="docs">
+    <button class="docs" (click)="selectButton('button2');openDocs()"
+        [ngClass]="{'selected' : selectedButton === 'button2'}">
         <lucide-icon [name]="files"></lucide-icon>
         <span>Documents</span>
     </button>

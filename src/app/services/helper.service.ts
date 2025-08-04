@@ -11,6 +11,8 @@ export class HelperService {
   _selectedHelper = signal<any>(this._users()[0]);
   isEditMode = false;
   isDeleteMode = false;
+  isDocClicked = false;
+  isStepOne = true;
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }

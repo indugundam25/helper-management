@@ -36,6 +36,7 @@ export class DocumentDialogComponent {
 
   clearSelectedFile() {
     this.clearFile = false;
+    this.selectedFile = undefined;
   }
 
   onDocumentTypeChange(event: Event): void {
@@ -50,6 +51,9 @@ export class DocumentDialogComponent {
         file: this.selectedFile,
         fileName: this.selectedFile.name,
       }); //stores this data when dialogRef.afterClosed() is used.  This data is the result
+    }
+    else {
+      this.dialogRef.close();
     }
   }
 
