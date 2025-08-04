@@ -18,7 +18,7 @@ export class HelperService {
     return this.http.post<{ helper: IHelper }>(`${this.apiUrl}`, data);
   }
 
-  updateHelper(id: string, helper: IHelper | FormData) {
+  updateHelper(id: string, helper: FormData) {
     return this.http.put<{ helper: any }>(`${this.apiUrl}/${id}`, helper);
   }
 

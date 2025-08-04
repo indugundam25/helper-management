@@ -14,10 +14,10 @@ import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
 import { SharedStepService } from '../../services/shared.service';
-import { LucideAngularModule, Plus, CloudUpload } from 'lucide-angular';
+import { LucideAngularModule, Plus, CloudUpload, Save } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
-import { ActivatedRoute } from '@angular/router';
-import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -42,10 +42,12 @@ import { UpdateDialogComponent } from '../update-dialog/update-dialog.component'
 export class HelperFormComponent implements OnInit {
   plus = Plus;
   cloudUpload = CloudUpload;
+  save = Save;
   filename: string = '';
   selectedFile: File | undefined;
   selectedDocuments: File[] = [];
   isLoading = false;
+  isSaving = false;
 
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
@@ -66,7 +68,8 @@ export class HelperFormComponent implements OnInit {
     private dialog: MatDialog,
     private sharedStepService: SharedStepService,
     private route: ActivatedRoute,
-
+    private toastr: ToastrService,
+    private router: Router,
   ) { }
   ngOnInit(): void {
     this.helperForm = this.fb.group({
@@ -168,6 +171,7 @@ export class HelperFormComponent implements OnInit {
         return;
       }
       this.isLoading = true;
+      this.isSaving = true;
       const formData = new FormData();
       if (this.selectedFile) {
         formData.append('photo', this.selectedFile);
@@ -183,10 +187,11 @@ export class HelperFormComponent implements OnInit {
       this.helperService.updateHelper(this.helperData._id, formData).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.dialog.open(UpdateDialogComponent, {
-            width: '500px',
-            disableClose: true
+          this.isSaving = false;
+          this.toastr.success('Helper updated successfully', '', {
+            positionClass: 'toast-bottom-right'
           });
+          this.router.navigate(['/']);
           this.sharedStepService.setStep(1);
           this.step = 1;
         },

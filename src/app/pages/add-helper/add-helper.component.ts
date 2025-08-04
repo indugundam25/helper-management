@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule, ChevronLeft } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
 import { HelperService } from '../../services/helper.service';
-
+import { EditTrackDetailsComponent } from '../../components/edit-track-details/edit-track-details.component';
 @Component({
   selector: 'app-add-helper',
   standalone: true,
-  imports: [TrackDetailsComponent, HelperFormComponent, CommonModule, LucideAngularModule, RouterLink],
+  imports: [TrackDetailsComponent, HelperFormComponent, CommonModule, LucideAngularModule, RouterLink, EditTrackDetailsComponent],
   templateUrl: './add-helper.component.html',
   styleUrl: './add-helper.component.scss'
 })

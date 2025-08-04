@@ -101,29 +101,53 @@
       </p>
     </div>
 
-    <div class="step-controls">
+    <div class="step-controls" *ngIf="!helperService.isEditMode; else editHelper">
       <button type="button" class="next-btn" (click)="nextStep()">Next</button>
     </div>
+    <ng-template #editHelper>
+      <div class="edit-btns">
+        <button type="submit" class="save-btn" [disabled]="isSaving">
+          <lucide-icon [name]="save"></lucide-icon>
+          Save
+          <span *ngIf="isSaving" class="loading-container">
+            <mat-spinner diameter="20" strokeWidth="3" color="accent"></mat-spinner>
+          </span>
+        </button>
+      </div>
+    </ng-template>
+
   </form>
 </div>
 
 <div class="helper-form" *ngIf="step === 2">
-  <h3>Additional Documents</h3>
-  <p>Upload related documents. This step is optional</p>
-  <div class="doc-upload">
-    <label for="doc">
-      <lucide-icon [name]="plus"></lucide-icon>
-    </label>
-    <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
-  </div>
+  <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
+    <h3>Additional Documents</h3>
+    <p>Upload related documents. This step is optional</p>
+    <div class="doc-upload">
+      <label for="doc">
+        <lucide-icon [name]="plus"></lucide-icon>
+      </label>
+      <input type="file" id="doc" hidden (change)="onFileSelected($event)" accept=".pdf, .docx" />
+    </div>
 
-  <div class="step-controls">
-    <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
-    <button type="button" class="next-btn" (click)="nextStep()">Next</button>
-  </div>
+    <div class="step-controls" *ngIf="!helperService.isEditMode">
+      <button type="button" class="prev-btn" (click)="prevStep()">Prev</button>
+      <button type="button" class="next-btn" (click)="nextStep()">Next</button>
+    </div>
+    <div *ngIf="helperService.isEditMode">
+      <button mat-raised-button color="primary" type="submit"><lucide-icon [name]="save"></lucide-icon>
+        <ng-container *ngIf="helperService.isEditMode && !isSaving">
+          Save
+        </ng-container>
+        <span *ngIf="isSaving && helperService.isEditMode" class="loading-container">
+          <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
+        </span>
+      </button>
+    </div>
+  </form>
 </div>
 
-<div class="helper-form" *ngIf="step === 3">
+<div class="helper-form" *ngIf="step === 3 && !helperService.isEditMode">
   <form [formGroup]="helperForm" (ngSubmit)="onSubmit()">
     <h2>Preview Helper Details</h2>
     <div class="preview-section">
@@ -167,14 +191,10 @@
     <div class="step-controls">
       <button type="button" class="prev-btn" (click)="prevStep()" [disabled]="isLoading">Prev</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="helperForm.invalid || isLoading">
-        <ng-container *ngIf="!isLoading && !this.helperService.isEditMode">
+        <ng-container *ngIf="!isLoading && !helperService.isEditMode">
           Add Helper
         </ng-container>
-        <ng-container *ngIf="this.helperService.isEditMode">
-          Save
-        </ng-container>
-
-        <span *ngIf="isLoading && !this.helperService.isEditMode" class="loading-container">
+        <span *ngIf="isLoading && !helperService.isEditMode" class="loading-container">
           <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
           <span class="loading-text">Adding...</span>
         </span>
