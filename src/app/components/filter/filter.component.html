@@ -8,10 +8,10 @@
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Select service</mat-label>
         <mat-select [(ngModel)]="selectedRoles" multiple>
-            <mat-option (click)="toggleAll('service')">
+            <mat-checkbox [checked]="isAllSelected('service')" [indeterminate]="isIndeterminate('service')"
+                (change)="toggleAll('service', $event)">
                 {{ isAllSelected('service') ? 'Deselect All' : 'Select All' }}
-            </mat-option>
-
+            </mat-checkbox>
             <mat-option *ngFor="let role of roles" [value]="role">
                 {{ role }}
             </mat-option>
@@ -22,10 +22,10 @@
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Select organization</mat-label>
         <mat-select [(ngModel)]="selectedOrgs" multiple>
-            <mat-option (click)="toggleAll('organization')">
+            <mat-checkbox [checked]="isAllSelected('organization')" [indeterminate]="isIndeterminate('organization')"
+                (change)="toggleAll('organization', $event)">
                 {{ isAllSelected('organization') ? 'Deselect All' : 'Select All' }}
-            </mat-option>
-
+            </mat-checkbox>
             <mat-option *ngFor="let org of orgs" [value]="org">
                 {{ org }}
             </mat-option>

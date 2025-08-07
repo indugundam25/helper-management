@@ -94,14 +94,21 @@
       </mat-error>
     </mat-form-field>
 
-    <div class="doc-upload" *ngIf="!helperService.isEditMode">
+    <div class="doc-upload" *ngIf="!helperService.isEditMode && !isUploaded">
       <mat-label>KYC Document</mat-label>
       <label for="upload" (click)="openDialog()"><lucide-icon [name]="plus"></lucide-icon></label>
-      <p *ngIf="helperForm.value.documents?.length">
-        {{ helperForm.value.documents[0]?.fileName }}
-      </p>
+    </div>
+    <div class="preview" *ngIf="helperForm.value.documents?.length && isUploaded">
+      <img src="assets/pdfIcon.png" alt="PDF Icon" class="pdf-icon"><br>
+      <span>kyc-{{helperForm.value.documents[0].fileName}}</span>
     </div>
 
+    <div class="docPreview" *ngIf="helperService.isEditMode">
+      <div class="preview" *ngIf="helperService._selectedHelper().documents.length">
+        <img src="assets/pdfIcon.png" alt="PDF Icon" class="pdf-icon"><br>
+        <span>kyc-{{helperService._selectedHelper().documents[0]?.fileName}}</span>
+      </div>
+    </div>
     <div class="step-controls" *ngIf="!helperService.isEditMode; else editHelper">
       <button type="button" class="next-btn" (click)="nextStep()">Next</button>
     </div>
@@ -112,6 +119,9 @@
           Save
           <span *ngIf="isSaving" class="loading-container">
             <mat-spinner diameter="20" strokeWidth="3" color="accent"></mat-spinner>
+            <mat-progress-bar *ngIf="isSaving" mode="indeterminate" color="primary"
+              style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;">
+            </mat-progress-bar>
           </span>
         </button>
       </div>
@@ -154,6 +164,9 @@
         Save
         <span *ngIf="isSaving" class="loading-container">
           <mat-spinner diameter="20" strokeWidth="3" color="accent"></mat-spinner>
+          <mat-progress-bar *ngIf="isSaving" mode="indeterminate" color="primary"
+            style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;">
+          </mat-progress-bar>
         </span>
       </button>
     </div>
@@ -210,6 +223,9 @@
         <span *ngIf="isLoading && !helperService.isEditMode" class="loading-container">
           <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
           <span class="loading-text">Adding...</span>
+          <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"
+            style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;">
+          </mat-progress-bar>
         </span>
       </button>
     </div>

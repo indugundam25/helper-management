@@ -5,8 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { HelperFormComponent } from '../helper-form/helper-form.component';
-import { SharedStepService } from '../../services/shared.service';
 import { CommonModule } from '@angular/common';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-track-details',
@@ -31,7 +31,7 @@ export class TrackDetailsComponent implements OnInit, AfterViewInit {
   step = 1;
 
   private _formBuilder = inject(FormBuilder);
-  constructor(private sharedStepService: SharedStepService) { }
+  constructor(private helperService: HelperService) { }
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -42,7 +42,7 @@ export class TrackDetailsComponent implements OnInit, AfterViewInit {
   });
 
   ngOnInit(): void {
-    this.sharedStepService.step$.subscribe(currentStep => {
+    this.helperService.step$.subscribe(currentStep => {
       this.step = currentStep;
       console.log('Step received in TrackDetails:', this.step);
 

@@ -4,7 +4,6 @@ import cloudinary from '../config/cloudinary';
 import { getDataUri } from '../utils/dataUri';
 import path from 'path';
 
-
 const storage = multer.memoryStorage(); //creating a storage engine
 const upload = multer({ storage }); //creating multer instance
 

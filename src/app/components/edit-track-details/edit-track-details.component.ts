@@ -14,7 +14,7 @@ export class EditTrackDetailsComponent {
   hammer = Hammer;
   selectedButton: string = 'button1';
 
-  constructor(public helperservice: HelperService) { }
+  constructor(public helperservice: HelperService) { this.helperservice.isStepOne = true; this.helperservice.isDocClicked = false }
 
   selectButton(button: string) {
     this.selectedButton = button;

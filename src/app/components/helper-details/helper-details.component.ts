@@ -44,7 +44,7 @@ export class HelperDetailsComponent {
             const updatedHelpers = this.helperService._users().filter(
               h => h._id !== this.helperService._selectedHelper()._id
             );
-            this.toastr.error(`${this.helperService._selectedHelper().name} deleted successfully`, '', {
+            this.toastr.error(`Deleted '${this.helperService._selectedHelper().name}'`, '', {
               positionClass: 'toast-bottom-right'
             });
             this.helperService._users.set(updatedHelpers);

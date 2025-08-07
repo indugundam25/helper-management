@@ -26,14 +26,13 @@
     display: flex;
 
     .track-left {
-      max-width: 400px;
-      border-right: 1px solid #ccc;
-      padding-right: 8px;
+      flex: 0 0 20%;
+      max-width: 20%;
     }
 
     .form-right {
       flex: 1;
-      max-width: 1000px;
+      max-width: 80%;
       padding-left: 12px;
     }
   }

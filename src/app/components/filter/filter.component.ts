@@ -7,11 +7,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { LucideAngularModule, X } from 'lucide-angular';
 import { FilterService } from '../../services/filters.service';
 import { HelperService } from '../../services/helper.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [MatSelectModule, MatFormFieldModule, CommonModule, FormsModule, LucideAngularModule],
+  imports: [MatSelectModule, MatCheckboxModule, MatFormFieldModule, CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss'
 })
@@ -23,20 +24,34 @@ export class FilterComponent {
   x = X;
   constructor(private dialogRef: MatDialogRef<any>, private filterService: FilterService, private helperService: HelperService) { };
 
-  toggleAll(type: 'service' | 'organization') {
-    if (type === 'service') {
-      this.selectedRoles =
-        this.selectedRoles.length === this.roles.length ? [] : [...this.roles];
-    } else {
-      this.selectedOrgs =
-        this.selectedOrgs.length === this.orgs.length ? [] : [...this.orgs];
-    }
-  }
 
   isAllSelected(type: 'service' | 'organization'): boolean {
-    return type === 'service'
-      ? this.selectedRoles.length === this.roles.length
-      : this.selectedOrgs.length === this.orgs.length;
+    const list = type === 'service' ? this.roles : this.orgs;
+    const selected = type === 'service' ? this.selectedRoles : this.selectedOrgs;
+    return selected.length === list.length && list.length > 0;
+  }
+
+  isIndeterminate(type: 'service' | 'organization'): boolean {
+    const list = type === 'service' ? this.roles : this.orgs;
+    const selected = type === 'service' ? this.selectedRoles : this.selectedOrgs;
+    return selected.length > 0 && selected.length < list.length;
+  }
+
+  toggleAll(type: 'service' | 'organization', event: any): void {
+    const list = type === 'service' ? this.roles : this.orgs;
+    if (event.checked) {
+      if (type === 'service') {
+        this.selectedRoles = [...list];
+      } else {
+        this.selectedOrgs = [...list];
+      }
+    } else {
+      if (type === 'service') {
+        this.selectedRoles = [];
+      } else {
+        this.selectedOrgs = [];
+      }
+    }
   }
 
   resetFilters(): void {

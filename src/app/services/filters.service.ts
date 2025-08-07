@@ -6,10 +6,8 @@ export class FilterService {
 
     constructor(private helperService: HelperService) { }
 
-    users = this.helperService._users;
-
     sortByName() {
-        const sorted = [...this.users()].sort((a, b) => {
+        const sorted = this.helperService._dupusers().sort((a, b) => {
             return a.name.localeCompare(b.name)
         });
         this.helperService._users.set(sorted);
@@ -18,7 +16,7 @@ export class FilterService {
 
     sortByID() {
         this.helperService._users.set(
-            this.users().sort((a, b) => a.empCode - b.empCode)
+            this.helperService._dupusers().sort((a, b) => a.empCode - b.empCode)
         )
         this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
@@ -33,9 +31,8 @@ export class FilterService {
         this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
     filterHelpers(roles: string[], orgs: string[]): void {
-        const allHelpers = this.helperService._dupusers();
 
-        const filtered = allHelpers.filter(helper => {
+        const filtered = this.helperService._dupusers().filter(helper => {
             const matchRole = roles.length ? roles.includes(helper.role) : true;
             const matchOrg = orgs.length ? orgs.includes(helper.organization) : true;
             return matchRole && matchOrg;
@@ -46,22 +43,15 @@ export class FilterService {
     }
 
     filterHelpersByDate(from: Date, to: Date): void {
-        const fromDate = new Date(from);
-        fromDate.setHours(0, 0, 0, 0);
-
-        const toDate = new Date(to);
-        toDate.setHours(23, 59, 59, 999);
+        from.setHours(0, 0, 0, 0);
+        to.setHours(23, 59, 59, 999);
 
         const allHelpers = this.helperService._dupusers();
-
         const filtered = allHelpers.filter(helper => {
             const createdAt = new Date(helper.createdAt);
-            return createdAt >= fromDate && createdAt <= toDate;
+            return createdAt >= from && createdAt <= to;
         });
-        console.log(filtered);
         this.helperService._users.set(filtered);
         this.helperService.onSelecthelper(this.helperService._users()[0]);
     }
-
-
 }

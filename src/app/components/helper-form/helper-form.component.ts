@@ -13,11 +13,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
-import { SharedStepService } from '../../services/shared.service';
 import { LucideAngularModule, Plus, CloudUpload, Save } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 @Component({
   standalone: true,
@@ -36,7 +37,8 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     HttpClientModule,
     LucideAngularModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ]
 })
 export class HelperFormComponent implements OnInit {
@@ -48,6 +50,7 @@ export class HelperFormComponent implements OnInit {
   selectedDocuments: File[] = [];
   isLoading = false;
   isSaving = false;
+  isUploaded = false;
 
   serviceTypes = ['Cook', 'Driver', 'Maid', 'Lawyer', 'Nurse', 'Plumber'];
   organizations = ['ASBL', 'Spring Helpers'];
@@ -58,7 +61,6 @@ export class HelperFormComponent implements OnInit {
   @Output() stepOutPut = new EventEmitter<number>();
   @Input() step: number = 1;
   @Input() helperForm!: FormGroup;
-  @Input() helperFormEdit!: FormGroup;
   helperData!: IHelper;
   id: number | undefined;
   date: string | undefined;
@@ -66,7 +68,6 @@ export class HelperFormComponent implements OnInit {
     private fb: FormBuilder,
     public helperService: HelperService,
     private dialog: MatDialog,
-    private sharedStepService: SharedStepService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private router: Router,
@@ -188,11 +189,11 @@ export class HelperFormComponent implements OnInit {
         next: (res) => {
           this.isLoading = false;
           this.isSaving = false;
-          this.toastr.success('Helper updated successfully', '', {
+          this.toastr.success('changes saved', '', {
             positionClass: 'toast-bottom-right'
           });
           this.router.navigate(['/']);
-          this.sharedStepService.setStep(1);
+          this.helperService.setStep(1);
           this.step = 1;
         },
         error: (err) => {
@@ -242,7 +243,7 @@ export class HelperFormComponent implements OnInit {
             helper: this.helperForm.value,
           }
         });
-        this.sharedStepService.setStep(1);
+        this.helperService.setStep(1);
         this.step = 1;
       },
       error: (err) => {
@@ -269,6 +270,7 @@ export class HelperFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.isUploaded = true;
         this.helperForm.patchValue({
           documents: [{
             type: result.documentType,
@@ -291,7 +293,7 @@ export class HelperFormComponent implements OnInit {
         (form.get('vehicleType')?.value === 'None' || form.get('number')?.valid)
       ) {
         this.step++;
-        this.sharedStepService.setStep(this.step);
+        this.helperService.setStep(this.step);
       } else {
         form.get('role')?.markAsTouched();
         form.get('organization')?.markAsTouched();
@@ -303,12 +305,12 @@ export class HelperFormComponent implements OnInit {
       }
     } else {
       this.step++;
-      this.sharedStepService.setStep(this.step);
+      this.helperService.setStep(this.step);
     }
   }
 
   prevStep() {
     this.step--;
-    this.sharedStepService.setStep(this.step);
+    this.helperService.setStep(this.step);
   }
 }

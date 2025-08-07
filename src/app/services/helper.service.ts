@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IHelper } from '../models/helper.model';
 import { signal } from '@angular/core';
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class HelperService {
@@ -13,15 +14,19 @@ export class HelperService {
   isDeleteMode = false;
   isDocClicked = false;
   isStepOne = true;
+  private stepSource = new BehaviorSubject<number>(1);
+  step$ = this.stepSource.asObservable();
+
   private apiUrl = 'http://localhost:3000/api/helpers';
 
   constructor(private http: HttpClient) { }
+
   addHelper(data: FormData) {
     return this.http.post<{ helper: IHelper }>(`${this.apiUrl}`, data);
   }
 
-  updateHelper(id: string, helper: FormData) {
-    return this.http.put<{ helper: any }>(`${this.apiUrl}/${id}`, helper);
+  updateHelper(id: string, data: FormData) {
+    return this.http.put<{ helper: any }>(`${this.apiUrl}/${id}`, data);
   }
 
   deleteHelper(id: string) {
@@ -52,5 +57,13 @@ export class HelperService {
 
   onSelecthelper(User: any) {
     this._selectedHelper.set(User);
+  }
+
+  setStep(step: number) {
+    this.stepSource.next(step);
+  }
+
+  get currentStep() {
+    return this.stepSource.getValue();
   }
 }
