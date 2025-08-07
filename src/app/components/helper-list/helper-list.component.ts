@@ -11,9 +11,7 @@ import { HelperService } from '../../services/helper.service';
 })
 export class HelperListComponent {
 
-  constructor(public helperService: HelperService) {
-    console.log(this.helperService._selectedHelper());
-  };
+  constructor(public helperService: HelperService) { };
 
   getInitials(name: string): string {
     return name ? name.trim().substring(0, 2).toUpperCase() : '';

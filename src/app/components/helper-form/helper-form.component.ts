@@ -62,8 +62,6 @@ export class HelperFormComponent implements OnInit {
   @Input() step: number = 1;
   @Input() helperForm!: FormGroup;
   helperData!: IHelper;
-  id: number | undefined;
-  date: string | undefined;
   constructor(
     private fb: FormBuilder,
     public helperService: HelperService,
@@ -229,18 +227,13 @@ export class HelperFormComponent implements OnInit {
       next: (response) => {
         const users = [this.helperService._users(), response]; //adding current helper to existing helpers
         this.helperService._users.set(users);
-        this.id = response.helper.empCode;
-        this.date = response.helper.createdAt;
         this.isLoading = false;
-
+        console.log(response.helper);
         const dialogRef = this.dialog.open(HelperSuccessDialogComponent, {
           width: '350px',
           disableClose: true,
           data: {
-            name: this.helperForm.value.name,
-            empId: this.id,
-            date: this.date,
-            helper: this.helperForm.value,
+            helper: response.helper,
           }
         });
         this.helperService.setStep(1);

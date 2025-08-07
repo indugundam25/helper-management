@@ -17,7 +17,7 @@ export class IdCardComponent {
   constructor(
     private router: Router,
     private dialogRef: MatDialogRef<IdCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { presentHelper: any, presentEmpCode: any, presentDate: any, presentID: any }
+    @Inject(MAT_DIALOG_DATA) public data: { presentHelper: any }
   ) { this.generateQrCodeDataURLForName() }
 
   closeAndNavigateHome() {

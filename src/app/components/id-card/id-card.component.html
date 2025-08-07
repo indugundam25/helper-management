@@ -7,12 +7,12 @@
 <div class="container">
     <div class="left">
         <div class="profile-image">
-            <img [src]="data.presentHelper.photoPreview" alt="Profile Photo" />
+            <img [src]="data.presentHelper.photoUrl" alt="Profile Photo" />
         </div>
         <div class="details">
             <h3 class="name">{{data.presentHelper.name}}</h3>
             <p class="role">{{data.presentHelper.role}}</p>
-            <p class="emp-id">{{data.presentEmpCode}}</p>
+            <p class="emp-id">{{data.presentHelper.empCode}}</p>
         </div>
         <div class="address">
             <p>ASBL SPRINGS</p>
@@ -31,7 +31,7 @@
             <div class="row">
                 <span class="title">Emp ID</span>
                 <span class="colon">:</span>
-                <span class="value">{{ data.presentEmpCode }}</span>
+                <span class="value">{{ data.presentHelper.empCode }}</span>
             </div>
             <div class="row">
                 <span class="title">Phone Number</span>
@@ -41,7 +41,8 @@
             <div class="row">
                 <span class="title">Joined on</span>
                 <span class="colon">:</span>
-                <span class="value">{{ data.presentDate ? (data.presentDate | date: 'dd-MM-yyyy') : '' }}</span>
+                <span class="value">{{ data.presentHelper.createdAt ? (data.presentHelper.createdAt | date:
+                    'dd-MM-yyyy') : '' }}</span>
 
             </div>
         </div>

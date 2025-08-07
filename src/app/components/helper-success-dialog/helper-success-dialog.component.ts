@@ -9,7 +9,7 @@ import { HelperService } from '../../services/helper.service';
   template: `
     <div class="dialog-content">
      <img src="assets/success.gif" alt="Success Animation" />
-      <p>{{data.name}} added</p>
+      <p>{{data.helper.name}} added</p>
      <button mat-raised-button color="primary" (click)="openId()">OK</button>
     </div>
   `,
@@ -39,17 +39,15 @@ import { HelperService } from '../../services/helper.service';
 export class HelperSuccessDialogComponent {
 
   currentHelper: any;
-  currentEmpCode: any;
-  currentDate: any;
 
   constructor(
     private dialog: MatDialog,
     private helperService: HelperService,
     private dialogRef: MatDialogRef<HelperSuccessDialogComponent, IdCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      helper: any; name: string; empId: number; date: string
+      helper: any;
     }
-  ) { this.currentHelper = data.helper; this.currentEmpCode = data.empId, this.currentDate = data.date }
+  ) { this.currentHelper = data.helper; }
 
   openId() {
     const dialogRef = this.dialog.open(IdCardComponent, {
@@ -57,8 +55,6 @@ export class HelperSuccessDialogComponent {
       disableClose: true,
       data: {
         presentHelper: this.currentHelper,
-        presentEmpCode: this.currentEmpCode,
-        presentDate: this.currentDate
       }
     });
     this.dialogRef.close();

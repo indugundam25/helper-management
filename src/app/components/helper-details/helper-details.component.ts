@@ -8,11 +8,11 @@ import { RouterLink } from '@angular/router';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ShowIDComponent } from '../show-id/show-id.component';
+import { IdCardComponent } from '../id-card/id-card.component';
 @Component({
   selector: 'app-helper-details',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent, RouterLink, ShowIDComponent],
+  imports: [CommonModule, LucideAngularModule, KYCDocComponent, DeleteConfirmationComponent, RouterLink, IdCardComponent],
   templateUrl: './helper-details.component.html',
   styleUrls: ['./helper-details.component.scss']
 })
@@ -60,12 +60,12 @@ export class HelperDetailsComponent {
   }
   openID() {
     const selectedHelper = this.helperService._selectedHelper();
-    const dialogRef = this.dialog.open(ShowIDComponent, {
+    const dialogRef = this.dialog.open(IdCardComponent, {
       width: '700px',
       height: '500px',
       disableClose: true,
       data: {
-        helper: selectedHelper
+        presentHelper: selectedHelper
       }
     })
   }
