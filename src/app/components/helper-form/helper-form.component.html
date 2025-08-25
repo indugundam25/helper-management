@@ -100,13 +100,19 @@
     </div>
     <div class="preview" *ngIf="helperForm.value.documents?.length && isUploaded">
       <img src="assets/pdfIcon.png" alt="PDF Icon" class="pdf-icon"><br>
-      <span>kyc-{{helperForm.value.documents[0].fileName}}</span>
+      <div class="kyc">
+        <span>kyc-{{helperForm.value.documents[0].fileName}}</span>
+        <div class="refresh-icon"><lucide-icon [name]="refresh"></lucide-icon></div>
+      </div>
     </div>
 
     <div class="docPreview" *ngIf="helperService.isEditMode">
       <div class="preview" *ngIf="helperService._selectedHelper().documents.length">
         <img src="assets/pdfIcon.png" alt="PDF Icon" class="pdf-icon"><br>
-        <span>kyc-{{helperService._selectedHelper().documents[0]?.fileName}}</span>
+        <div class="kyc">
+          <p>kyc-{{helperService._selectedHelper().documents[0]?.fileName}}</p>
+          <div class="refresh-icon"><lucide-icon [name]="refresh"></lucide-icon></div>
+        </div>
       </div>
     </div>
     <div class="step-controls" *ngIf="!helperService.isEditMode; else editHelper">
