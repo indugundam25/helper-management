@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HelperService } from '../../services/helper.service';
 import { HelperSuccessDialogComponent } from '../helper-success-dialog/helper-success-dialog.component';
 import { DocumentDialogComponent } from '../document-dialog/document-dialog.component';
-import { LucideAngularModule, Plus, CloudUpload, Save, RefreshCw } from 'lucide-angular';
+import { LucideAngularModule, Plus, CloudUpload, Save } from 'lucide-angular';
 import { IHelper } from '../../models/helper.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -45,7 +45,6 @@ export class HelperFormComponent implements OnInit {
   plus = Plus;
   cloudUpload = CloudUpload;
   save = Save;
-  refresh = RefreshCw;
   filename: string = '';
   selectedFile: File | undefined;
   selectedDocuments: File[] = [];

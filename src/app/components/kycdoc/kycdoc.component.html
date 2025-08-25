@@ -4,6 +4,7 @@
         <lucide-icon [name]="x" (click)="close()"></lucide-icon>
     </div>
 
+
     <div *ngIf="sanitizedUrl; else noDoc">
         <iframe *ngIf="sanitizedUrl" [src]="sanitizedUrl" width="400vh" height="400vh" frameborder="0">
         </iframe>
